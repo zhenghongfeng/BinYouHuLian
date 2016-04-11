@@ -42,7 +42,7 @@
     // 让按钮内部的所有内容左对齐
     backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     // 让按钮的内容往左边偏移10
-    backBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+//    backBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     

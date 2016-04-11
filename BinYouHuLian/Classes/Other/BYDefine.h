@@ -17,4 +17,12 @@
 
 #define kMainColor [UIColor colorWithRed:255 / 255.0 green:143 / 255.0 blue:108 / 255.0 alpha:1.0]
 
+
+
+//****************************frame const****************************************
+// 首页定位当前位置按钮
+#define kHomePageLocationButtonW 30
+#define kHomePageLocationButtonToLeftMargin 10
+#define kHomePageLocationButtonToBottomMargin 20
+
 #endif

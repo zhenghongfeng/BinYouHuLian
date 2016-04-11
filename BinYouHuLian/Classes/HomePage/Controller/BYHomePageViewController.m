@@ -6,7 +6,7 @@
 //  Copyright © 2016年 郑洪锋. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "BYHomePageViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "BYRegisterViewController.h"
@@ -14,8 +14,9 @@
 #import "BYSearchViewController.h"
 #import "BYCreateShopViewController.h"
 
+#import <Masonry.h>
 
-@interface ViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
+@interface BYHomePageViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic, strong) MKMapView *mapView;
 
@@ -33,14 +34,15 @@
 
 @end
 
-@implementation ViewController
+@implementation BYHomePageViewController
 
 - (UIButton *)locateBtn
 {
     if (!_locateBtn) {
-        _locateBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, kScreenHeight - 50, 30, 30)];
+        _locateBtn = [[UIButton alloc] init];
         [_locateBtn setImage:[UIImage imageNamed:@"icon_locate_in_map"] forState:UIControlStateNormal];
         [_locateBtn addTarget:self action:@selector(locateBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_locateBtn];
     }
     return _locateBtn;
 }
@@ -87,16 +89,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [self setupMapView];
     
-    [self.view addSubview:self.locateBtn];
+    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo(kHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - kHomePageLocationButtonW - kHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(kHomePageLocationButtonW, kHomePageLocationButtonW));
+    }];
     
     [self.view addSubview:self.mineBtn];
     
     [self.view addSubview:self.createShopBtn];
     
     [self.view addSubview:self.searchBtn];
+    
+    
 }
 
 - (void)setupMapView

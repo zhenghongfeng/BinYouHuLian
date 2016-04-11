@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "BYHomePageViewController.h"
  #import "EaseMob.h"
 
 #define IMAPPKEY "binyou#binyou"
@@ -32,14 +32,13 @@
     
     [self.window makeKeyAndVisible];
     
-    ViewController *vc = [[ViewController alloc] init];
+    BYHomePageViewController *vc = [[BYHomePageViewController alloc] init];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     
     self.window.rootViewController = nav;
     
     return YES;
-    NSLog(@"fsda");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

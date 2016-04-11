@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F76A61CB12A87D01844482D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 981E6814906AE9332B30E63D /* libPods.a */; };
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
+		BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -20,7 +21,7 @@
 		BAE0F3C71CBB9AA4002009F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3401CBB9AA4002009F6 /* Main.storyboard */; };
 		BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */; };
 		BAE0F3C91CBB9AA4002009F6 /* BYCreateShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3461CBB9AA4002009F6 /* BYCreateShopViewController.xib */; };
-		BAE0F3CA1CBB9AA4002009F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F34C1CBB9AA4002009F6 /* ViewController.m */; };
+		BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */; };
 		BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3521CBB9AA4002009F6 /* BYMineViewController.m */; };
 		BAE0F3CC1CBB9AA4002009F6 /* BYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3541CBB9AA4002009F6 /* BYRegisterViewController.m */; };
 		BAE0F3CD1CBB9AA4002009F6 /* BYRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3551CBB9AA4002009F6 /* BYRegisterViewController.xib */; };
@@ -129,6 +130,8 @@
 		9F7E7D3912C32B300C075D39 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		BA0857861CB60E4F00D4454C /* BinYouHuLian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinYouHuLian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0857951CB60E4F00D4454C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BA2E53A01CBBA6DE00AD323B /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
+		BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -146,8 +149,8 @@
 		BAE0F3441CBB9AA4002009F6 /* BYCreateShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopViewController.h; sourceTree = "<group>"; };
 		BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopViewController.m; sourceTree = "<group>"; };
 		BAE0F3461CBB9AA4002009F6 /* BYCreateShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopViewController.xib; sourceTree = "<group>"; };
-		BAE0F34B1CBB9AA4002009F6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BAE0F34C1CBB9AA4002009F6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BAE0F34B1CBB9AA4002009F6 /* BYHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYHomePageViewController.h; sourceTree = "<group>"; };
+		BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYHomePageViewController.m; sourceTree = "<group>"; };
 		BAE0F3511CBB9AA4002009F6 /* BYMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMineViewController.h; sourceTree = "<group>"; };
 		BAE0F3521CBB9AA4002009F6 /* BYMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMineViewController.m; sourceTree = "<group>"; };
 		BAE0F3531CBB9AA4002009F6 /* BYRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYRegisterViewController.h; sourceTree = "<group>"; };
@@ -375,8 +378,8 @@
 		BAE0F34A1CBB9AA4002009F6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BAE0F34B1CBB9AA4002009F6 /* ViewController.h */,
-				BAE0F34C1CBB9AA4002009F6 /* ViewController.m */,
+				BAE0F34B1CBB9AA4002009F6 /* BYHomePageViewController.h */,
+				BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -439,8 +442,8 @@
 				BAE0F3601CBB9AA4002009F6 /* View */,
 				BAE0F3591CBB9AA4002009F6 /* AppDelegate.h */,
 				BAE0F35A1CBB9AA4002009F6 /* AppDelegate.m */,
-				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BAE0F35E1CBB9AA4002009F6 /* main.m */,
+				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
 			);
 			path = Other;
@@ -449,6 +452,8 @@
 		BAE0F35C1CBB9AA4002009F6 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				BA2E53A01CBBA6DE00AD323B /* UIView+Category.h */,
+				BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -856,11 +861,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE0F3CF1CBB9AA4002009F6 /* main.m in Sources */,
-				BAE0F3CA1CBB9AA4002009F6 /* ViewController.m in Sources */,
+				BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */,
 				BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */,
 				BAE0F3CC1CBB9AA4002009F6 /* BYRegisterViewController.m in Sources */,
 				BAE0F3CE1CBB9AA4002009F6 /* AppDelegate.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
+				BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */,
 				BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -968,6 +974,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -1001,6 +1008,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
