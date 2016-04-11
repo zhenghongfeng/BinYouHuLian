@@ -19,10 +19,4 @@
 
 
 
-//****************************frame const****************************************
-// 首页定位当前位置按钮
-#define kHomePageLocationButtonW 30
-#define kHomePageLocationButtonToLeftMargin 10
-#define kHomePageLocationButtonToBottomMargin 20
-
 #endif

@@ -10,6 +10,7 @@
 		8F76A61CB12A87D01844482D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 981E6814906AE9332B30E63D /* libPods.a */; };
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
 		BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */; };
+		BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A71CBBBEDD00AD323B /* BYConst.m */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -132,6 +133,8 @@
 		BA0857951CB60E4F00D4454C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA2E53A01CBBA6DE00AD323B /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
+		BA2E53A61CBBBEDD00AD323B /* BYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYConst.h; sourceTree = "<group>"; };
+		BA2E53A71CBBBEDD00AD323B /* BYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYConst.m; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -445,6 +448,8 @@
 				BAE0F35E1CBB9AA4002009F6 /* main.m */,
 				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
+				BA2E53A61CBBBEDD00AD323B /* BYConst.h */,
+				BA2E53A71CBBBEDD00AD323B /* BYConst.m */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -867,6 +872,7 @@
 				BAE0F3CE1CBB9AA4002009F6 /* AppDelegate.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */,
+				BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */,
 				BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

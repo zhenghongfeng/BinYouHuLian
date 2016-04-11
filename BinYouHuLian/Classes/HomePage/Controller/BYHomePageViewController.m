@@ -92,9 +92,9 @@
     [self setupMapView];
     
     [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo(kHomePageLocationButtonToLeftMargin);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - kHomePageLocationButtonW - kHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(kHomePageLocationButtonW, kHomePageLocationButtonW));
+        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
     }];
     
     [self.view addSubview:self.mineBtn];
