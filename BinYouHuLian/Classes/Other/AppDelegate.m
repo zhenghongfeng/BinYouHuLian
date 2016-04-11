@@ -39,6 +39,7 @@
     self.window.rootViewController = nav;
     
     return YES;
+    NSLog(@"fsda");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
