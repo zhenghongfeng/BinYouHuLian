@@ -16,4 +16,7 @@
 #import <MBProgressHUD.h>
 #import <Masonry.h>
 
+#import "UIView+Category.h"
+#import "UIImage+Category.h"
+
 #endif

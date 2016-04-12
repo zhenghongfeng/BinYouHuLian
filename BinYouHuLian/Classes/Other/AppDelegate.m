@@ -7,8 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "BYNavigationController.h"
 #import "BYHomePageViewController.h"
- #import "EaseMob.h"
+#import "EaseMob.h"
 
 #define IMAPPKEY "binyou#binyou"
 
@@ -34,7 +35,7 @@
     
     BYHomePageViewController *vc = [[BYHomePageViewController alloc] init];
     
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    UINavigationController *nav = [[BYNavigationController alloc] initWithRootViewController:vc];
     
     self.window.rootViewController = nav;
     

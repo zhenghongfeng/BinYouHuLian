@@ -14,8 +14,6 @@
 #import "BYSearchViewController.h"
 #import "BYCreateShopViewController.h"
 
-#import <Masonry.h>
-
 @interface BYHomePageViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic, strong) MKMapView *mapView;
@@ -36,13 +34,21 @@
 
 @implementation BYHomePageViewController
 
+- (MKMapView *)mapView
+{
+    if (!_mapView) {
+        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+        _mapView.delegate = self;
+        // 显示当前位置
+        _mapView.showsUserLocation = YES;
+    }
+    return _mapView;
+}
+
 - (UIButton *)locateBtn
 {
     if (!_locateBtn) {
-        _locateBtn = [[UIButton alloc] init];
-        [_locateBtn setImage:[UIImage imageNamed:@"icon_locate_in_map"] forState:UIControlStateNormal];
-        [_locateBtn addTarget:self action:@selector(locateBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_locateBtn];
+        _locateBtn = [self createButtonWithTitle:nil image:@"icon_locate_in_map" action:@selector(locateBtnClick)];
     }
     return _locateBtn;
 }
@@ -50,10 +56,7 @@
 - (UIButton *)mineBtn
 {
     if (!_mineBtn) {
-        _mineBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth * 0.5 - 40, kScreenHeight - 50, 80, 30)];
-        [_mineBtn setTitle:@"我的" forState:UIControlStateNormal];
-        _mineBtn.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
-        [_mineBtn addTarget:self action:@selector(mineBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _mineBtn = [self createButtonWithTitle:@"我的" image:nil action:@selector(mineBtnClick)];
     }
     return _mineBtn;
 }
@@ -61,10 +64,7 @@
 - (UIButton *)createShopBtn
 {
     if (!_createShopBtn) {
-        _createShopBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 90, kScreenHeight - 50, 80, 30)];
-        [_createShopBtn setTitle:@"开店" forState:UIControlStateNormal];
-        _createShopBtn.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
-        [_createShopBtn addTarget:self action:@selector(createShopBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _createShopBtn = [self createButtonWithTitle:@"开店" image:nil action:@selector(createShopBtnClick)];
     }
     return _createShopBtn;
 }
@@ -72,12 +72,47 @@
 - (UIButton *)searchBtn
 {
     if (!_searchBtn) {
-        _searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 80, 30)];
-        [_searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-        _searchBtn.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
-        [_searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _searchBtn = [self createButtonWithTitle:@"搜索" image:nil action:@selector(searchBtnClick)];
     }
     return _searchBtn;
+}
+
+- (UIButton *)createButtonWithTitle:(NSString *)title image:(NSString *)image action:(SEL)action
+{
+    UIButton *button = [[UIButton alloc] init];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+    button.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    return button;
+}
+
+- (void)setupConstraints
+{
+    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
+    }];
+    
+    [self.mineBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo((kScreenWidth - BYHomePageMineButtonW)  * 0.5);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageMineButtonH - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
+    }];
+    
+    [self.createShopBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo(kScreenWidth - BYHomePageMineButtonW - BYHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageMineButtonH - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
+    }];
+    
+    [self.searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin * 2);
+        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -89,42 +124,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupMapView];
-    
-    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
-    }];
-    
-    [self.view addSubview:self.mineBtn];
-    
-    [self.view addSubview:self.createShopBtn];
-    
-    [self.view addSubview:self.searchBtn];
-    
-    
-}
-
-- (void)setupMapView
-{
-    _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
-    _mapView.delegate = self;
-    // 显示当前位置
-    _mapView.showsUserLocation = YES;
-    [self.view addSubview:_mapView];
+    [self.view addSubview:self.mapView];
     
     if(kIOS8)
     {
         [self getUserLocation];
     }
+    
+    [self setupConstraints];
 }
 
 - (void)locateBtnClick
 {
-    // 显示当前位置
-    _mapView.showsUserLocation = YES;
-    
     if(kIOS8)
     {
         //更新位置
@@ -256,7 +267,7 @@
 
 - (void)mineBtnClick
 {
-    BOOL isLogin = YES;
+    BOOL isLogin = NO;
     if (isLogin) {
         BYMineViewController *vc = [[BYMineViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];

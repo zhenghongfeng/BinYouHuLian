@@ -9,6 +9,7 @@
 #import "BYRegisterViewController.h"
 
 @interface BYRegisterViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
 
@@ -20,6 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.scrollView.contentSize = CGSizeMake(0, kScreenHeight + 50);
     
     [self.phoneNumberTextField becomeFirstResponder];
 }

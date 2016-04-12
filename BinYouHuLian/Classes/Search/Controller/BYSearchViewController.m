@@ -27,11 +27,11 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
         label.text = @"   搜索历史";
         _tableView.tableHeaderView = label;
         
-        UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
         [deleteBtn setTitle:@"清除搜索记录" forState:UIControlStateNormal];
         [deleteBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick) forControlEvents:UIControlEventTouchUpInside];

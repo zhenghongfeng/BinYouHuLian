@@ -11,6 +11,16 @@
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
 		BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */; };
 		BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A71CBBBEDD00AD323B /* BYConst.m */; };
+		BA9E3D8E1CBC9A9300E71119 /* BYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3D8D1CBC9A9300E71119 /* BYNavigationController.m */; };
+		BA9E3D911CBCA10100E71119 /* add_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3D8F1CBCA10100E71119 /* add_header@2x.png */; };
+		BA9E3D921CBCA10100E71119 /* add_header@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3D901CBCA10100E71119 /* add_header@3x.png */; };
+		BA9E3D9B1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3D991CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m */; };
+		BA9E3D9C1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3D9A1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.xib */; };
+		BA9E3DA31CBCD97300E71119 /* add_header_edit_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DA11CBCD97300E71119 /* add_header_edit_btn@2x.png */; };
+		BA9E3DA41CBCD97300E71119 /* add_header_edit_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DA21CBCD97300E71119 /* add_header_edit_btn@3x.png */; };
+		BA9E3DAA1CBCDD9B00E71119 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DA91CBCDD9B00E71119 /* UIImage+Category.m */; };
+		BA9E3DAE1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */; };
+		BA9E3DAF1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -21,7 +31,6 @@
 		BAE0F3301CBB7F66002009F6 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F32F1CBB7F66002009F6 /* libxml2.tbd */; };
 		BAE0F3C71CBB9AA4002009F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3401CBB9AA4002009F6 /* Main.storyboard */; };
 		BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */; };
-		BAE0F3C91CBB9AA4002009F6 /* BYCreateShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3461CBB9AA4002009F6 /* BYCreateShopViewController.xib */; };
 		BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */; };
 		BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3521CBB9AA4002009F6 /* BYMineViewController.m */; };
 		BAE0F3CC1CBB9AA4002009F6 /* BYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3541CBB9AA4002009F6 /* BYRegisterViewController.m */; };
@@ -135,6 +144,20 @@
 		BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		BA2E53A61CBBBEDD00AD323B /* BYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYConst.h; sourceTree = "<group>"; };
 		BA2E53A71CBBBEDD00AD323B /* BYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYConst.m; sourceTree = "<group>"; };
+		BA9E3D8C1CBC9A9300E71119 /* BYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYNavigationController.h; sourceTree = "<group>"; };
+		BA9E3D8D1CBC9A9300E71119 /* BYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYNavigationController.m; sourceTree = "<group>"; };
+		BA9E3D8F1CBCA10100E71119 /* add_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_header@2x.png"; sourceTree = "<group>"; };
+		BA9E3D901CBCA10100E71119 /* add_header@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_header@3x.png"; sourceTree = "<group>"; };
+		BA9E3D981CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopAddHeaderTableViewCell.h; sourceTree = "<group>"; };
+		BA9E3D991CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopAddHeaderTableViewCell.m; sourceTree = "<group>"; };
+		BA9E3D9A1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopAddHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		BA9E3DA11CBCD97300E71119 /* add_header_edit_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_header_edit_btn@2x.png"; sourceTree = "<group>"; };
+		BA9E3DA21CBCD97300E71119 /* add_header_edit_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_header_edit_btn@3x.png"; sourceTree = "<group>"; };
+		BA9E3DA81CBCDD9B00E71119 /* UIImage+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Category.h"; sourceTree = "<group>"; };
+		BA9E3DA91CBCDD9B00E71119 /* UIImage+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Category.m"; sourceTree = "<group>"; };
+		BA9E3DAB1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopEditTableViewCell.h; sourceTree = "<group>"; };
+		BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopEditTableViewCell.m; sourceTree = "<group>"; };
+		BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopEditTableViewCell.xib; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -151,7 +174,6 @@
 		BAE0F3411CBB9AA4002009F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BAE0F3441CBB9AA4002009F6 /* BYCreateShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopViewController.h; sourceTree = "<group>"; };
 		BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopViewController.m; sourceTree = "<group>"; };
-		BAE0F3461CBB9AA4002009F6 /* BYCreateShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopViewController.xib; sourceTree = "<group>"; };
 		BAE0F34B1CBB9AA4002009F6 /* BYHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYHomePageViewController.h; sourceTree = "<group>"; };
 		BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYHomePageViewController.m; sourceTree = "<group>"; };
 		BAE0F3511CBB9AA4002009F6 /* BYMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMineViewController.h; sourceTree = "<group>"; };
@@ -324,12 +346,12 @@
 		BAE0F33D1CBB9AA4002009F6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BAE0F3611CBB9AA4002009F6 /* Resource */,
 				BAE0F3491CBB9AA4002009F6 /* HomePage */,
 				BAE0F3BF1CBB9AA4002009F6 /* Search */,
 				BAE0F3421CBB9AA4002009F6 /* CreateShop */,
 				BAE0F34F1CBB9AA4002009F6 /* Me */,
 				BAE0F3581CBB9AA4002009F6 /* Other */,
-				BAE0F3611CBB9AA4002009F6 /* Resource */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -349,7 +371,6 @@
 			children = (
 				BAE0F3441CBB9AA4002009F6 /* BYCreateShopViewController.h */,
 				BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */,
-				BAE0F3461CBB9AA4002009F6 /* BYCreateShopViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -364,6 +385,12 @@
 		BAE0F3481CBB9AA4002009F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA9E3D981CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.h */,
+				BA9E3D991CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m */,
+				BA9E3D9A1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.xib */,
+				BA9E3DAB1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.h */,
+				BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */,
+				BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -459,6 +486,8 @@
 			children = (
 				BA2E53A01CBBA6DE00AD323B /* UIView+Category.h */,
 				BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */,
+				BA9E3DA81CBCDD9B00E71119 /* UIImage+Category.h */,
+				BA9E3DA91CBCDD9B00E71119 /* UIImage+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -466,6 +495,8 @@
 		BAE0F35D1CBB9AA4002009F6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BA9E3D8C1CBC9A9300E71119 /* BYNavigationController.h */,
+				BA9E3D8D1CBC9A9300E71119 /* BYNavigationController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -480,6 +511,10 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BA9E3DA11CBCD97300E71119 /* add_header_edit_btn@2x.png */,
+				BA9E3DA21CBCD97300E71119 /* add_header_edit_btn@3x.png */,
+				BA9E3D8F1CBCA10100E71119 /* add_header@2x.png */,
+				BA9E3D901CBCA10100E71119 /* add_header@3x.png */,
 				BAE0F3621CBB9AA4002009F6 /* ac_back@2x.png */,
 				BAE0F3631CBB9AA4002009F6 /* ac_back@3x.png */,
 				BAE0F3641CBB9AA4002009F6 /* arrow_merchant_detail_map_highlighted@2x.png */,
@@ -709,6 +744,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE0F4281CBB9AA5002009F6 /* mapTabLeftButtonSelected@2x.png in Resources */,
+				BA9E3DA31CBCD97300E71119 /* add_header_edit_btn@2x.png in Resources */,
 				BAE0F3D11CBB9AA4002009F6 /* ac_back@3x.png in Resources */,
 				BAE0F3D51CBB9AA4002009F6 /* bg_htl_map_location@2x.png in Resources */,
 				BAE0F4141CBB9AA5002009F6 /* map_icon_297@2x.png in Resources */,
@@ -732,6 +768,7 @@
 				BAE0F3E71CBB9AA4002009F6 /* btn_htl_map_prepay_small_selected@2x.png in Resources */,
 				BAE0F3F11CBB9AA4002009F6 /* icon_locate_in_map@2x.png in Resources */,
 				BAE0F3F61CBB9AA4002009F6 /* icon_map_cateid_2.png in Resources */,
+				BA9E3DA41CBCD97300E71119 /* add_header_edit_btn@3x.png in Resources */,
 				BAE0F3ED1CBB9AA4002009F6 /* icon_homepage_map.png in Resources */,
 				BAE0F4091CBB9AA5002009F6 /* icon_map_poi@2x.png in Resources */,
 				BAE0F3FB1CBB9AA5002009F6 /* icon_map_cateid_5.png in Resources */,
@@ -766,9 +803,11 @@
 				BAE0F4181CBB9AA5002009F6 /* map_icon_301@2x.png in Resources */,
 				BAE0F3D41CBB9AA4002009F6 /* bg_back_merchant_detail_map@2x.png in Resources */,
 				BAE0F3F81CBB9AA5002009F6 /* icon_map_cateid_22.png in Resources */,
+				BA9E3DAF1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib in Resources */,
 				BAE0F4241CBB9AA5002009F6 /* mapTabButtonSelected@2x.png in Resources */,
 				BAE0F41F1CBB9AA5002009F6 /* map_icon_308@2x.png in Resources */,
 				BAE0F42E1CBB9AA5002009F6 /* BYSearchViewController.xib in Resources */,
+				BA9E3D921CBCA10100E71119 /* add_header@3x.png in Resources */,
 				BAE0F40A1CBB9AA5002009F6 /* icon_map_poi_big@2x.png in Resources */,
 				BAE0F3EA1CBB9AA4002009F6 /* icon_error_merchant_detail_map@2x.png in Resources */,
 				BAE0F4221CBB9AA5002009F6 /* mapTabButton@2x.png in Resources */,
@@ -786,11 +825,13 @@
 				BAE0F4041CBB9AA5002009F6 /* icon_map_line.png in Resources */,
 				BAE0F3F31CBB9AA4002009F6 /* icon_map_arrow@2x.png in Resources */,
 				BAE0F40C1CBB9AA5002009F6 /* icon_map_refresh@2x.png in Resources */,
+				BA9E3D9C1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.xib in Resources */,
 				BAE0F4051CBB9AA5002009F6 /* icon_map_line@2x.png in Resources */,
 				BAE0F3FF1CBB9AA5002009F6 /* icon_map_dealDetailArrow.png in Resources */,
 				BAE0F3F01CBB9AA4002009F6 /* icon_homepage_map_selected_old.png in Resources */,
 				BAE0F41A1CBB9AA5002009F6 /* map_icon_303@2x.png in Resources */,
 				BAE0F4161CBB9AA5002009F6 /* map_icon_299@2x.png in Resources */,
+				BA9E3D911CBCA10100E71119 /* add_header@2x.png in Resources */,
 				BAE0F4061CBB9AA5002009F6 /* icon_map_locate.png in Resources */,
 				BAE0F3DF1CBB9AA4002009F6 /* btn_htl_map_location_highlighted@2x.png in Resources */,
 				BAE0F4261CBB9AA5002009F6 /* mapTabLeftButton@2x.png in Resources */,
@@ -806,7 +847,6 @@
 				BAE0F3F91CBB9AA5002009F6 /* icon_map_cateid_3.png in Resources */,
 				BAE0F4291CBB9AA5002009F6 /* mapTabRightButton.png in Resources */,
 				BAE0F3E21CBB9AA4002009F6 /* btn_htl_map_normal_small@2x.png in Resources */,
-				BAE0F3C91CBB9AA4002009F6 /* BYCreateShopViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,7 +913,11 @@
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */,
 				BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */,
+				BA9E3D8E1CBC9A9300E71119 /* BYNavigationController.m in Sources */,
+				BA9E3D9B1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m in Sources */,
 				BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */,
+				BA9E3DAA1CBCDD9B00E71119 /* UIImage+Category.m in Sources */,
+				BA9E3DAE1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
