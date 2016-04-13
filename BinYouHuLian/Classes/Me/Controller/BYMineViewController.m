@@ -7,6 +7,7 @@
 //
 
 #import "BYMineViewController.h"
+#import "BYSettingViewController.h"
 
 @interface BYMineViewController ()
 
@@ -56,4 +57,14 @@
     return cell;
 }
 
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 0) {
+        BYSettingViewController *vc = [[BYSettingViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 @end

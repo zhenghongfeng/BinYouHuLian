@@ -72,9 +72,14 @@
     BOOL isLogin = YES;
     
     if (isLogin) {
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"正在登录";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            hud.labelText = @"登录成功";
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            // 本地缓存
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:loginStatus];
+            
             [self.view endEditing:YES];
             [self dismissViewControllerAnimated:YES completion:nil];
         });

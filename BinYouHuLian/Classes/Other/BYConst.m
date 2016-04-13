@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-CGFloat const BYHomePageLocationButtonW = 35;
+CGFloat const BYHomePageLocationButtonW = 30;
 CGFloat const BYHomePageLocationButtonToLeftMargin = 10;
 CGFloat const BYHomePageLocationButtonToBottomMargin = 20;
 
@@ -16,8 +16,6 @@ CGFloat const BYHomePageMineButtonW = 80;
 CGFloat const BYHomePageMineButtonH = 30;
 
 CGFloat const BYTableViewCellH = 44;
-
-
 
 
 

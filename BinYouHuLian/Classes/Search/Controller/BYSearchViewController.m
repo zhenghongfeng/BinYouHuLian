@@ -30,12 +30,6 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
         label.text = @"   搜索历史";
         _tableView.tableHeaderView = label;
-        
-        UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
-        [deleteBtn setTitle:@"清除搜索记录" forState:UIControlStateNormal];
-        [deleteBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [deleteBtn addTarget:self action:@selector(deleteBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _tableView.tableFooterView = deleteBtn;
     }
     return _tableView;
 }
@@ -71,9 +65,14 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.searchDatas.count;
+    return section == 0 ? self.searchDatas.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,8 +82,32 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    cell.textLabel.text = self.searchDatas[indexPath.row];
+    if (indexPath.section == 0) {
+        cell.textLabel.text = self.searchDatas[indexPath.row];
+    } else {
+        cell.textLabel.text = @"清除搜索历史";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.textColor = kMainColor;
+    }
+    
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        
+        [_tableView removeFromSuperview];
+        
+        [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"已清空历史记录";
+        [hud hide:YES afterDelay:1];
+    }
 }
 
 #pragma mark - UISearchBarDelegate

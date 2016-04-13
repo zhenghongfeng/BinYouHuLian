@@ -18,5 +18,6 @@
 
 #import "UIView+Category.h"
 #import "UIImage+Category.h"
+#import "UITextField+Category.h"
 
 #endif

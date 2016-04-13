@@ -14,6 +14,7 @@
 #import "BYSearchViewController.h"
 #import "BYCreateShopViewController.h"
 
+
 @interface BYHomePageViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic, strong) MKMapView *mapView;
@@ -267,7 +268,9 @@
 
 - (void)mineBtnClick
 {
-    BOOL isLogin = NO;
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] valueForKey:loginStatus];
+    NSLog(@"---%d", isLogin);
+    
     if (isLogin) {
         BYMineViewController *vc = [[BYMineViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];

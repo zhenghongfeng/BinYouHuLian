@@ -21,6 +21,14 @@
 		BA9E3DAA1CBCDD9B00E71119 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DA91CBCDD9B00E71119 /* UIImage+Category.m */; };
 		BA9E3DAE1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */; };
 		BA9E3DAF1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */; };
+		BA9E3DB41CBDFD9F00E71119 /* UITextField+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DB31CBDFD9F00E71119 /* UITextField+Category.m */; };
+		BA9E3DB91CBE0A0000E71119 /* BYPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DB81CBE0A0000E71119 /* BYPickerView.m */; };
+		BA9E3DBC1CBE116500E71119 /* BYSelectPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */; };
+		BA9E3DBF1CBE200B00E71119 /* BYSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DBE1CBE200B00E71119 /* BYSettingViewController.m */; };
+		BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */; };
+		BA9E3DC71CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */; };
+		BA9E3DCB1CBE42EC00E71119 /* red_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */; };
+		BA9E3DD11CBE4F1B00E71119 /* BYTopAligningLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DD01CBE4F1B00E71119 /* BYTopAligningLabel.m */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -158,6 +166,20 @@
 		BA9E3DAB1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopEditTableViewCell.h; sourceTree = "<group>"; };
 		BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopEditTableViewCell.m; sourceTree = "<group>"; };
 		BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopEditTableViewCell.xib; sourceTree = "<group>"; };
+		BA9E3DB21CBDFD9F00E71119 /* UITextField+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Category.h"; sourceTree = "<group>"; };
+		BA9E3DB31CBDFD9F00E71119 /* UITextField+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Category.m"; sourceTree = "<group>"; };
+		BA9E3DB71CBE0A0000E71119 /* BYPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYPickerView.h; sourceTree = "<group>"; };
+		BA9E3DB81CBE0A0000E71119 /* BYPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYPickerView.m; sourceTree = "<group>"; };
+		BA9E3DBA1CBE116500E71119 /* BYSelectPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYSelectPlaceViewController.h; sourceTree = "<group>"; };
+		BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSelectPlaceViewController.m; sourceTree = "<group>"; };
+		BA9E3DBD1CBE200B00E71119 /* BYSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYSettingViewController.h; sourceTree = "<group>"; };
+		BA9E3DBE1CBE200B00E71119 /* BYSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSettingViewController.m; sourceTree = "<group>"; };
+		BA9E3DC31CBE3BB100E71119 /* BYCreateShopSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopSuccessViewController.h; sourceTree = "<group>"; };
+		BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopSuccessViewController.m; sourceTree = "<group>"; };
+		BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopSuccessViewController.xib; sourceTree = "<group>"; };
+		BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_check@3x.png"; sourceTree = "<group>"; };
+		BA9E3DCF1CBE4F1B00E71119 /* BYTopAligningLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYTopAligningLabel.h; sourceTree = "<group>"; };
+		BA9E3DD01CBE4F1B00E71119 /* BYTopAligningLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYTopAligningLabel.m; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -371,6 +393,11 @@
 			children = (
 				BAE0F3441CBB9AA4002009F6 /* BYCreateShopViewController.h */,
 				BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */,
+				BA9E3DBA1CBE116500E71119 /* BYSelectPlaceViewController.h */,
+				BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */,
+				BA9E3DC31CBE3BB100E71119 /* BYCreateShopSuccessViewController.h */,
+				BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */,
+				BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -391,6 +418,8 @@
 				BA9E3DAB1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.h */,
 				BA9E3DAC1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m */,
 				BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */,
+				BA9E3DCF1CBE4F1B00E71119 /* BYTopAligningLabel.h */,
+				BA9E3DD01CBE4F1B00E71119 /* BYTopAligningLabel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -446,6 +475,8 @@
 				BAE0F3531CBB9AA4002009F6 /* BYRegisterViewController.h */,
 				BAE0F3541CBB9AA4002009F6 /* BYRegisterViewController.m */,
 				BAE0F3551CBB9AA4002009F6 /* BYRegisterViewController.xib */,
+				BA9E3DBD1CBE200B00E71119 /* BYSettingViewController.h */,
+				BA9E3DBE1CBE200B00E71119 /* BYSettingViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -488,6 +519,8 @@
 				BA2E53A11CBBA6DE00AD323B /* UIView+Category.m */,
 				BA9E3DA81CBCDD9B00E71119 /* UIImage+Category.h */,
 				BA9E3DA91CBCDD9B00E71119 /* UIImage+Category.m */,
+				BA9E3DB21CBDFD9F00E71119 /* UITextField+Category.h */,
+				BA9E3DB31CBDFD9F00E71119 /* UITextField+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -504,6 +537,8 @@
 		BAE0F3601CBB9AA4002009F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA9E3DB71CBE0A0000E71119 /* BYPickerView.h */,
+				BA9E3DB81CBE0A0000E71119 /* BYPickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -511,6 +546,7 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */,
 				BA9E3DA11CBCD97300E71119 /* add_header_edit_btn@2x.png */,
 				BA9E3DA21CBCD97300E71119 /* add_header_edit_btn@3x.png */,
 				BA9E3D8F1CBCA10100E71119 /* add_header@2x.png */,
@@ -769,6 +805,7 @@
 				BAE0F3F11CBB9AA4002009F6 /* icon_locate_in_map@2x.png in Resources */,
 				BAE0F3F61CBB9AA4002009F6 /* icon_map_cateid_2.png in Resources */,
 				BA9E3DA41CBCD97300E71119 /* add_header_edit_btn@3x.png in Resources */,
+				BA9E3DCB1CBE42EC00E71119 /* red_check@3x.png in Resources */,
 				BAE0F3ED1CBB9AA4002009F6 /* icon_homepage_map.png in Resources */,
 				BAE0F4091CBB9AA5002009F6 /* icon_map_poi@2x.png in Resources */,
 				BAE0F3FB1CBB9AA5002009F6 /* icon_map_cateid_5.png in Resources */,
@@ -777,6 +814,7 @@
 				BAE0F3C71CBB9AA4002009F6 /* Main.storyboard in Resources */,
 				BAE0F4001CBB9AA5002009F6 /* icon_map_delivery@2x.png in Resources */,
 				BAE0F4171CBB9AA5002009F6 /* map_icon_300@2x.png in Resources */,
+				BA9E3DC71CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib in Resources */,
 				BAE0F3EF1CBB9AA4002009F6 /* icon_homepage_map_selected.png in Resources */,
 				BAE0F4131CBB9AA5002009F6 /* map_icon_296@2x.png in Resources */,
 				BAE0F3FA1CBB9AA5002009F6 /* icon_map_cateid_4.png in Resources */,
@@ -906,12 +944,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE0F3CF1CBB9AA4002009F6 /* main.m in Sources */,
+				BA9E3DD11CBE4F1B00E71119 /* BYTopAligningLabel.m in Sources */,
 				BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */,
 				BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */,
 				BAE0F3CC1CBB9AA4002009F6 /* BYRegisterViewController.m in Sources */,
+				BA9E3DBF1CBE200B00E71119 /* BYSettingViewController.m in Sources */,
 				BAE0F3CE1CBB9AA4002009F6 /* AppDelegate.m in Sources */,
+				BA9E3DB41CBDFD9F00E71119 /* UITextField+Category.m in Sources */,
+				BA9E3DB91CBE0A0000E71119 /* BYPickerView.m in Sources */,
+				BA9E3DBC1CBE116500E71119 /* BYSelectPlaceViewController.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA2E53A21CBBA6DE00AD323B /* UIView+Category.m in Sources */,
+				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
 				BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */,
 				BA9E3D8E1CBC9A9300E71119 /* BYNavigationController.m in Sources */,
 				BA9E3D9B1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m in Sources */,

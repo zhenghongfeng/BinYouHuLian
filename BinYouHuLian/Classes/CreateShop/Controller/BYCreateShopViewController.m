@@ -10,9 +10,18 @@
 #import "BYCreateShopAddHeaderTableViewCell.h"
 #import "BYCreateShopEditTableViewCell.h"
 #import <AVFoundation/AVFoundation.h>
+#import "BYPickerView.h"
+#import "BYSelectPlaceViewController.h"
+#import "BYCreateShopSuccessViewController.h"
 
-@interface BYCreateShopViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface BYCreateShopViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, BYPickerViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
+/** 店铺类别titles */
+@property (nonatomic, strong) NSArray *categoryTitles;
+/** 半通明弹层 */
+@property (nonatomic, strong) UIView *coverView;
+/** 类别选择器 */
+@property (nonatomic, strong) BYPickerView *pickerView;
 
 @end
 
@@ -21,6 +30,56 @@
 static NSString * const BYCreateShopAddHeaderCellID = @"addHeaderCell";
 static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
+#pragma mark - getter
+
+- (UITableView *)tableView
+{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        
+        // 注册cell
+        [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BYCreateShopAddHeaderTableViewCell class]) bundle:nil] forCellReuseIdentifier:BYCreateShopAddHeaderCellID];
+        
+        [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BYCreateShopEditTableViewCell class]) bundle:nil] forCellReuseIdentifier:BYCreateShopEditCellID];
+    }
+    return _tableView;
+}
+
+- (NSArray *)categoryTitles
+{
+    if (!_categoryTitles) {
+        _categoryTitles = @[@"宠物店", @"服装店", @"食品店", @"足疗店", @"理发店"];
+    }
+    return _categoryTitles;
+}
+
+- (UIView *)coverView
+{
+    if (!_coverView) {
+        _coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _coverView.backgroundColor = [UIColor colorWithRed:0.50f green:0.49f blue:0.47f alpha:0.50f];
+        
+        // 添加手势
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        [_coverView addGestureRecognizer:tap];
+        
+        [_coverView addSubview:self.pickerView];
+    }
+    return _coverView;
+}
+
+- (BYPickerView *)pickerView
+{
+    if (!_pickerView) {
+        _pickerView = [[BYPickerView alloc] initPickviewWithArray:self.categoryTitles isHaveNavControler:NO];
+        _pickerView.delegate = self;
+    }
+    return _pickerView;
+}
+
+#pragma mark - life cycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -39,20 +98,10 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     
     self.title = @"创建店铺";
     
-    [self setupTableView];
-}
-
-- (void)setupTableView
-{
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    [self.view addSubview:self.tableView];
-        
-    // 注册cell
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BYCreateShopAddHeaderTableViewCell class]) bundle:nil] forCellReuseIdentifier:BYCreateShopAddHeaderCellID];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(rightTopDoneClick)];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BYCreateShopEditTableViewCell class]) bundle:nil] forCellReuseIdentifier:BYCreateShopEditCellID];
+    
+    [self.view addSubview:self.tableView];
 }
 
 #pragma mark - UITableViewDataSource
@@ -64,7 +113,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : 2;
+    return section == 0 ? 1 : 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,15 +125,23 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         return cell;
     } else {
         if (indexPath.row == 0) {
+            UITableViewCell *cell = [[UITableViewCell alloc] init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = @"请选择店铺类别";
+            return cell;
+        } else if (indexPath.row == 1) {
             BYCreateShopEditTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BYCreateShopEditCellID];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.textField setPlaceholderColor:[UIColor blackColor]];
+            return cell;
+        } else if (indexPath.row == 2) {
+            BYCreateShopEditTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BYCreateShopEditCellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textField.placeholder = @"请输入店铺简介";
+            [cell.textField setPlaceholderColor:[UIColor blackColor]];
             return cell;
         } else {
-            static NSString *ID = @"cell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-            }
+            UITableViewCell *cell = [[UITableViewCell alloc] init];
             cell.textLabel.text = @"选位置";
             return cell;
         }
@@ -100,10 +157,14 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
-        if (indexPath.row == 1) {
-            [self.view endEditing:YES];
-            [self.navigationController popViewControllerAnimated:YES];
+        if (indexPath.row == 0) {
+            [self.navigationController.view addSubview:self.coverView];
+        }
+        if (indexPath.row == 3) {
+            BYSelectPlaceViewController *vc = [[BYSelectPlaceViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }
@@ -169,8 +230,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-//    NSData *data = UIImageJPEGRepresentation(image, 0.5);
-    //在这里 调用上传头像的接口
     
     UIImage *roundImage = [image circleWithImage:image inset:2];
     
@@ -183,19 +242,34 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     [cell.addHeadButton setImage:[UIImage imageNamed:@"add_header_edit_btn"] forState:UIControlStateNormal];
 }
 
+#pragma mark - BYPickerViewDelegate
 
+-(void)toobarDonBtnHaveClick:(BYPickerView *)pickView resultString:(NSString *)resultString
+{
+    NSLog(@"%@", resultString);
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.text = resultString;
+}
 
+#pragma mark - 移除半通明_coverView
+- (void)tapClick
+{
+    [_coverView removeFromSuperview];
+}
 
-
-
-
-
-
-
-
-
-
-
+#pragma mark - 右上角的done
+- (void)rightTopDoneClick
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"正在创建";
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [hud hide:YES];
+        BYCreateShopSuccessViewController *vc = [[BYCreateShopSuccessViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    });
+}
 
 
 

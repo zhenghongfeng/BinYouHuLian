@@ -10,6 +10,7 @@
 #import "BYNavigationController.h"
 #import "BYHomePageViewController.h"
 #import "EaseMob.h"
+#import <IQKeyboardManager.h>
 
 #define IMAPPKEY "binyou#binyou"
 
@@ -22,13 +23,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSLog(@"%@", NSHomeDirectory()); // 沙盒路径
-    
-    //registerSDKWithAppKey:注册的appKey，详细见下面注释。
-    //apnsCertName:推送证书名(不需要加后缀)，详细见下面注释。
-    [[EaseMob sharedInstance] registerSDKWithAppKey:@IMAPPKEY apnsCertName:@"istore_dev"];
-    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     [self.window makeKeyAndVisible];
@@ -38,6 +32,19 @@
     UINavigationController *nav = [[BYNavigationController alloc] initWithRootViewController:vc];
     
     self.window.rootViewController = nav;
+    
+    NSLog(@"%@", NSHomeDirectory()); // 沙盒路径
+    
+    //registerSDKWithAppKey:注册的appKey，详细见下面注释。
+    //apnsCertName:推送证书名(不需要加后缀)，详细见下面注释。
+    [[EaseMob sharedInstance] registerSDKWithAppKey:@IMAPPKEY apnsCertName:@"istore_dev"];
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    IQKeyboardManager *keyBoard = [IQKeyboardManager sharedManager];
+    keyBoard.shouldResignOnTouchOutside = YES;
+    keyBoard.shouldToolbarUsesTextFieldTintColor = YES;
+    keyBoard.enableAutoToolbar = YES;
+    
     
     return YES;
 }
