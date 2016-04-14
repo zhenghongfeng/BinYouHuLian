@@ -29,7 +29,6 @@ static NSString *const contentString = @"我们会在订单交易成功后次日
     
     BYTopAligningLabel *topAligningLabel = [[BYTopAligningLabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.label.frame) + 10, kScreenWidth - 20, 999)];
     [topAligningLabel setText:contentString];
-    topAligningLabel.numberOfLines = 0;
     topAligningLabel.textColor = [UIColor grayColor];
     topAligningLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:topAligningLabel];
@@ -45,9 +44,10 @@ static NSString *const contentString = @"我们会在订单交易成功后次日
 
 - (void)openShopButtonClick
 {
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
-    // 下面在首页弹出店铺详情界面
-    
+    // 下面在首页跳到店铺详情界面
+//    [[UIApplication sharedApplication].keyWindow.rootViewController.navigationController pushViewController:<#(nonnull UIViewController *)#> animated:<#(BOOL)#>]
 }
 
 

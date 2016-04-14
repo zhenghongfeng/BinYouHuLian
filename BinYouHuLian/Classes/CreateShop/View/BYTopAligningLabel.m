@@ -24,7 +24,7 @@
     frame.size.height = size.height;
     self.frame = frame;
     self.transform = transform;
-    
+    self.numberOfLines = 0;
     [super setText:text];
 }
 

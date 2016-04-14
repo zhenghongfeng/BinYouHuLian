@@ -231,7 +231,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     
-    UIImage *roundImage = [image circleWithImage:image inset:2];
+    UIImage *roundImage = [image imageByRoundCornerRadius:2];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     

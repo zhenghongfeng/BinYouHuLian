@@ -18,6 +18,9 @@ PODS:
   - IQKeyboardManager (4.0.1)
   - Masonry (1.0.0)
   - MBProgressHUD (0.9.2)
+  - YYCategories (1.0.2):
+    - YYCategories/no-arc (= 1.0.2)
+  - YYCategories/no-arc (1.0.2)
 
 DEPENDENCIES:
   - AFNetworking
@@ -25,6 +28,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - Masonry
   - MBProgressHUD
+  - YYCategories
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -32,5 +36,6 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 0c11a0cb402a621f7aa1aff506f60ab6d2388969
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  YYCategories: 7319e4ba4f4d4dbcec0094abaab540e98f04a65f
 
 COCOAPODS: 0.39.0

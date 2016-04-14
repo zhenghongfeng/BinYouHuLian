@@ -15,9 +15,9 @@
 
 #import <MBProgressHUD.h>
 #import <Masonry.h>
+#import <YYCategories.h>
 
-#import "UIView+Category.h"
-#import "UIImage+Category.h"
+
 #import "UITextField+Category.h"
 
 #endif

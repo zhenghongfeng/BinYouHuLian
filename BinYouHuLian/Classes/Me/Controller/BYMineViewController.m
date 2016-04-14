@@ -8,6 +8,9 @@
 
 #import "BYMineViewController.h"
 #import "BYSettingViewController.h"
+#import "BYCaredLocationViewController.h"
+#import "BYMessageViewController.h"
+#import "BYMyShopBusinessViewController.h"
 
 @interface BYMineViewController ()
 
@@ -62,9 +65,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UIViewController *vc;
     if (indexPath.row == 0) {
-        BYSettingViewController *vc = [[BYSettingViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
+        vc = [[BYSettingViewController alloc] init];
     }
+    if (indexPath.row == 1) {
+        vc = [[BYCaredLocationViewController alloc] init];
+    }
+    if (indexPath.row == 2) {
+        vc = [[BYMessageViewController alloc] init];
+    }
+    if (indexPath.row == 3) {
+        vc = [[BYMyShopBusinessViewController alloc] init];
+    }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end
