@@ -6,13 +6,21 @@
 //  Copyright © 2016年 郑洪锋. All rights reserved.
 //
 
-#ifndef PrefixHeader_pch
-#define PrefixHeader_pch
+#import <Availability.h>
 
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+
+#import "EMSDK.h"
+#import "EaseUI.h"
 
 #import "BYDefine.h"
 #import "BYConst.h"
 
+#import <IQKeyboardManager.h>
 #import <MBProgressHUD.h>
 #import <Masonry.h>
 #import <YYCategories.h>
@@ -21,3 +29,12 @@
 #import "UITextField+Category.h"
 
 #endif
+
+
+
+
+
+
+
+
+

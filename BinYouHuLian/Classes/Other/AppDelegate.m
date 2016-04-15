@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "BYNavigationController.h"
 #import "BYHomePageViewController.h"
-#import "EaseMob.h"
-#import <IQKeyboardManager.h>
 
 #define IMAPPKEY "binyou#binyou"
 
@@ -35,34 +33,55 @@
     
     NSLog(@"%@", NSHomeDirectory()); // 沙盒路径
     
-    //registerSDKWithAppKey:注册的appKey，详细见下面注释。
+    //AppKey:注册的appKey，详细见下面注释。
     //apnsCertName:推送证书名(不需要加后缀)，详细见下面注释。
-    [[EaseMob sharedInstance] registerSDKWithAppKey:@IMAPPKEY apnsCertName:@"istore_dev"];
-    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    EMOptions *options = [EMOptions optionsWithAppkey:@IMAPPKEY];
+    options.apnsCertName = @"binyouApns";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
     
-    IQKeyboardManager *keyBoard = [IQKeyboardManager sharedManager];
-    keyBoard.shouldResignOnTouchOutside = YES;
-    keyBoard.shouldToolbarUsesTextFieldTintColor = YES;
-    keyBoard.enableAutoToolbar = YES;
+//    EMError *error = [[EMClient sharedClient] registerWithUsername:@"xiaofeng" password:@"123456"];
+//    if (error==nil) {
+//        NSLog(@"注册成功");
+//    }
     
+    EMError *error = [[EMClient sharedClient] loginWithUsername:@"xiaofeng" password:@"123456"];
+    if (!error) {
+        NSLog(@"登陆成功");
+        
+    }
+
+    //iOS8 注册APNS
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        [application registerForRemoteNotifications];
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge |
+        UIUserNotificationTypeSound |
+        UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
+    else{
+        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeSound |
+        UIRemoteNotificationTypeAlert;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+    }
     
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
 }
 // App进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    [[EaseMob sharedInstance] applicationDidEnterBackground:application];
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
 }
 
 // App将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
-    [[EaseMob sharedInstance] applicationWillEnterForeground:application];
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -71,7 +90,17 @@
 // 申请处理时间
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-    [[EaseMob sharedInstance] applicationWillTerminate:application];
+//    [[EaseMob sharedInstance] applicationWillTerminate:application];
+}
+#pragma mark - 您注册了推送功能，iOS 会自动回调以下方法，得到deviceToken，您需要将deviceToken传给SDK
+// 将得到的deviceToken传给SDK
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    [[EMClient sharedClient] bindDeviceToken:deviceToken];
+}
+
+// 注册deviceToken失败
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"error -- %@",error);
 }
 
 @end

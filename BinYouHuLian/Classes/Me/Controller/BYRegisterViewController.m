@@ -9,7 +9,6 @@
 #import "BYRegisterViewController.h"
 
 @interface BYRegisterViewController ()
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
 
@@ -22,7 +21,7 @@
 {
     [super viewDidLoad];
     
-    self.scrollView.contentSize = CGSizeMake(0, kScreenHeight + 50);
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
     
     [self.phoneNumberTextField becomeFirstResponder];
 }
@@ -67,6 +66,9 @@
         });
         return;
     }
+    
+    
+    
     
     // yes：登录成功  no:登录失败
     BOOL isLogin = YES;

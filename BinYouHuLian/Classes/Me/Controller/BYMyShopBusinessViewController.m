@@ -117,7 +117,8 @@ static NSString *const messageCellID = @"MessageCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BYChatViewController *vc = [[BYChatViewController alloc] init];
+    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"会话" conversationType:EMConversationTypeChat]; // 单聊会话类型
+    vc.title = @"会话";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -9,7 +9,7 @@
 #import "BYMineViewController.h"
 #import "BYSettingViewController.h"
 #import "BYCaredLocationViewController.h"
-#import "BYMessageViewController.h"
+#import "BYMessageListViewController.h"
 #import "BYMyShopBusinessViewController.h"
 
 @interface BYMineViewController ()
@@ -73,7 +73,7 @@
         vc = [[BYCaredLocationViewController alloc] init];
     }
     if (indexPath.row == 2) {
-        vc = [[BYMessageViewController alloc] init];
+        vc = [[BYMessageListViewController alloc] init];
     }
     if (indexPath.row == 3) {
         vc = [[BYMyShopBusinessViewController alloc] init];
