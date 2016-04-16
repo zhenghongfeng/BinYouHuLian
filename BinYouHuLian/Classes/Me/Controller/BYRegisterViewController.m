@@ -67,9 +67,6 @@
         return;
     }
     
-    
-    
-    
     // yes：登录成功  no:登录失败
     BOOL isLogin = YES;
     
