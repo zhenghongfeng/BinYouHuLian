@@ -264,7 +264,6 @@
 		BAE0F32C1CBB6D5E002009F6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F32B1CBB6D5E002009F6 /* libsqlite3.tbd */; };
 		BAE0F32E1CBB7251002009F6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F32D1CBB7251002009F6 /* CFNetwork.framework */; };
 		BAE0F3301CBB7F66002009F6 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F32F1CBB7F66002009F6 /* libxml2.tbd */; };
-		BAE0F3C71CBB9AA4002009F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3401CBB9AA4002009F6 /* Main.storyboard */; };
 		BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */; };
 		BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F34C1CBB9AA4002009F6 /* BYHomePageViewController.m */; };
 		BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3521CBB9AA4002009F6 /* BYMineViewController.m */; };
@@ -829,7 +828,6 @@
 		BAE0F32B1CBB6D5E002009F6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BAE0F32D1CBB7251002009F6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		BAE0F32F1CBB7F66002009F6 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
-		BAE0F3411CBB9AA4002009F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BAE0F3441CBB9AA4002009F6 /* BYCreateShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopViewController.h; sourceTree = "<group>"; };
 		BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopViewController.m; sourceTree = "<group>"; };
 		BAE0F34B1CBB9AA4002009F6 /* BYHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYHomePageViewController.h; sourceTree = "<group>"; };
@@ -1014,7 +1012,6 @@
 			isa = PBXGroup;
 			children = (
 				BA04BE551CC0D91B000270EB /* Localizable.strings */,
-				BAE0F3401CBB9AA4002009F6 /* Main.storyboard */,
 				BA0857951CB60E4F00D4454C /* Assets.xcassets */,
 				BAE0F42F1CBB9AD5002009F6 /* Info.plist */,
 			);
@@ -2102,12 +2099,12 @@
 			isa = PBXGroup;
 			children = (
 				BA04BE4D1CC0D5D6000270EB /* GifImage */,
-				BA04BE4A1CC0D5BE000270EB /* ChatViewController.h */,
-				BA04BE4B1CC0D5BE000270EB /* ChatViewController.m */,
 				BA68E1FD1CC0B4FD00A85FCD /* EaseUIResource.bundle */,
 				BA68E1851CC0B4F200A85FCD /* Resource */,
 				BA68DFEB1CC0B4C800A85FCD /* EaseUI */,
 				BA68DFBF1CC0B3E100A85FCD /* HyphenateSDK */,
+				BA04BE4A1CC0D5BE000270EB /* ChatViewController.h */,
+				BA04BE4B1CC0D5BE000270EB /* ChatViewController.m */,
 				BA04BE471CC0CC55000270EB /* BYChatViewController.h */,
 				BA04BE481CC0CC55000270EB /* BYChatViewController.m */,
 			);
@@ -2267,7 +2264,6 @@
 				BA68E1F71CC0B4F300A85FCD /* VoiceSearchFeedback016@2x.png in Resources */,
 				BAD26EBD1CBF86B100F355C5 /* anon_chat_bottom_more_nor@3x.png in Resources */,
 				BAD26DAF1CBF442E00F355C5 /* xiaowang.png in Resources */,
-				BAE0F3C71CBB9AA4002009F6 /* Main.storyboard in Resources */,
 				BAE0F4001CBB9AA5002009F6 /* icon_map_delivery@2x.png in Resources */,
 				BAE0F4171CBB9AA5002009F6 /* map_icon_300@2x.png in Resources */,
 				BAD26E8E1CBF7F7700F355C5 /* chatBar_keyboard@2x.png in Resources */,
@@ -2641,15 +2637,6 @@
 				BA68E1C31CC0B4F300A85FCD /* zh-Hans */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		BAE0F3401CBB9AA4002009F6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BAE0F3411CBB9AA4002009F6 /* Base */,
-			);
-			name = Main.storyboard;
-			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
