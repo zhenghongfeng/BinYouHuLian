@@ -12,6 +12,11 @@
 		BA04BE4C1CC0D5BE000270EB /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE4B1CC0D5BE000270EB /* ChatViewController.m */; };
 		BA04BE501CC0D5D6000270EB /* EMGifImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE4F1CC0D5D6000270EB /* EMGifImage.m */; };
 		BA04BE531CC0D91B000270EB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE551CC0D91B000270EB /* Localizable.strings */; };
+		BA04BE581CC4D3AD000270EB /* BYAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE571CC4D3AD000270EB /* BYAnnotation.m */; };
+		BA04BE5B1CC4DA7C000270EB /* BYShop.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE5A1CC4DA7C000270EB /* BYShop.m */; };
+		BA04BE5E1CC4E0E8000270EB /* BYShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE5D1CC4E0E8000270EB /* BYShopDetailViewController.m */; };
+		BA04BE621CC4E685000270EB /* BYShopDetailCycleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04BE601CC4E685000270EB /* BYShopDetailCycleView.m */; };
+		BA04BE631CC4E685000270EB /* BYShopDetailCycleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE611CC4E685000270EB /* BYShopDetailCycleView.xib */; };
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
 		BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A71CBBBEDD00AD323B /* BYConst.m */; };
 		BA68DFE91CC0B3E100A85FCD /* libHyphenateFullSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA68DFE71CC0B3E100A85FCD /* libHyphenateFullSDK.a */; };
@@ -385,6 +390,15 @@
 		BA04BE4E1CC0D5D6000270EB /* EMGifImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMGifImage.h; sourceTree = "<group>"; };
 		BA04BE4F1CC0D5D6000270EB /* EMGifImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMGifImage.m; sourceTree = "<group>"; };
 		BA04BE541CC0D91B000270EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BA04BE561CC4D3AD000270EB /* BYAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAnnotation.h; sourceTree = "<group>"; };
+		BA04BE571CC4D3AD000270EB /* BYAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAnnotation.m; sourceTree = "<group>"; };
+		BA04BE591CC4DA7C000270EB /* BYShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYShop.h; sourceTree = "<group>"; };
+		BA04BE5A1CC4DA7C000270EB /* BYShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYShop.m; sourceTree = "<group>"; };
+		BA04BE5C1CC4E0E8000270EB /* BYShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYShopDetailViewController.h; sourceTree = "<group>"; };
+		BA04BE5D1CC4E0E8000270EB /* BYShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYShopDetailViewController.m; sourceTree = "<group>"; };
+		BA04BE5F1CC4E685000270EB /* BYShopDetailCycleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYShopDetailCycleView.h; sourceTree = "<group>"; };
+		BA04BE601CC4E685000270EB /* BYShopDetailCycleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYShopDetailCycleView.m; sourceTree = "<group>"; };
+		BA04BE611CC4E685000270EB /* BYShopDetailCycleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYShopDetailCycleView.xib; sourceTree = "<group>"; };
 		BA0857861CB60E4F00D4454C /* BinYouHuLian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinYouHuLian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0857951CB60E4F00D4454C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA2E53A61CBBBEDD00AD323B /* BYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYConst.h; sourceTree = "<group>"; };
@@ -1760,6 +1774,8 @@
 				BA9E3DC31CBE3BB100E71119 /* BYCreateShopSuccessViewController.h */,
 				BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */,
 				BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */,
+				BA04BE5C1CC4E0E8000270EB /* BYShopDetailViewController.h */,
+				BA04BE5D1CC4E0E8000270EB /* BYShopDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1782,6 +1798,9 @@
 				BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */,
 				BA9E3DCF1CBE4F1B00E71119 /* BYTopAligningLabel.h */,
 				BA9E3DD01CBE4F1B00E71119 /* BYTopAligningLabel.m */,
+				BA04BE5F1CC4E685000270EB /* BYShopDetailCycleView.h */,
+				BA04BE601CC4E685000270EB /* BYShopDetailCycleView.m */,
+				BA04BE611CC4E685000270EB /* BYShopDetailCycleView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1808,6 +1827,8 @@
 		BAE0F34D1CBB9AA4002009F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BA04BE591CC4DA7C000270EB /* BYShop.h */,
+				BA04BE5A1CC4DA7C000270EB /* BYShop.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1815,6 +1836,8 @@
 		BAE0F34E1CBB9AA4002009F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA04BE561CC4D3AD000270EB /* BYAnnotation.h */,
+				BA04BE571CC4D3AD000270EB /* BYAnnotation.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1874,11 +1897,11 @@
 				BAE0F35C1CBB9AA4002009F6 /* Category */,
 				BAE0F35D1CBB9AA4002009F6 /* Controller */,
 				BAE0F3601CBB9AA4002009F6 /* View */,
+				BAE0F35E1CBB9AA4002009F6 /* main.m */,
 				BAE0F3591CBB9AA4002009F6 /* AppDelegate.h */,
 				BAE0F35A1CBB9AA4002009F6 /* AppDelegate.m */,
-				BAE0F35E1CBB9AA4002009F6 /* main.m */,
-				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
+				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BA2E53A61CBBBEDD00AD323B /* BYConst.h */,
 				BA2E53A71CBBBEDD00AD323B /* BYConst.m */,
 			);
@@ -2222,6 +2245,7 @@
 				BA68E1C91CC0B4F300A85FCD /* chat_receiver_bg@2x.png in Resources */,
 				BA68E1571CC0B4C900A85FCD /* MWPhotoBrowser.bundle in Resources */,
 				BAE0F3E61CBB9AA4002009F6 /* btn_htl_map_prepay_small@2x.png in Resources */,
+				BA04BE631CC4E685000270EB /* BYShopDetailCycleView.xib in Resources */,
 				BAE0F3E11CBB9AA4002009F6 /* btn_htl_map_normal_big_selected@2x.png in Resources */,
 				BA68E1CC1CC0B4F300A85FCD /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				BAE0F4191CBB9AA5002009F6 /* map_icon_302@2x.png in Resources */,
@@ -2537,6 +2561,7 @@
 				BA68E14C1CC0B4C900A85FCD /* PSTCollectionViewCell.m in Sources */,
 				BA68E1731CC0B4C900A85FCD /* EaseMessageTimeCell.m in Sources */,
 				BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */,
+				BA04BE621CC4E685000270EB /* BYShopDetailCycleView.m in Sources */,
 				BAD26DBE1CBF64CC00F355C5 /* BYMessageModel.m in Sources */,
 				BA68E1701CC0B4C900A85FCD /* EaseBaseMessageCell.m in Sources */,
 				BA68E13D1CC0B4C900A85FCD /* EMSDWebImageDownloader.m in Sources */,
@@ -2553,6 +2578,7 @@
 				BA68E1561CC0B4C900A85FCD /* PSTGridLayoutSection.m in Sources */,
 				BA68E12A1CC0B4C800A85FCD /* MJRefreshNormalHeader.m in Sources */,
 				BA68E1661CC0B4C900A85FCD /* EaseEmotionEscape.m in Sources */,
+				BA04BE5E1CC4E0E8000270EB /* BYShopDetailViewController.m in Sources */,
 				BAE0F3CC1CBB9AA4002009F6 /* BYRegisterViewController.m in Sources */,
 				BA68E1521CC0B4C900A85FCD /* PSTCollectionViewUpdateItem.m in Sources */,
 				BA68E1451CC0B4C900A85FCD /* UIImage+EMMultiFormat.m in Sources */,
@@ -2567,6 +2593,7 @@
 				BA68E16E1CC0B4C900A85FCD /* EaseViewController.m in Sources */,
 				BA9E3DB91CBE0A0000E71119 /* BYPickerView.m in Sources */,
 				BA68E1821CC0B4C900A85FCD /* EaseChatBarMoreView.m in Sources */,
+				BA04BE5B1CC4DA7C000270EB /* BYShop.m in Sources */,
 				BA68E14A1CC0B4C900A85FCD /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				BA9E3DBC1CBE116500E71119 /* BYSelectPlaceViewController.m in Sources */,
 				BA68E1711CC0B4C900A85FCD /* EaseCustomMessageCell.m in Sources */,
@@ -2596,6 +2623,7 @@
 				BA68E16F1CC0B4C900A85FCD /* EaseUserCell.m in Sources */,
 				BA68E1791CC0B4C900A85FCD /* EaseBubbleView+Video.m in Sources */,
 				BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */,
+				BA04BE581CC4D3AD000270EB /* BYAnnotation.m in Sources */,
 				BA68E17A1CC0B4C900A85FCD /* EaseBubbleView+Voice.m in Sources */,
 				BA68E1781CC0B4C900A85FCD /* EaseBubbleView+Text.m in Sources */,
 				BA68E1601CC0B4C900A85FCD /* UIViewController+HUD.m in Sources */,
