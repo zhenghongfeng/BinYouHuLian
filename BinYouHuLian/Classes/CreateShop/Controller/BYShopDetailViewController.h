@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BYShopDetailViewController : UIViewController
+@interface BYShopDetailViewController : UITableViewController
 
 @end

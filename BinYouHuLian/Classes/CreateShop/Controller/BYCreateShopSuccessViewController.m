@@ -7,7 +7,7 @@
 //
 
 #import "BYCreateShopSuccessViewController.h"
-#import "BYTopAligningLabel.h"
+#import "BYShopDetailViewController.h"
 
 static NSString *const contentString = @"我们会在订单交易成功后次日将款项提现到你填写的银行账户上，一般1~2个工作日到账。目前推广期免手续费。";
 
@@ -27,19 +27,36 @@ static NSString *const contentString = @"我们会在订单交易成功后次日
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[UIView new]];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
-    BYTopAligningLabel *topAligningLabel = [[BYTopAligningLabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.label.frame) + 10, kScreenWidth - 20, 999)];
-    [topAligningLabel setText:contentString];
-    topAligningLabel.textColor = [UIColor grayColor];
-    topAligningLabel.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:topAligningLabel];
+    [self setupUI];
+}
+
+- (void)setupUI
+{
+    UILabel *label = [[UILabel alloc] init];
+    label.text = contentString;
+    label.textColor = [UIColor grayColor];
+    label.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:label];
     
-    UIButton *openShopButton = [[UIButton alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(topAligningLabel.frame) + 10, kScreenWidth - 20, 40)];
-    openShopButton.layer.masksToBounds = YES;
-    openShopButton.layer.cornerRadius = 5;
-    [openShopButton setTitle:@"开启微店" forState:UIControlStateNormal];
-    openShopButton.backgroundColor = [UIColor redColor];
-    [openShopButton addTarget:self action:@selector(openShopButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:openShopButton];
+    label.sd_layout
+    .leftSpaceToView(self.view, BYMargin)
+    .topSpaceToView(self.view, CGRectGetMaxY(self.label.frame) + BYMargin)
+    .rightSpaceToView(self.view, BYMargin)
+    .autoHeightRatio(0);
+    
+    UIButton *button = [[UIButton alloc] init];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = 5;
+    [button setTitle:@"开启微店" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor redColor];
+    [button addTarget:self action:@selector(openShopButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
+    button.sd_layout
+    .leftEqualToView(label)
+    .rightEqualToView(label)
+    .topSpaceToView(label, BYMargin)
+    .heightIs(40);
 }
 
 - (void)openShopButtonClick
@@ -47,7 +64,10 @@ static NSString *const contentString = @"我们会在订单交易成功后次日
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
     // 下面在首页跳到店铺详情界面
-//    [[UIApplication sharedApplication].keyWindow.rootViewController.navigationController pushViewController:<#(nonnull UIViewController *)#> animated:<#(BOOL)#>]
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [[[UIApplication sharedApplication] keyWindow].rootViewController.navigationController pushViewController:[BYShopDetailViewController new] animated:YES];
+//    });
 }
 
 

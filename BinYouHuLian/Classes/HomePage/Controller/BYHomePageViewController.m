@@ -15,6 +15,8 @@
 #import "BYCreateShopViewController.h"
 #import "BYAnnotation.h"
 #import "BYShopDetailViewController.h"
+#import "BYCalloutAnnotation.h"
+#import "BYCalloutAnnotatonView.h"
 
 static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/select/position/39.983478,116.318049/cate/1?__skck=40aaaf01c2fc4801b9c059efcd7aa146&__skcy=ji%2BV3hnRG9MHGaryLpiFV9Fiw5o%3D&__skno=1F082187-597D-4636-B088-B54186954C10&__skts=1436951992.642581&__skua=bd6b6e8eadfad15571a15c3b9ef9199a&__vhost=api.mobile.meituan.com&ci=1&client=iphone&distance=2051&fields=slug%2Ccate%2Csubcate%2Crdplocs%2Cimgurl%2Ctitle%2Csmstitle%2Cprice%2Cbrandname%2Cmname%2Crating%2Crate-count%2Capplelottery%2Cid&limit=30&movieBundleVersion=100&msid=48E2B810-805D-4821-9CDD-D5C9E01BC98A2015-07-15-15-51824&mypos=39.983478%2C116.318049&offset=0&sort=defaults&ste=_b0&userid=10086&utm_campaign=AgroupBgroupD100Fa20141120nanning__m1__leftflow___ab_pindaochangsha__a__leftflow___ab_gxtest__gd__leftflow___ab_gxhceshi__nostrategy__leftflow___ab_i550poi_ktv__d__j___ab_chunceshishuju__a__a___ab_gxh_82__nostrategy__leftflow___ab_i_group_5_3_poidetaildeallist__a__b___b1junglehomepagecatesort__b__leftflow___ab_gxhceshi0202__b__a___ab_pindaoquxincelue0630__b__b1___ab_i550poi_xxyl__b__leftflow___ab_i_group_5_6_searchkuang__a__leftflow___i_group_5_2_deallist_poitype__d__d___ab_pindaoshenyang__a__leftflow___ab_b_food_57_purepoilist_extinfo__a__a___ab_waimaiwending__a__a___ab_waimaizhanshi__b__b1___ab_i550poi_lr__d__leftflow___ab_i_group_5_5_onsite__b__b___ab_xinkeceshi__b__leftflowGhomepage_map&utm_content=4B8C0B46F5B0527D55EA292904FD7E12E48FB7BEA8DF50BFE7828AF7F20BB08D&utm_medium=iphone&utm_source=AppStore&utm_term=5.7&uuid=4B8C0B46F5B0527D55EA292904FD7E12E48FB7BEA8DF50BFE7828AF7F20BB08D&version_name=5.7";
 
@@ -151,6 +153,10 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     annotation1.title = @"宠物店";
     annotation1.subtitle = @"海淀区成府路清华科技园";
     annotation1.coordinate = location1;
+    annotation1.image = [UIImage imageNamed:@"icon_map_arrow"];
+//    annotation1.icon = [UIImage imageNamed:@"icon_map_cateid_3"];
+//    annotation1.detail = @"各种小猫、小狗、可爱的小动物";
+//    annotation1.rate = [UIImage imageNamed:@"red_check@3x"];
     [_mapView addAnnotation:annotation1];
     
     CLLocationCoordinate2D location2 = CLLocationCoordinate2DMake(39.99, 116.32);
@@ -158,6 +164,10 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     annotation2.title = @"水果店";
     annotation2.subtitle = @"海淀区成府路清华科技园";
     annotation2.coordinate = location2;
+    annotation2.image = [UIImage imageNamed:@"icon_map_arrow"];
+//    annotation1.icon = [UIImage imageNamed:@"icon_map_cateid_3"];
+//    annotation1.detail = @"各种水果，苹果，香蕉、草莓、菠萝、应有尽有";
+//    annotation1.rate = [UIImage imageNamed:@"red_check@3x"];
     [_mapView addAnnotation:annotation2];
     
     CLLocationCoordinate2D location3 = CLLocationCoordinate2DMake(40.00, 116.33);
@@ -165,7 +175,11 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     annotation3.title = @"理发店";
     annotation3.subtitle = @"海淀区成府路清华科技园";
     annotation3.coordinate = location3;
-    [_mapView addAnnotation:annotation3];
+    annotation3.image = [UIImage imageNamed:@"icon_map_arrow"];
+//    annotation1.icon = [UIImage imageNamed:@"icon_map_cateid_3"];
+//    annotation1.detail = @"打造您的专属发型，包您满意，发型好心情就然会好";
+//    annotation1.rate = [UIImage imageNamed:@"red_check@3x"];
+    [_mapView addAnnotation:annotation3];    
 }
 
 - (void)locateBtnClick
@@ -305,44 +319,77 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    // 判断大头针位置是否在原点,如果是则不加大头针
-    if([annotation isKindOfClass:[mapView.userLocation class]])
-        return nil;
     
-    static NSString *annotationName = @"annotation";
-    MKPinAnnotationView *anView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationName];
-    if(anView == nil)
-    {
-        anView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationName];
+    //由于当前位置的标注也是一个大头针，所以此时需要判断，此代理方法返回nil使用默认大头针视图
+    if ([annotation isKindOfClass:[BYAnnotation class]]) {
+        static NSString *key1 = @"AnnotationKey1";
+        MKAnnotationView *annotationView = [_mapView dequeueReusableAnnotationViewWithIdentifier:key1];
+        //如果缓存池中不存在则新建
+        if (!annotationView) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:key1];
+            //允许交互点击
+            annotationView.canShowCallout = YES;
+            //定义详情视图偏移量
+            annotationView.calloutOffset=CGPointMake(0, 1);
+            //定义右视图
+            annotationView.rightCalloutAccessoryView = ({
+                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
+                [button setTitle:@"查看详情" forState:UIControlStateNormal];
+                [button setTitleColor:kMainColor forState:UIControlStateNormal];
+                button.titleLabel.numberOfLines = 2;
+                [button addTarget:self action:@selector(shopDetailClick) forControlEvents:UIControlEventTouchUpInside];
+                button;
+            });
+//            annotationView.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_classify_cafe.png"]];//定义详情左侧视图
+        }
+        //修改大头针视图
+        //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
+        annotationView.annotation = annotation;
+        annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
+        return annotationView;
     }
-    anView.animatesDrop = YES;
-    // 显示详细信息
-    anView.canShowCallout = YES;
-//    anView.leftCalloutAccessoryView   可以设置左视图
-    // 可以设置右视图
-    anView.rightCalloutAccessoryView = ({
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
-        [button setTitle:@"查看详情" forState:UIControlStateNormal];
-        [button setTitleColor:kMainColor forState:UIControlStateNormal];
-        button.titleLabel.numberOfLines = 2;
-        [button addTarget:self action:@selector(shopDetailClick) forControlEvents:UIControlEventTouchUpInside];
-        button;
-    });
-    return anView;
+//    else if ([annotation isKindOfClass:[BYCalloutAnnotation class]]){
+//        //对于作为弹出详情视图的自定义大头针视图无弹出交互功能（canShowCallout=false，这是默认值），在其中可以自由添加其他视图（因为它本身继承于UIView）
+//        BYCalloutAnnotatonView *calloutView = [BYCalloutAnnotatonView calloutViewWithMapView:mapView];
+//        calloutView.annotation = annotation;
+//        return calloutView;
+//    }
+    else {
+        return nil;
+    }
 }
 
 // 点击选中某个大头针时触发
+// 点击一般的大头针KCAnnotation时添加一个大头针作为所点大头针的弹出详情视图
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    NSLog(@"%@", view.subviews);
+//    BYAnnotation *annotation=view.annotation;
+//    if ([view.annotation isKindOfClass:[BYAnnotation class]]) {
+//        //点击一个大头针时移除其他弹出详情视图
+//        //        [self removeCustomAnnotation];
+//        //添加详情大头针，渲染此大头针视图时将此模型对象赋值给自定义大头针视图完成自动布局
+//        BYCalloutAnnotation *annotation1 = [[BYCalloutAnnotation alloc] init];
+//        annotation1.icon = annotation.icon;
+//        annotation1.detail = annotation.detail;
+//        annotation1.rate = annotation.rate;
+//        annotation1.coordinate = view.annotation.coordinate;
+//        [mapView addAnnotation:annotation1];
+//    }
 }
 // 取消选中大头针时触发
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
-    
+//    [self removeCustomAnnotation];
 }
 
-
+#pragma mark 移除所用自定义大头针
+-(void)removeCustomAnnotation{
+    [_mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[BYCalloutAnnotation class]]) {
+            [_mapView removeAnnotation:obj];
+        }
+    }];
+}
 
 
 #pragma mark - button click

@@ -129,6 +129,7 @@
     }
     //更新位置
     [_locationManager startUpdatingLocation];
+    
 }
 #pragma mark - CLLocationManagerDelegate  位置更新后的回调
 
@@ -239,8 +240,10 @@
 
 //- (CGPoint)convertCoordinate:(CLLocationCoordinate2D)coordinate toPointToView:(nullable UIView *)view
 //{
-//    
+//    [_mapView.userLocation setCoordinate:coordinate];// 设置位置
+//    [_mapView setRegion:theRegion];
 //}
+
 //- (CLLocationCoordinate2D)convertPoint:(CGPoint)point toCoordinateFromView:(nullable UIView *)view
 //{
 //    
