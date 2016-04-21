@@ -12,12 +12,10 @@
 #import "BYGPSLocation.h"
 
 @interface BYSelectPlaceViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
-
 {
     NSString *_longitude;//用户经度
     NSString *_latitude;//用户纬度
     BOOL isAppear;//地图是否显示完成
-    
 }
 
 @property (nonatomic, strong) MKMapView *mapView;
@@ -33,9 +31,7 @@
 
 @property (nonatomic, strong) CLGeocoder* geocoder;
 
-/** <#注释#> */
 @property (nonatomic, strong) UIImageView *centerImageView;
-/** <#注释#> */
 @property (nonatomic, strong) UILabel *adressLabel;
 
 
@@ -60,7 +56,7 @@
 - (UIButton *)locateBtn
 {
     if (!_locateBtn) {
-        _locateBtn = [self createButtonWithTitle:nil image:@"icon_locate_in_map" action:@selector(locateBtnClick)];
+        _locateBtn = [self createButtonWithTitle:nil image:@"icon_locate_in_map" action:@selector(locateBtnClick) alpha:0.0];
     }
     return _locateBtn;
 }
@@ -68,18 +64,20 @@
 - (UIButton *)okButton
 {
     if (!_okButton) {
-        _okButton = [self createButtonWithTitle:@"选好了" image:nil action:@selector(okBtnClick)];
+        _okButton = [self createButtonWithTitle:@"选好了" image:nil action:@selector(okBtnClick) alpha:0.6];
     }
     return _okButton;
 }
 
-- (UIButton *)createButtonWithTitle:(NSString *)title image:(NSString *)image action:(SEL)action
+- (UIButton *)createButtonWithTitle:(NSString *)title image:(NSString *)image action:(SEL)action alpha:(CGFloat)alpha
 {
     UIButton *button = [[UIButton alloc] init];
     [button setTitle:title forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
-    button.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
+    button.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alpha];
     [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = 5;
     [self.view addSubview:button];
     return button;
 }
@@ -124,7 +122,6 @@
     
     isAppear = NO;
     
-    
     [self.view addSubview:self.mapView];
     
     _centerImageView = [[UIImageView alloc] init];
@@ -132,7 +129,7 @@
     _centerImageView.centerY = self.view.centerY;
     _centerImageView.width = 30;
     _centerImageView.height = 40;
-    _centerImageView.image = [UIImage imageNamed:@"btn_htl_map_normal_small"];
+    _centerImageView.image = [UIImage imageNamed:@"map_point_on"];
     [self.view addSubview:_centerImageView];
     
     _adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 50 - 10 - 40, kScreenWidth, 40)];
@@ -273,8 +270,8 @@
     anView.animatesDrop = YES;
     // 显示详细信息
     anView.canShowCallout = YES;
-    //    anView.leftCalloutAccessoryView   可以设置左视图
-    //    anView.rightCalloutAccessoryView   可以设置右视图
+//    anView.leftCalloutAccessoryView   可以设置左视图
+//    anView.rightCalloutAccessoryView   可以设置右视图
     return anView;
 }
 
@@ -296,7 +293,7 @@
 }
 
 #pragma mark mapViewDelegate
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
     NSLog(@"mapView经度:%f,纬度:%f",coord.latitude,coord.longitude);
     _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
@@ -385,7 +382,7 @@ static double transformLon(double x, double y)
 }
 // 地球坐标系 (WGS-84) <- 火星坐标系 (GCJ-02)
 
-- (CLLocationCoordinate2D) gcj2wgs:(CLLocationCoordinate2D) coordinate
+- (CLLocationCoordinate2D)gcj2wgs:(CLLocationCoordinate2D)coordinate
 {
     if ([self outOfChina:coordinate]) {
         return coordinate;
@@ -395,7 +392,7 @@ static double transformLon(double x, double y)
 }
 // 地球坐标系 (WGS-84) -> 火星坐标系 (GCJ-02)
 
-- (CLLocationCoordinate2D) wgs2gcj:(CLLocationCoordinate2D) coordinate
+- (CLLocationCoordinate2D)wgs2gcj:(CLLocationCoordinate2D)coordinate
 {
     if ([self outOfChina:coordinate]) {
         return coordinate;
@@ -413,10 +410,6 @@ static double transformLon(double x, double y)
     return CLLocationCoordinate2DMake(wgLat + dLat, wgLon + dLon);
     
 }
-//点击用户位置按钮
-//- (IBAction)touchedLocationBtn:(id)sender {
-//    [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
-//}
 
 
 @end

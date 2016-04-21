@@ -39,17 +39,26 @@
     options.apnsCertName = @"binyouApns";
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
-//    EMError *error = [[EMClient sharedClient] registerWithUsername:@"xiaofeng" password:@"123456"];
-//    if (error==nil) {
+//    EMError *error = [[EMClient sharedClient] registerWithUsername:@"xiaofeng1" password:@"123456"];
+//    if (error == nil) {
 //        NSLog(@"注册成功");
 //    }
     
-    EMError *error = [[EMClient sharedClient] loginWithUsername:@"xiaofeng" password:@"123456"];
-    if (!error) {
-        NSLog(@"登陆成功");
-        
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+    if (!isAutoLogin) {
+        EMError *error = [[EMClient sharedClient] loginWithUsername:@"xiaofeng" password:@"123456"];
+        if (!error) {
+            NSLog(@"登陆成功");
+            // 自动登录：即首次登录成功后，不需要再次调用登录方法，在下次app启动时，SDK会自动为您登录。并且如果您自动登录失败，也可以读取到之前的会话信息。
+            [[EMClient sharedClient].options setIsAutoLogin:YES];
+        }
     }
-
+    
+//    EMError *error = [[EMClient sharedClient] logout:YES];
+//    if (!error) {
+//        NSLog(@"退出成功");
+//    }
+    
     //iOS8 注册APNS
     if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
         [application registerForRemoteNotifications];
@@ -68,6 +77,33 @@
     
     return YES;
 }
+
+/*!
+ *  自动登陆返回结果
+ *
+ *  @param aError 错误信息
+ */
+- (void)didAutoLoginWithError:(EMError *)aError
+{
+    //添加回调监听代理:[[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+    NSLog(@"aError == %@" , aError);
+}
+
+#pragma mark - 重连
+/*!
+ *  SDK连接服务器的状态变化时会接收到该回调
+ *
+ *  有以下几种情况, 会引起该方法的调用:
+ *  1. 登录成功后, 手机无法上网时, 会调用该回调
+ *  2. 登录成功后, 网络状态变化时, 会调用该回调
+ *
+ *  @param aConnectionState 当前状态
+ */
+- (void)didConnectionStateChanged:(EMConnectionState)aConnectionState
+{
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     

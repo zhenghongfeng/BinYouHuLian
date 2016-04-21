@@ -97,6 +97,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        [self.view endEditing:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
     if (indexPath.section == 1) {
         
         [_tableView removeFromSuperview];
