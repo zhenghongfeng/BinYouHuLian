@@ -1034,6 +1034,7 @@
 		BA0857891CB60E4F00D4454C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BAE0F3611CBB9AA4002009F6 /* Resource */,
 				BA04BE551CC0D91B000270EB /* Localizable.strings */,
 				BA0857951CB60E4F00D4454C /* Assets.xcassets */,
 				BAE0F42F1CBB9AD5002009F6 /* Info.plist */,
@@ -1752,7 +1753,6 @@
 		BAE0F33D1CBB9AA4002009F6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BAE0F3611CBB9AA4002009F6 /* Resource */,
 				BAFABB8D1CC08C0300B43773 /* Chat */,
 				BAE0F3491CBB9AA4002009F6 /* HomePage */,
 				BAE0F3BF1CBB9AA4002009F6 /* Search */,
@@ -2090,7 +2090,8 @@
 				BAE0F3BD1CBB9AA4002009F6 /* mapTabRightButtonSelected.png */,
 				BAE0F3BE1CBB9AA4002009F6 /* mapTabRightButtonSelected@2x.png */,
 			);
-			path = Resource;
+			name = Resource;
+			path = Classes/Resource;
 			sourceTree = "<group>";
 		};
 		BAE0F3BF1CBB9AA4002009F6 /* Search */ = {

@@ -147,6 +147,7 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
 }
 
 #pragma mark 添加大头针
+
 -(void)addAnnotation{
     CLLocationCoordinate2D location1 = CLLocationCoordinate2DMake(39.98, 116.31);
     BYAnnotation *annotation1 = [[BYAnnotation alloc] init];
@@ -237,6 +238,7 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     theRegion.span = theSpan;
     [_mapView setRegion:theRegion];
 }
+
 #pragma mark - CLLocationManagerDelegate
 
 // 位置更新后的回调
