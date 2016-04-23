@@ -398,7 +398,7 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
 
 - (void)mineBtnClick
 {
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] valueForKey:loginStatus];
+    BOOL isLogin = [[[NSUserDefaults standardUserDefaults] valueForKey:loginStatus] boolValue];
     NSLog(@"---%d", isLogin);
     
     if (isLogin) {
