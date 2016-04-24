@@ -393,7 +393,6 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     }];
 }
 
-
 #pragma mark - button click
 
 - (void)mineBtnClick
