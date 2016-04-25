@@ -11,8 +11,9 @@
 #import "BYHomePageViewController.h"
 
 #define IMAPPKEY "binyou#binyou"
+#define IMAPNsCertName @"binyou_apns_dev"
 
-@interface AppDelegate ()
+@interface AppDelegate () <EMClientDelegate, EMContactManagerDelegate>
 
 @end
 
@@ -21,43 +22,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // create the window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    BYHomePageViewController *vc = [[BYHomePageViewController alloc] init];
+    // set up root controller
+    BYHomePageViewController *vc = [BYHomePageViewController new];
+    self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:vc];
     
-    UINavigationController *nav = [[BYNavigationController alloc] initWithRootViewController:vc];
-    
-    self.window.rootViewController = nav;
-    
-    NSLog(@"%@", NSHomeDirectory()); // 沙盒路径
-    
-    //AppKey:注册的appKey，详细见下面注释。
-    //apnsCertName:推送证书名(不需要加后缀)，详细见下面注释。
+    // 集成环信SDK, AppKey:注册的appKey, apnsCertName:推送证书名(不需要加后缀)
     EMOptions *options = [EMOptions optionsWithAppkey:@IMAPPKEY];
-    options.apnsCertName = @"binyouApns";
+    options.apnsCertName = IMAPNsCertName;
+    // 初始化SDK
     [[EMClient sharedClient] initializeSDKWithOptions:options];
+    //添加回调监听代理
+    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     
-//    EMError *error = [[EMClient sharedClient] registerWithUsername:@"xiaofeng1" password:@"123456"];
-//    if (error == nil) {
-//        NSLog(@"注册成功");
-//    }
-    
-    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
-    if (!isAutoLogin) {
-        EMError *error = [[EMClient sharedClient] loginWithUsername:@"xiaofeng" password:@"123456"];
-        if (!error) {
-            NSLog(@"登陆成功");
-            // 自动登录：即首次登录成功后，不需要再次调用登录方法，在下次app启动时，SDK会自动为您登录。并且如果您自动登录失败，也可以读取到之前的会话信息。
-            [[EMClient sharedClient].options setIsAutoLogin:YES];
-        }
-    }
-    
-//    EMError *error = [[EMClient sharedClient] logout:YES];
-//    if (!error) {
-//        NSLog(@"退出成功");
-//    }
+    //注册好友回调
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    //移除好友回调
+//    [[EMClient sharedClient].contactManager removeDelegate:self];
     
     //iOS8 注册APNS
     if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
@@ -67,13 +52,17 @@
         UIUserNotificationTypeAlert;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
         [application registerUserNotificationSettings:settings];
-    }
-    else{
+    } else{
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
         UIRemoteNotificationTypeSound |
         UIRemoteNotificationTypeAlert;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
+    
+//    EMError *error = nil;
+//    EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+    
+    
     
     return YES;
 }
@@ -85,7 +74,6 @@
  */
 - (void)didAutoLoginWithError:(EMError *)aError
 {
-    //添加回调监听代理:[[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     NSLog(@"aError == %@" , aError);
 }
 
@@ -101,9 +89,66 @@
  */
 - (void)didConnectionStateChanged:(EMConnectionState)aConnectionState
 {
+    NSLog(@"重连");
+}
+#pragma mark - 被动退出登录
+/*!
+ *  当前登录账号在其它设备登录时会接收到该回调
+ */
+- (void)didLoginFromOtherDevice
+{
+    NSLog(@"当前登录账号在其它设备登录");
+}
+
+/*!
+ *  当前登录账号已经被从服务器端删除时会收到该回调
+ */
+- (void)didRemovedFromServer
+{
+    NSLog(@"当前登录账号已经被从服务器端删除");
+}
+
+#pragma mark - EMContactManagerDelegate
+/*!
+ *  用户A发送加用户B为好友的申请，用户B会收到这个回调
+ *
+ *  @param aUsername   用户名
+ *  @param aMessage    附属信息
+ */
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername message:(NSString *)aMessage
+{
+    // 拒绝加好友申请
+    EMError *error = [[EMClient sharedClient].contactManager acceptInvitationForUsername:aUsername];
+    if (!error) {
+        NSLog(@"发送同意成功");
+    }
+    
+    // 拒绝加好友申请
+//    EMError *error = [[EMClient sharedClient].contactManager declineInvitationForUsername:@"8001"];
+//    if (!error) {
+//        NSLog(@"发送拒绝成功");
+//    }
+}
+
+/*!
+ @method
+ @brief 用户A发送加用户B为好友的申请，用户B同意后，用户A会收到这个回调
+ */
+- (void)didReceiveAgreedFromUsername:(NSString *)aUsername
+{
     
 }
 
+/*!
+ @method
+ @brief 用户A发送加用户B为好友的申请，用户B拒绝后，用户A会收到这个回调
+ */
+- (void)didReceiveDeclinedFromUsername:(NSString *)aUsername
+{
+    
+}
+
+#pragma mark - UIApplicationDelegate
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     
@@ -123,15 +168,17 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
 }
+
 // 申请处理时间
 - (void)applicationWillTerminate:(UIApplication *)application {
     
 //    [[EaseMob sharedInstance] applicationWillTerminate:application];
 }
-#pragma mark - 您注册了推送功能，iOS 会自动回调以下方法，得到deviceToken，您需要将deviceToken传给SDK
-// 将得到的deviceToken传给SDK
+
+// 您注册了推送功能，iOS 会自动回调以下方法，得到deviceToken，您需要将deviceToken传给SDK
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     [[EMClient sharedClient] bindDeviceToken:deviceToken];
+    NSLog(@"deviceToken == %@", deviceToken);
 }
 
 // 注册deviceToken失败

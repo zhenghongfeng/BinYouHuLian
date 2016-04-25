@@ -96,16 +96,23 @@
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         
         UIAlertAction *logoutAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            // 清空账号信息
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:loginStatus]; // 登录状态
-            [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil]; // 该用户的搜索记录
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[BYRegisterViewController new] animated:YES completion:nil];
-            });
-            
+            EMError *error = [[EMClient sharedClient] logout:YES];
+            if (!error) {
+                NSLog(@"退出成功");
+                // 清空该用户的搜索记录
+                [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[BYRegisterViewController new] animated:YES completion:nil];
+                });
+            } else {
+                NSLog(@"退出失败");
+            }
+//            // 清空账号信息
+//            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:loginStatus]; // 登录状态
         }];
         
         [alert addAction:cancelAction];

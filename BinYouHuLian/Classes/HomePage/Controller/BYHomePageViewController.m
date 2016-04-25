@@ -397,10 +397,12 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
 
 - (void)mineBtnClick
 {
-    BOOL isLogin = [[[NSUserDefaults standardUserDefaults] valueForKey:loginStatus] boolValue];
-    NSLog(@"---%d", isLogin);
+//    BOOL isLogin = [[[NSUserDefaults standardUserDefaults] valueForKey:loginStatus] boolValue];
+//    NSLog(@"---%d", isLogin);
     
-    if (isLogin) {
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+    
+    if (isAutoLogin) {
         BYMineViewController *vc = [[BYMineViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     } else {

@@ -11,6 +11,8 @@
 #import "BYCaredLocationViewController.h"
 #import "BYMessageListViewController.h"
 #import "BYMyShopBusinessViewController.h"
+#import "BYMyBuddyListViewController.h"
+#import "BYMyBlackListViewController.h"
 
 @interface BYMineViewController ()
 
@@ -35,7 +37,7 @@
     [super viewDidLoad];
     
     self.title = @"我";
-    self.itemTitles = @[@"设置", @"位置", @"留言", @"我的店业务"];
+    self.itemTitles = @[@"设置", @"位置", @"留言", @"我的店业务", @"我的好友", @"我的黑名单"];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -67,16 +69,22 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIViewController *vc;
     if (indexPath.row == 0) {
-        vc = [[BYSettingViewController alloc] init];
+        vc = [BYSettingViewController new];
     }
     if (indexPath.row == 1) {
-        vc = [[BYCaredLocationViewController alloc] init];
+        vc = [BYCaredLocationViewController new];
     }
     if (indexPath.row == 2) {
-        vc = [[BYMessageListViewController alloc] init];
+        vc = [BYMessageListViewController new];
     }
     if (indexPath.row == 3) {
-        vc = [[BYMyShopBusinessViewController alloc] init];
+        vc = [BYMyShopBusinessViewController new];
+    }
+    if (indexPath.row == 4) {
+        vc = [BYMyBuddyListViewController new];
+    }
+    if (indexPath.row == 5) {
+        vc = [BYMyBlackListViewController new];
     }
     [self.navigationController pushViewController:vc animated:YES];
 }

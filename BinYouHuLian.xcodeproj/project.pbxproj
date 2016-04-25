@@ -24,6 +24,12 @@
 		BA04BE8B1CC88AE4000270EB /* map_point_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE881CC88AE4000270EB /* map_point_on@2x.png */; };
 		BA04BE8C1CC88AE4000270EB /* map_point_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE891CC88AE4000270EB /* map_point_on@3x.png */; };
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
+		BA159F3F1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */; };
+		BA159F431CCDED0300FE34F0 /* BYAddBuddyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */; };
+		BA159F441CCDED0300FE34F0 /* BYAddBuddyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */; };
+		BA159F471CCDF66600FE34F0 /* BYMyBlackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */; };
+		BA159F4B1CCDF7CB00FE34F0 /* BYAddBlackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */; };
+		BA159F4C1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */; };
 		BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A71CBBBEDD00AD323B /* BYConst.m */; };
 		BA68DFE91CC0B3E100A85FCD /* libHyphenateFullSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA68DFE71CC0B3E100A85FCD /* libHyphenateFullSDK.a */; };
 		BA68E10F1CC0B4C800A85FCD /* EaseUI.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68DFEE1CC0B4C800A85FCD /* EaseUI.m */; };
@@ -231,8 +237,6 @@
 		BAD26DC31CBF6F0500F355C5 /* BYMyShopBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD26DC21CBF6F0500F355C5 /* BYMyShopBusinessViewController.m */; };
 		BAD26E851CBF7F6100F355C5 /* chatBar_face.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E831CBF7F6100F355C5 /* chatBar_face.png */; };
 		BAD26E861CBF7F6100F355C5 /* chatBar_face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E841CBF7F6100F355C5 /* chatBar_face@2x.png */; };
-		BAD26E891CBF7F6F00F355C5 /* chatBar_faceSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E871CBF7F6F00F355C5 /* chatBar_faceSelected.png */; };
-		BAD26E8A1CBF7F6F00F355C5 /* chatBar_faceSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E881CBF7F6F00F355C5 /* chatBar_faceSelected@2x.png */; };
 		BAD26E8D1CBF7F7700F355C5 /* chatBar_keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E8B1CBF7F7700F355C5 /* chatBar_keyboard.png */; };
 		BAD26E8E1CBF7F7700F355C5 /* chatBar_keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E8C1CBF7F7700F355C5 /* chatBar_keyboard@2x.png */; };
 		BAD26E911CBF7F8200F355C5 /* chatBar_keyboardSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26E8F1CBF7F8200F355C5 /* chatBar_keyboardSelected.png */; };
@@ -260,6 +264,10 @@
 		BAD26EC81CBF959500F355C5 /* chat_sender_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26EC61CBF959500F355C5 /* chat_sender_bg@2x.png */; };
 		BAD26ECB1CBF95A200F355C5 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26EC91CBF95A200F355C5 /* chatListCellHead.png */; };
 		BAD26ECC1CBF95A200F355C5 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */; };
+		BADE666E1CCE02CD00843708 /* BYGroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */; };
+		BADE66711CCE06C000843708 /* BYMyBuddyListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */; };
+		BADE66731CCE080900843708 /* groupPublicHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BADE66721CCE080900843708 /* groupPublicHeader@2x.png */; };
+		BADE66771CCE12CA00843708 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = BADE66761CCE12CA00843708 /* delete.png */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -409,6 +417,16 @@
 		BA04BE891CC88AE4000270EB /* map_point_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_point_on@3x.png"; sourceTree = "<group>"; };
 		BA0857861CB60E4F00D4454C /* BinYouHuLian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinYouHuLian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0857951CB60E4F00D4454C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BA159F3D1CCDE92A00FE34F0 /* BYMyBuddyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBuddyListViewController.h; sourceTree = "<group>"; };
+		BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBuddyListViewController.m; sourceTree = "<group>"; };
+		BA159F401CCDED0300FE34F0 /* BYAddBuddyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddBuddyViewController.h; sourceTree = "<group>"; };
+		BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddBuddyViewController.m; sourceTree = "<group>"; };
+		BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYAddBuddyViewController.xib; sourceTree = "<group>"; };
+		BA159F451CCDF66600FE34F0 /* BYMyBlackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBlackListViewController.h; sourceTree = "<group>"; };
+		BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBlackListViewController.m; sourceTree = "<group>"; };
+		BA159F481CCDF7CB00FE34F0 /* BYAddBlackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddBlackViewController.h; sourceTree = "<group>"; };
+		BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddBlackViewController.m; sourceTree = "<group>"; };
+		BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYAddBlackViewController.xib; sourceTree = "<group>"; };
 		BA2E53A61CBBBEDD00AD323B /* BYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYConst.h; sourceTree = "<group>"; };
 		BA2E53A71CBBBEDD00AD323B /* BYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYConst.m; sourceTree = "<group>"; };
 		BA68DFC11CC0B3E100A85FCD /* EMCallLocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallLocalView.h; sourceTree = "<group>"; };
@@ -800,8 +818,6 @@
 		BAD26DC21CBF6F0500F355C5 /* BYMyShopBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyShopBusinessViewController.m; sourceTree = "<group>"; };
 		BAD26E831CBF7F6100F355C5 /* chatBar_face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBar_face.png; sourceTree = "<group>"; };
 		BAD26E841CBF7F6100F355C5 /* chatBar_face@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_face@2x.png"; sourceTree = "<group>"; };
-		BAD26E871CBF7F6F00F355C5 /* chatBar_faceSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBar_faceSelected.png; sourceTree = "<group>"; };
-		BAD26E881CBF7F6F00F355C5 /* chatBar_faceSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_faceSelected@2x.png"; sourceTree = "<group>"; };
 		BAD26E8B1CBF7F7700F355C5 /* chatBar_keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBar_keyboard.png; sourceTree = "<group>"; };
 		BAD26E8C1CBF7F7700F355C5 /* chatBar_keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBar_keyboard@2x.png"; sourceTree = "<group>"; };
 		BAD26E8F1CBF7F8200F355C5 /* chatBar_keyboardSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBar_keyboardSelected.png; sourceTree = "<group>"; };
@@ -829,6 +845,12 @@
 		BAD26EC61CBF959500F355C5 /* chat_sender_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_bg@2x.png"; sourceTree = "<group>"; };
 		BAD26EC91CBF95A200F355C5 /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
+		BADE666C1CCE02CD00843708 /* BYGroupChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYGroupChatViewController.h; sourceTree = "<group>"; };
+		BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYGroupChatViewController.m; sourceTree = "<group>"; };
+		BADE666F1CCE06C000843708 /* BYMyBuddyListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBuddyListTableViewCell.h; sourceTree = "<group>"; };
+		BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBuddyListTableViewCell.m; sourceTree = "<group>"; };
+		BADE66721CCE080900843708 /* groupPublicHeader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPublicHeader@2x.png"; sourceTree = "<group>"; };
+		BADE66761CCE12CA00843708 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1879,6 +1901,16 @@
 				BAD26DA21CBF40E500F355C5 /* BYMessageListViewController.m */,
 				BAD26DC11CBF6F0500F355C5 /* BYMyShopBusinessViewController.h */,
 				BAD26DC21CBF6F0500F355C5 /* BYMyShopBusinessViewController.m */,
+				BA159F3D1CCDE92A00FE34F0 /* BYMyBuddyListViewController.h */,
+				BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */,
+				BA159F401CCDED0300FE34F0 /* BYAddBuddyViewController.h */,
+				BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */,
+				BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */,
+				BA159F451CCDF66600FE34F0 /* BYMyBlackListViewController.h */,
+				BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */,
+				BA159F481CCDF7CB00FE34F0 /* BYAddBlackViewController.h */,
+				BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */,
+				BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1898,6 +1930,8 @@
 				BAD26DB41CBF5D9E00F355C5 /* BYMessageTableViewCell.h */,
 				BAD26DB51CBF5D9E00F355C5 /* BYMessageTableViewCell.m */,
 				BAD26DB61CBF5D9E00F355C5 /* BYMessageTableViewCell.xib */,
+				BADE666F1CCE06C000843708 /* BYMyBuddyListTableViewCell.h */,
+				BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1949,6 +1983,8 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BADE66761CCE12CA00843708 /* delete.png */,
+				BADE66721CCE080900843708 /* groupPublicHeader@2x.png */,
 				BA04BE871CC88AE4000270EB /* map_point_on.png */,
 				BA04BE881CC88AE4000270EB /* map_point_on@2x.png */,
 				BA04BE891CC88AE4000270EB /* map_point_on@3x.png */,
@@ -1969,8 +2005,6 @@
 				BAD26EAF1CBF866D00F355C5 /* anon_chat_bottom_PTT_press@3x.png */,
 				BAD26E831CBF7F6100F355C5 /* chatBar_face.png */,
 				BAD26E841CBF7F6100F355C5 /* chatBar_face@2x.png */,
-				BAD26E871CBF7F6F00F355C5 /* chatBar_faceSelected.png */,
-				BAD26E881CBF7F6F00F355C5 /* chatBar_faceSelected@2x.png */,
 				BAD26E8B1CBF7F7700F355C5 /* chatBar_keyboard.png */,
 				BAD26E8C1CBF7F7700F355C5 /* chatBar_keyboard@2x.png */,
 				BAD26E8F1CBF7F8200F355C5 /* chatBar_keyboardSelected.png */,
@@ -2140,6 +2174,8 @@
 				BA04BE4B1CC0D5BE000270EB /* ChatViewController.m */,
 				BA04BE471CC0CC55000270EB /* BYChatViewController.h */,
 				BA04BE481CC0CC55000270EB /* BYChatViewController.m */,
+				BADE666C1CCE02CD00843708 /* BYGroupChatViewController.h */,
+				BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2289,6 +2325,7 @@
 				BA9E3DCB1CBE42EC00E71119 /* red_check@3x.png in Resources */,
 				BA68E1DF1CC0B4F300A85FCD /* chatBar_recordSelected@2x.png in Resources */,
 				BAE0F3ED1CBB9AA4002009F6 /* icon_homepage_map.png in Resources */,
+				BADE66731CCE080900843708 /* groupPublicHeader@2x.png in Resources */,
 				BAE0F4091CBB9AA5002009F6 /* icon_map_poi@2x.png in Resources */,
 				BAE0F3FB1CBB9AA5002009F6 /* icon_map_cateid_5.png in Resources */,
 				BAE0F4251CBB9AA5002009F6 /* mapTabLeftButton.png in Resources */,
@@ -2356,7 +2393,6 @@
 				BA68E1EE1CC0B4F300A85FCD /* VoiceSearchFeedback007@2x.png in Resources */,
 				BAE0F4181CBB9AA5002009F6 /* map_icon_301@2x.png in Resources */,
 				BA68E1FE1CC0B4FD00A85FCD /* EaseUIResource.bundle in Resources */,
-				BAD26E891CBF7F6F00F355C5 /* chatBar_faceSelected.png in Resources */,
 				BAE0F3D41CBB9AA4002009F6 /* bg_back_merchant_detail_map@2x.png in Resources */,
 				BA68E1D01CC0B4F300A85FCD /* chatBar_colorMore_locationSelected@2x.png in Resources */,
 				BA04BE8B1CC88AE4000270EB /* map_point_on@2x.png in Resources */,
@@ -2388,6 +2424,7 @@
 				BAD26ECC1CBF95A200F355C5 /* chatListCellHead@2x.png in Resources */,
 				BAE0F3D91CBB9AA4002009F6 /* bg_map_merchant_pop@2x.png in Resources */,
 				BAD26DB01CBF442E00F355C5 /* xiaohong.png in Resources */,
+				BA159F4C1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib in Resources */,
 				BAE0F4101CBB9AA5002009F6 /* icon_travel_map_green@2x.png in Resources */,
 				BAE0F4231CBB9AA5002009F6 /* mapTabButtonSelected.png in Resources */,
 				BAD26EC81CBF959500F355C5 /* chat_sender_bg@2x.png in Resources */,
@@ -2407,6 +2444,7 @@
 				BA68E12C1CC0B4C900A85FCD /* MJRefresh.bundle in Resources */,
 				BAE0F3F31CBB9AA4002009F6 /* icon_map_arrow@2x.png in Resources */,
 				BAD26DAE1CBF442E00F355C5 /* xiaoli.png in Resources */,
+				BA159F441CCDED0300FE34F0 /* BYAddBuddyViewController.xib in Resources */,
 				BAE0F40C1CBB9AA5002009F6 /* icon_map_refresh@2x.png in Resources */,
 				BA68E1C61CC0B4F300A85FCD /* back@2x.png in Resources */,
 				BAD26EA11CBF7FA000F355C5 /* chatBar_recordBg.png in Resources */,
@@ -2437,12 +2475,12 @@
 				BA68E1F01CC0B4F300A85FCD /* VoiceSearchFeedback009@2x.png in Resources */,
 				BAE0F42C1CBB9AA5002009F6 /* mapTabRightButtonSelected@2x.png in Resources */,
 				BAE0F3E51CBB9AA4002009F6 /* btn_htl_map_prepay_big_selected@2x.png in Resources */,
-				BAD26E8A1CBF7F6F00F355C5 /* chatBar_faceSelected@2x.png in Resources */,
 				BAE0F4271CBB9AA5002009F6 /* mapTabLeftButtonSelected.png in Resources */,
 				BA68E1CB1CC0B4F300A85FCD /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				BAE0F3EC1CBB9AA4002009F6 /* icon_food_homepage_map_selected.png in Resources */,
 				BAE0F3D31CBB9AA4002009F6 /* arrow_merchant_detail_map_normal@2x.png in Resources */,
 				BAE0F4201CBB9AA5002009F6 /* map_icon_309@2x.png in Resources */,
+				BADE66771CCE12CA00843708 /* delete.png in Resources */,
 				BAE0F3E81CBB9AA4002009F6 /* btn_htl_map_userlocation@2x.png in Resources */,
 				BAE0F3F91CBB9AA5002009F6 /* icon_map_cateid_3.png in Resources */,
 				BAE0F4291CBB9AA5002009F6 /* mapTabRightButton.png in Resources */,
@@ -2520,6 +2558,7 @@
 				BAE0F3CF1CBB9AA4002009F6 /* main.m in Sources */,
 				BA68E1501CC0B4C900A85FCD /* PSTCollectionViewItemKey.m in Sources */,
 				BA68E16B1CC0B4C900A85FCD /* EaseMessageViewController.m in Sources */,
+				BA159F4B1CCDF7CB00FE34F0 /* BYAddBlackViewController.m in Sources */,
 				BA68E12B1CC0B4C800A85FCD /* MJRefreshStateHeader.m in Sources */,
 				BA68E1331CC0B4C900A85FCD /* MWGridViewController.m in Sources */,
 				BA68E1131CC0B4C800A85FCD /* EMCDDeviceManager+Microphone.m in Sources */,
@@ -2538,6 +2577,7 @@
 				BA68E1111CC0B4C800A85FCD /* EMAudioRecorderUtil.m in Sources */,
 				BA68E1351CC0B4C900A85FCD /* MWPhotoBrowser.m in Sources */,
 				BA68E1201CC0B4C800A85FCD /* MJRefreshComponent.m in Sources */,
+				BADE666E1CCE02CD00843708 /* BYGroupChatViewController.m in Sources */,
 				BA68E1441CC0B4C900A85FCD /* UIImage+EMGIF.m in Sources */,
 				BA68E1211CC0B4C800A85FCD /* MJRefreshFooter.m in Sources */,
 				BA68E1581CC0B4C900A85FCD /* EaseSDKHelper.m in Sources */,
@@ -2571,6 +2611,7 @@
 				BAD26DBE1CBF64CC00F355C5 /* BYMessageModel.m in Sources */,
 				BA68E1701CC0B4C900A85FCD /* EaseBaseMessageCell.m in Sources */,
 				BA68E13D1CC0B4C900A85FCD /* EMSDWebImageDownloader.m in Sources */,
+				BA159F471CCDF66600FE34F0 /* BYMyBlackListViewController.m in Sources */,
 				BA04BE501CC0D5D6000270EB /* EMGifImage.m in Sources */,
 				BA68E11E1CC0B4C800A85FCD /* MJRefreshAutoFooter.m in Sources */,
 				BA68E11F1CC0B4C800A85FCD /* MJRefreshBackFooter.m in Sources */,
@@ -2602,6 +2643,7 @@
 				BA9E3DB91CBE0A0000E71119 /* BYPickerView.m in Sources */,
 				BA68E1821CC0B4C900A85FCD /* EaseChatBarMoreView.m in Sources */,
 				BA04BE5B1CC4DA7C000270EB /* BYShop.m in Sources */,
+				BA159F431CCDED0300FE34F0 /* BYAddBuddyViewController.m in Sources */,
 				BA04BE821CC61F31000270EB /* BYCalloutAnnotatonView.m in Sources */,
 				BA68E14A1CC0B4C900A85FCD /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				BA9E3DBC1CBE116500E71119 /* BYSelectPlaceViewController.m in Sources */,
@@ -2631,9 +2673,11 @@
 				BA68E1241CC0B4C800A85FCD /* MJRefreshAutoNormalFooter.m in Sources */,
 				BA68E16F1CC0B4C900A85FCD /* EaseUserCell.m in Sources */,
 				BA68E1791CC0B4C900A85FCD /* EaseBubbleView+Video.m in Sources */,
+				BADE66711CCE06C000843708 /* BYMyBuddyListTableViewCell.m in Sources */,
 				BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */,
 				BA04BE581CC4D3AD000270EB /* BYAnnotation.m in Sources */,
 				BA68E17A1CC0B4C900A85FCD /* EaseBubbleView+Voice.m in Sources */,
+				BA159F3F1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m in Sources */,
 				BA68E1781CC0B4C900A85FCD /* EaseBubbleView+Text.m in Sources */,
 				BA68E1601CC0B4C900A85FCD /* UIViewController+HUD.m in Sources */,
 				BAD26DB71CBF5D9E00F355C5 /* BYMessageTableViewCell.m in Sources */,

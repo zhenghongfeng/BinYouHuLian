@@ -34,9 +34,20 @@
 
 @implementation ChatViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.conversation.type == EMConversationTypeGroupChat) {
+        if ([[self.conversation.ext objectForKey:@"subject"] length])
+        {
+            self.title = [self.conversation.ext objectForKey:@"subject"];
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
@@ -65,43 +76,6 @@
     [self tableViewDidTriggerHeaderRefresh];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc
-{
-    if (self.conversation.type == EMConversationTypeChatRoom)
-    {
-        //退出聊天室，删除会话
-        NSString *chatter = [self.conversation.conversationId copy];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            EMError *error = nil;
-            [[EMClient sharedClient].roomManager leaveChatroom:chatter error:&error];
-            if (error !=nil) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Leave chatroom '%@' failed [%@]", chatter, error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertView show];
-                });
-            }
-        });
-    }
-    
-    [[EMClient sharedClient] removeDelegate:self];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.conversation.type == EMConversationTypeGroupChat) {
-        if ([[self.conversation.ext objectForKey:@"subject"] length])
-        {
-            self.title = [self.conversation.ext objectForKey:@"subject"];
-        }
-    }
-}
-
 #pragma mark - setup subviews
 
 - (void)_setupBarButtonItem
@@ -118,7 +92,7 @@
         [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(deleteAllMessages:) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
-    } else{//群聊
+    } else {//群聊
         UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
         [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
         [detailButton addTarget:self action:@selector(showGroupDetailAction) forControlEvents:UIControlEventTouchUpInside];
@@ -432,6 +406,27 @@
     }
     [self.menuController setTargetRect:showInView.frame inView:showInView.superview];
     [self.menuController setMenuVisible:YES animated:YES];
+}
+
+- (void)dealloc
+{
+    if (self.conversation.type == EMConversationTypeChatRoom)
+    {
+        //退出聊天室，删除会话
+        NSString *chatter = [self.conversation.conversationId copy];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            EMError *error = nil;
+            [[EMClient sharedClient].roomManager leaveChatroom:chatter error:&error];
+            if (error !=nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Leave chatroom '%@' failed [%@]", chatter, error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertView show];
+                });
+            }
+        });
+    }
+    
+    [[EMClient sharedClient] removeDelegate:self];
 }
 
 @end
