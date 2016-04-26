@@ -12,13 +12,27 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-@property (nonatomic, strong) NSMutableArray *searchDatas;
+@property (nonatomic, strong) NSMutableArray *searchHistoryDatas;
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) UITableView *searchTableView;
+
+@property (nonatomic, strong) NSMutableArray *searchData;
 
 @end
 
 @implementation BYSearchViewController
+
+- (UITableView *)searchTableView
+{
+    if (!_searchTableView) {
+        _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, kScreenWidth, kScreenHeight - 60) style:UITableViewStyleGrouped];
+        _searchTableView.delegate = self;
+        _searchTableView.dataSource = self;
+    }
+    return _searchTableView;
+}
 
 - (UITableView *)tableView
 {
@@ -56,9 +70,10 @@
     
     [self.searchBar becomeFirstResponder];
     
-    self.searchDatas = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
+    self.searchHistoryDatas = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
+    self.searchData = [NSMutableArray array];
     
-    if (self.searchDatas) {
+    if (self.searchHistoryDatas) {
         [self.view addSubview:self.tableView];
     }
 }
@@ -67,12 +82,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return tableView == _tableView ? 2 : 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? self.searchDatas.count : 1;
+    if (tableView == _tableView) {
+        return section == 0 ? self.searchHistoryDatas.count : 1;
+    } else {
+        return self.searchData.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,13 +101,18 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    if (indexPath.section == 0) {
-        cell.textLabel.text = self.searchDatas[indexPath.row];
+    if (tableView == _tableView) {
+        if (indexPath.section == 0) {
+            cell.textLabel.text = self.searchHistoryDatas[indexPath.row];
+        } else {
+            cell.textLabel.text = @"清除搜索历史";
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.textColor = kMainColor;
+        }
     } else {
-        cell.textLabel.text = @"清除搜索历史";
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.textLabel.textColor = kMainColor;
+        cell.textLabel.text = self.searchData[indexPath.row];
     }
+    
     
     return cell;
 }
@@ -97,28 +121,43 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (tableView == _tableView) {
+        if (indexPath.section == 0) {
+            [self.view endEditing:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
+        }
+        
+        if (indexPath.section == 1) {
+            
+            [_tableView removeFromSuperview];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"已清空历史记录";
+            [hud hide:YES afterDelay:1];
+        }
+    } else {
         [self.view endEditing:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
     }
     
-    if (indexPath.section == 1) {
-        
-        [_tableView removeFromSuperview];
-        
-        [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"已清空历史记录";
-        [hud hide:YES afterDelay:1];
-    }
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    if (searchBar.text.length == 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入关键字";
+        [hud hide:YES afterDelay:1.5];
+        return;
+    }
     // 读取沙盒中pilst数据
     NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
     
@@ -134,6 +173,26 @@
     }
     //  沙盒路径
     NSLog(@"%@", NSHomeDirectory());
+    
+    [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"searchText == %@", searchText);
+    if (searchText.length == 0) {
+        [_searchTableView removeFromSuperview];
+        return;
+    }
+    [self.searchData removeAllObjects];
+    for (NSInteger i = 0; i < 5; i++) {
+        NSString *str = [NSString stringWithFormat:@"%@%zd", searchText, i];
+        [self.searchData addObject:str];
+    }
+    [self.view addSubview:self.searchTableView];
+    [self.searchTableView reloadData];
 }
 
 - (IBAction)back {

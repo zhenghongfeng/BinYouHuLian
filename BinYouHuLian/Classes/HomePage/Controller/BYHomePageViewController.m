@@ -144,6 +144,16 @@ static NSString *const meituanUrl = @"http://api.meituan.com/group/v1/deal/selec
     [self addAnnotation];
     
     [self setupConstraints];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocation) name:@"location" object:nil];
+}
+
+- (void)addLocation
+{
+    CLLocationCoordinate2D location = CLLocationCoordinate2DMake(39.98, 116.33);
+    MKPointAnnotation *pinAnnotation = [[MKPointAnnotation alloc] init];
+    pinAnnotation.coordinate = location;
+    [_mapView addAnnotation:pinAnnotation];
 }
 
 #pragma mark 添加大头针

@@ -2838,9 +2838,9 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = zhenghongfeng.BinYouHuLian;
+				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8a18c731-cd26-475a-8136-6d64ced2e63f";
 			};
 			name = Debug;
 		};
@@ -2877,9 +2877,9 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = zhenghongfeng.BinYouHuLian;
+				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8a18c731-cd26-475a-8136-6d64ced2e63f";
 			};
 			name = Release;
 		};

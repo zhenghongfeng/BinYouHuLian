@@ -10,10 +10,10 @@
 #import "BYNavigationController.h"
 #import "BYHomePageViewController.h"
 
-#define IMAPPKEY "binyou#binyou"
-#define IMAPNsCertName @"binyou_apns_dev"
+#define IMAPPKEY @"binyou#binyouhulian"
+#define IMAPNsCertName @"aps_development"
 
-@interface AppDelegate () <EMClientDelegate, EMContactManagerDelegate>
+@interface AppDelegate () <EMClientDelegate, EMContactManagerDelegate, EMChatManagerDelegate>
 
 @end
 
@@ -32,7 +32,7 @@
     self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:vc];
     
     // 集成环信SDK, AppKey:注册的appKey, apnsCertName:推送证书名(不需要加后缀)
-    EMOptions *options = [EMOptions optionsWithAppkey:@IMAPPKEY];
+    EMOptions *options = [EMOptions optionsWithAppkey:IMAPPKEY];
     options.apnsCertName = IMAPNsCertName;
     // 初始化SDK
     [[EMClient sharedClient] initializeSDKWithOptions:options];
@@ -59,9 +59,9 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
     
-//    EMError *error = nil;
-//    EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-    
+    EMError *error = nil;
+    EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+    pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
     
     
     return YES;
@@ -177,13 +177,21 @@
 
 // 您注册了推送功能，iOS 会自动回调以下方法，得到deviceToken，您需要将deviceToken传给SDK
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-    [[EMClient sharedClient] bindDeviceToken:deviceToken];
-    NSLog(@"deviceToken == %@", deviceToken);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[EMClient sharedClient] bindDeviceToken:deviceToken];
+        NSLog(@"deviceToken == %@", deviceToken);
+    });
 }
 
-// 注册deviceToken失败
+// 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    NSLog(@"error -- %@",error);
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
+//                                                    message:error.description
+//                                                   delegate:nil
+//                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+//                                          otherButtonTitles:nil];
+//    [alert show];
 }
 
 @end

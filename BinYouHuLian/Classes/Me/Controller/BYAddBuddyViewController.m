@@ -34,6 +34,7 @@
     EMError *error = [[EMClient sharedClient].contactManager addContact:_userName.text message:@"我想加您为好友"];
     if (!error) {
         NSLog(@"添加成功");
+        hud.labelText = @"添加成功";
     } else {
         NSLog(@"如果您已经发过，并且对方没有处理，您将不能再次发送");
     }
