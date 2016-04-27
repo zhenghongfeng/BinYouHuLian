@@ -10,6 +10,9 @@
 
 CGFloat const BYMargin = 10;
 
+CGFloat const BYHomeButtonW = 80;
+CGFloat const BYHomeButtonH = 30;
+
 CGFloat const BYHomePageLocationButtonW = 30;
 CGFloat const BYHomePageLocationButtonToLeftMargin = 10;
 CGFloat const BYHomePageLocationButtonToBottomMargin = 20;

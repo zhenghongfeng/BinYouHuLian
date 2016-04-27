@@ -13,6 +13,9 @@
 
 UIKIT_EXTERN CGFloat const BYMargin;
 
+UIKIT_EXTERN CGFloat const BYHomeButtonW;
+UIKIT_EXTERN CGFloat const BYHomeButtonH;
+
 // 首页地图上的定位当前位置按钮
 UIKIT_EXTERN CGFloat const BYHomePageLocationButtonW;
 UIKIT_EXTERN CGFloat const BYHomePageLocationButtonToLeftMargin;

@@ -21,6 +21,18 @@
 
 @implementation BYShopDetailViewController
 
+#pragma mark - life cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"店铺详情";
+    self.titles = @[@"店名", @"电话", @"图文简介"];
+    self.contents = @[@"吴老板的书店", @"18816889999", @"《岛上书店》是一本关于全世界所有书的书，写给全世界所有真正爱书的人。 岛上书店是间维多利亚风格的小屋，门廊上挂着褪色的招牌，上面写着：没有谁是一座孤岛，每本书都是一个世界A．J．费克里，人近中年，在一座与世隔绝的小岛上，经营一家书店。"];
+
+    [self setupTabelView];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -31,16 +43,6 @@
 {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.title = @"店铺详情";
-    self.titles = @[@"店名", @"电话", @"图文简介"];
-    self.contents = @[@"吴老板的书店", @"18816889999", @"《岛上书店》是一本关于全世界所有书的书，写给全世界所有真正爱书的人。 岛上书店是间维多利亚风格的小屋，门廊上挂着褪色的招牌，上面写着：没有谁是一座孤岛，每本书都是一个世界A．J．费克里，人近中年，在一座与世隔绝的小岛上，经营一家书店。"];
-
-    [self setupTabelView];
 }
 
 - (void)setupTabelView
@@ -116,19 +118,19 @@
     
 }
 
-#pragma mark - button click
+#pragma mark - even response
 
 - (void)chatClick
 {
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"会话" conversationType:EMConversationTypeChat];
-    vc.title = @"私聊";
+    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeChat];
+    vc.title = @"wuzong";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)groupChatClick
 {
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"会话" conversationType:EMConversationTypeGroupChat];
-    vc.title = @"群聊";
+    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeGroupChat];
+    vc.title = @"wuzong";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
