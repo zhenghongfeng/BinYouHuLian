@@ -2810,8 +2810,8 @@
 			baseConfigurationReference = 9F7E7D3912C32B300C075D39 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: shi xu (F2SJB359DN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: shi xu (F2SJB359DN)";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
@@ -2840,7 +2840,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8a18c731-cd26-475a-8136-6d64ced2e63f";
+				PROVISIONING_PROFILE = "3b3e08c1-e39c-41aa-a0e9-a901f90e7ab4";
 			};
 			name = Debug;
 		};
@@ -2849,8 +2849,8 @@
 			baseConfigurationReference = E9312517A69122E6D29C1D3C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
@@ -2879,7 +2879,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8a18c731-cd26-475a-8136-6d64ced2e63f";
+				PROVISIONING_PROFILE = "3b3e08c1-e39c-41aa-a0e9-a901f90e7ab4";
 			};
 			name = Release;
 		};
