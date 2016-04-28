@@ -41,7 +41,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocation) name:@"location" object:nil];
+    
     [self.view addSubview:self.mapView];
+    [self.view addSubview:self.searchBtn];
+    [self.view addSubview:self.locateBtn];
+    [self.view addSubview:self.mineBtn];
+    [self.view addSubview:self.createShopBtn];
+    
+    [self setupConstraints];
     
     if(kIOS8)
     {
@@ -49,12 +57,8 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)setupConstraints
 {
-    [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBarHidden = YES;
-    
     // SDAutoLayout
     // 搜索
     self.searchBtn.sd_layout.leftSpaceToView(self.view, BYMargin)
@@ -82,26 +86,18 @@
     
     // Masonry
     /*
-    [self.searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
-        make.top.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin * 2);
-        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
-    }];
+     [self.searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+     make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
+     make.top.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin * 2);
+     make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
+     }];
      */
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocation) name:@"location" object:nil];
-}
-
-- (void)locateBtnClick
-{
-    if(kIOS8)
-    {
-        [self getUserLocation];
-    }
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 // 获取当前位置
@@ -114,21 +110,6 @@
         NSLog(@"定位服务当前可能尚未打开，请设置打开！");
         return;
     }
-    
-    //如果没有授权则请求用户授权
-//    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-//        [_locationManager requestWhenInUseAuthorization];
-//    } else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
-//        // 设置代理
-//        _locationManager.delegate=self;
-//        // 设置定位精度
-//        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//        // 定位频率,每隔多少米定位一次
-//        CLLocationDistance distance = 10.0;//十米定位一次
-//        _locationManager.distanceFilter = distance;
-//        // 启动跟踪定位
-//        [_locationManager startUpdatingLocation];
-//    }
     
     // 定位精度
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -151,9 +132,6 @@
     theRegion.span = theSpan;
     [_mapView setRegion:theRegion];
 }
-
-
-
 
 #pragma mark - MKMapViewDelegate
 /**
@@ -234,6 +212,14 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)locateBtnClick
+{
+    if(kIOS8)
+    {
+        [self getUserLocation];
+    }
+}
+
 #pragma mark - private methods
 
 - (UIButton *)createButtonWithTitle:(NSString *)title image:(NSString *)image action:(SEL)action alpha:(CGFloat)alpha
@@ -245,7 +231,6 @@
     [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius = 5;
-    [self.view addSubview:button];
     return button;
 }
 
