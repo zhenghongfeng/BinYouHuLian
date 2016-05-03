@@ -264,6 +264,8 @@
 		BAD26EC81CBF959500F355C5 /* chat_sender_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26EC61CBF959500F355C5 /* chat_sender_bg@2x.png */; };
 		BAD26ECB1CBF95A200F355C5 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26EC91CBF95A200F355C5 /* chatListCellHead.png */; };
 		BAD26ECC1CBF95A200F355C5 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */; };
+		BADD96F31CD2FF63008CFF3D /* BYMyGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */; };
+		BADD96F61CD308F1008CFF3D /* BYAddGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADD96F51CD308F1008CFF3D /* BYAddGroupViewController.m */; };
 		BADE666E1CCE02CD00843708 /* BYGroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */; };
 		BADE66711CCE06C000843708 /* BYMyBuddyListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */; };
 		BADE66731CCE080900843708 /* groupPublicHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BADE66721CCE080900843708 /* groupPublicHeader@2x.png */; };
@@ -845,6 +847,10 @@
 		BAD26EC61CBF959500F355C5 /* chat_sender_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_bg@2x.png"; sourceTree = "<group>"; };
 		BAD26EC91CBF95A200F355C5 /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
+		BADD96F11CD2FF63008CFF3D /* BYMyGroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyGroupListViewController.h; sourceTree = "<group>"; };
+		BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyGroupListViewController.m; sourceTree = "<group>"; };
+		BADD96F41CD308F1008CFF3D /* BYAddGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddGroupViewController.h; sourceTree = "<group>"; };
+		BADD96F51CD308F1008CFF3D /* BYAddGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddGroupViewController.m; sourceTree = "<group>"; };
 		BADE666C1CCE02CD00843708 /* BYGroupChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYGroupChatViewController.h; sourceTree = "<group>"; };
 		BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYGroupChatViewController.m; sourceTree = "<group>"; };
 		BADE666F1CCE06C000843708 /* BYMyBuddyListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBuddyListTableViewCell.h; sourceTree = "<group>"; };
@@ -1911,6 +1917,10 @@
 				BA159F481CCDF7CB00FE34F0 /* BYAddBlackViewController.h */,
 				BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */,
 				BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */,
+				BADD96F11CD2FF63008CFF3D /* BYMyGroupListViewController.h */,
+				BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */,
+				BADD96F41CD308F1008CFF3D /* BYAddGroupViewController.h */,
+				BADD96F51CD308F1008CFF3D /* BYAddGroupViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2588,6 +2598,7 @@
 				BA68E17F1CC0B4C900A85FCD /* EaseTextView.m in Sources */,
 				BA68E13F1CC0B4C900A85FCD /* EMSDWebImageManager.m in Sources */,
 				BA68E15F1CC0B4C900A85FCD /* UIViewController+DismissKeyboard.m in Sources */,
+				BADD96F61CD308F1008CFF3D /* BYAddGroupViewController.m in Sources */,
 				BA68E1811CC0B4C900A85FCD /* EaseFacialView.m in Sources */,
 				BA68E1431CC0B4C900A85FCD /* UIButton+EMWebCache.m in Sources */,
 				BA68E1121CC0B4C800A85FCD /* EMCDDeviceManager+Media.m in Sources */,
@@ -2597,6 +2608,7 @@
 				BA68E1481CC0B4C900A85FCD /* UIImageView+EMWebCache.m in Sources */,
 				BA68E1261CC0B4C800A85FCD /* MJRefreshBackGifFooter.m in Sources */,
 				BA68E1641CC0B4C900A85FCD /* EaseEmoji.m in Sources */,
+				BADD96F31CD2FF63008CFF3D /* BYMyGroupListViewController.m in Sources */,
 				BA68E1361CC0B4C900A85FCD /* MWTapDetectingImageView.m in Sources */,
 				BA68E1681CC0B4C900A85FCD /* FixFopen.c in Sources */,
 				BA68E1491CC0B4C900A85FCD /* UIView+EMWebCacheOperation.m in Sources */,
@@ -2840,7 +2852,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3b3e08c1-e39c-41aa-a0e9-a901f90e7ab4";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2849,8 +2861,8 @@
 			baseConfigurationReference = E9312517A69122E6D29C1D3C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: shi xu (F2SJB359DN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
@@ -2879,7 +2891,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3b3e08c1-e39c-41aa-a0e9-a901f90e7ab4";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

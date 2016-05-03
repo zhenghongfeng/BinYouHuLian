@@ -1,24 +1,25 @@
 //
-//  BYMyBuddyListViewController.m
+//  BYMyGroupListViewController.m
 //  BinYouHuLian
 //
-//  Created by zhf on 16/4/25.
+//  Created by zhf on 16/4/29.
 //  Copyright © 2016年 郑洪锋. All rights reserved.
 //
 
-#import "BYMyBuddyListViewController.h"
+#import "BYMyGroupListViewController.h"
 #import "BYAddBuddyViewController.h"
 #import "BYMyBuddyListTableViewCell.h"
 #import "BYChatViewController.h"
+#import "BYAddGroupViewController.h"
 
-@interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface BYMyGroupListViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray *buddyList;
+@property (nonatomic, strong) NSMutableArray *myGroups;
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
 
-@implementation BYMyBuddyListViewController
+@implementation BYMyGroupListViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -29,9 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"好友列表";
+    self.title = @"群组列表";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBuddy)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addGroup)];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView.delegate = self;
@@ -40,22 +41,27 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
-    // 从服务器获取所有的好友  有网络的情况
+    //1.从服务器获取与我相关的群组列表
     EMError *error = nil;
-    self.buddyList = [[NSMutableArray alloc] initWithArray:[[EMClient sharedClient].contactManager getContactsFromServerWithError:&error]];
+    self.myGroups = [NSMutableArray arrayWithArray:[[EMClient sharedClient].groupManager getMyGroupsFromServerWithError:&error]];
     if (!error) {
-        NSLog(@"获取成功 -- %@",self.buddyList);
+        NSLog(@"获取成功 -- %@",self.myGroups);
     }
     
-    // 从数据库获取所有的好友  无网络的情况
-//    self.buddyList = [[EMClient sharedClient].contactManager getContactsFromDB];
+    //2. 获取数据库中所有的群组
+//    NSArray *groupList = [[EMClient sharedClient].groupManager loadAllMyGroupsFromDB];
+    
+    //3. 取内存中的值
+//    NSArray *groupList = [[EMClient sharedClient].groupManager getAllGroups];
+    
+    
 }
 /**
  *  添加好友
  */
-- (void)addBuddy
+- (void)addGroup
 {
-    BYAddBuddyViewController *vc = [[BYAddBuddyViewController alloc] init];
+    BYAddGroupViewController *vc = [[BYAddGroupViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -63,7 +69,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.buddyList.count;
+    return self.myGroups.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +79,7 @@
     if (!cell) {
         cell = [[BYMyBuddyListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    cell.textLabel.text = self.buddyList[indexPath.row];
+//    cell.textLabel.text = self.myGroups[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:@"chatListCellHead"];
     
     return cell;
@@ -85,8 +91,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:self.buddyList[indexPath.row] conversationType:EMConversationTypeChat];
-    vc.title = self.buddyList[indexPath.row];
+    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:self.myGroups[indexPath.row] conversationType:EMConversationTypeChat];
+    vc.title = self.myGroups[indexPath.row];
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -109,19 +115,13 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 删除好友
-    EMError *error = [[EMClient sharedClient].contactManager deleteContact:self.buddyList[indexPath.row]];
-    if (!error) {
-        NSLog(@"删除成功");
-    }
-    
-    [self.buddyList removeObjectAtIndex:indexPath.row];
-    [self.tableView reloadData];
+//    EMError *error = [[EMClient sharedClient].contactManager deleteContact:self.myGroups[indexPath.row]];
+//    if (!error) {
+//        NSLog(@"删除成功");
+//    }
+//    
+//    [self.buddyList removeObjectAtIndex:indexPath.row];
+//    [self.tableView reloadData];
 }
-
-
-
-
-
-
 
 @end

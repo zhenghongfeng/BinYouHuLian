@@ -13,6 +13,7 @@
 #import "BYMyShopBusinessViewController.h"
 #import "BYMyBuddyListViewController.h"
 #import "BYMyBlackListViewController.h"
+#import "BYMyGroupListViewController.h"
 
 @interface BYMineViewController ()
 
@@ -37,7 +38,7 @@
     [super viewDidLoad];
     
     self.title = @"我";
-    self.itemTitles = @[@"设置", @"位置", @"留言", @"我的店业务", @"我的好友", @"我的黑名单"];
+    self.itemTitles = @[@"设置", @"位置", @"留言", @"我的店业务", @"我的好友", @"我的黑名单", @"我的群组"];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -85,6 +86,9 @@
     }
     if (indexPath.row == 5) {
         vc = [BYMyBlackListViewController new];
+    }
+    if (indexPath.row == 6) {
+        vc = [BYMyGroupListViewController new];
     }
     [self.navigationController pushViewController:vc animated:YES];
 }

@@ -52,7 +52,7 @@
         UIUserNotificationTypeAlert;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
         [application registerUserNotificationSettings:settings];
-    } else{
+    } else {
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
         UIRemoteNotificationTypeSound |
         UIRemoteNotificationTypeAlert;
@@ -62,7 +62,6 @@
     EMError *error = nil;
     EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
     pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
-    
     
     return YES;
 }
