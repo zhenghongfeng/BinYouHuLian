@@ -51,7 +51,7 @@
     
     [self setupConstraints];
     
-    if(kIOS8)
+    if(kIOS_VERSION >= 8.0)
     {
         [self getUserLocation];
     }
@@ -115,7 +115,7 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     // 位置信息更新最小距离，只有移动大于这个距离才更新位置信息，默认为kCLDistanceFilterNone：不进行距离限制
     _locationManager.distanceFilter = 50.0f;
-    if (kIOS8)
+    if (kIOS_VERSION >= 8.0)
     {
         [_locationManager requestWhenInUseAuthorization];
     }
@@ -214,7 +214,7 @@
 
 - (void)locateBtnClick
 {
-    if(kIOS8)
+    if(kIOS_VERSION >= 8.0)
     {
         [self getUserLocation];
     }

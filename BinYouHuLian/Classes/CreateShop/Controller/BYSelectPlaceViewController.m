@@ -177,7 +177,7 @@
     //kCLLocationAccuracyBest:设备使用电池供电时候最高的精度
     _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     _locationManager.distanceFilter = 50.0f;
-    if (kIOS8)
+    if (kIOS_VERSION >= 8.0)
     {
         [_locationManager requestAlwaysAuthorization];
     }
