@@ -29,9 +29,10 @@
 /** ok按钮 */
 @property (nonatomic, strong) UIButton *okButton;
 
-@property (nonatomic, strong) CLGeocoder* geocoder;
+@property (nonatomic, strong) CLGeocoder *geocoder;
 
 @property (nonatomic, strong) UIImageView *centerImageView;
+
 @property (nonatomic, strong) UILabel *adressLabel;
 
 
@@ -118,7 +119,7 @@
     
     [[BYGPSLocation sharedGPSLocation] startLocation];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayUserLocation:) name:@"inceptCoordinate" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayUserLocation:) name:@"inceptCoordinate" object:nil];
     
     isAppear = NO;
     
@@ -136,58 +137,34 @@
     _adressLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_adressLabel];
     
-//    if(kIOS8)
-//    {
-//        [self getUserLocation];
-//    }
-    
     [self setupConstraints];
 }
 
-- (void)displayUserLocation:(NSNotification *)notification
-{
-    NSDictionary *dict = notification.userInfo;
-    CLLocationCoordinate2D cl = CLLocationCoordinate2DMake([dict[@"latitude"] floatValue], [dict[@"longitude"] floatValue]);
-    _mapView.centerCoordinate = cl;
-    
-}
+//- (void)displayUserLocation:(NSNotification *)notification
+//{
+//    NSDictionary *dict = notification.userInfo;
+//    CLLocationCoordinate2D cl = CLLocationCoordinate2DMake([dict[@"latitude"] floatValue], [dict[@"longitude"] floatValue]);
+//    _mapView.centerCoordinate = cl;
+//}
 
 #pragma mark - 选好了点击事件
 
 - (void)okBtnClick
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
+        [self.delegate selectedLocation:_adressLabel.text longitude:_longitude latitude:_latitude];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)locateBtnClick
 {
-//    if(kIOS8)
-//    {
-//        //更新位置
-//        [_locationManager startUpdatingLocation];
-//    }
     [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
 }
 
-// 获取当前位置
-- (void)getUserLocation
-{
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    //kCLLocationAccuracyBest:设备使用电池供电时候最高的精度
-    _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    _locationManager.distanceFilter = 50.0f;
-    if (kIOS_VERSION >= 8.0)
-    {
-        [_locationManager requestAlwaysAuthorization];
-    }
-    //更新位置
-    [_locationManager startUpdatingLocation];
-    
-}
 #pragma mark - CLLocationManagerDelegate  位置更新后的回调
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     //停止位置更新
     [_locationManager stopUpdatingLocation];
@@ -275,27 +252,10 @@
     return anView;
 }
 
-//长按添加大头针事件
-- (void)lpgrClick:(UILongPressGestureRecognizer *)lpgr
-{
-    // 判断只在长按的起始点下落大头针
-    if(lpgr.state == UIGestureRecognizerStateBegan)
-    {
-        // 首先获取点
-        CGPoint point = [lpgr locationInView:_mapView];
-        // 将一个点转化为经纬度坐标
-        CLLocationCoordinate2D center = [_mapView convertPoint:point toCoordinateFromView:_mapView];
-        MKPointAnnotation *pinAnnotation = [[MKPointAnnotation alloc] init];
-        pinAnnotation.coordinate = center;
-        pinAnnotation.title = @"长按";
-        [_mapView addAnnotation:pinAnnotation];
-    }
-}
-
 #pragma mark mapViewDelegate
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
-    NSLog(@"mapView经度:%f,纬度:%f",coord.latitude,coord.longitude);
+    NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
 }
@@ -335,6 +295,9 @@
 - (void)reverseGeocode1:(double)_lat longitude:(double)_long
 {
     NSLog(@"转换后:%f,%f",_lat,_long);
+    _latitude = [NSString stringWithFormat:@"%f", _lat];
+    _longitude = [NSString stringWithFormat:@"%f", _long];
+    
     if (_geocoder == nil) {
         _geocoder = [[CLGeocoder alloc] init];
     }
@@ -343,7 +306,7 @@
     [_geocoder reverseGeocodeLocation:location
                     completionHandler:^(NSArray* placemarks, NSError* error) {
                         CLPlacemark* placemark = [placemarks firstObject];
-                        NSLog(@"详细信息:%@", placemark.addressDictionary);
+//                        NSLog(@"详细信息:%@", placemark.addressDictionary);
                         if(placemark.addressDictionary == nil){
                             _adressLabel.text = @"地图君没有识别此地。。。";
                         }else {
@@ -409,6 +372,11 @@ static double transformLon(double x, double y)
     dLon = (dLon * 180.0) / (a / sqrtMagic * cos(radLat) * M_PI);
     return CLLocationCoordinate2DMake(wgLat + dLat, wgLon + dLon);
     
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

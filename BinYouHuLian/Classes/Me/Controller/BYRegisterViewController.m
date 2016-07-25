@@ -7,87 +7,225 @@
 //
 
 #import "BYRegisterViewController.h"
+#import <CommonCrypto/CommonDigest.h>
+#import "BYRegisterNextStepViewController.h"
+#import "BYLoginViewController.h"
 
 @interface BYRegisterViewController ()
+/** back button */
+@property (nonatomic, strong) UIButton *backButton;
+/** title label */
+@property (nonatomic, strong) UILabel *titleLabel;
+/** phone textField */
+@property (weak, nonatomic) UITextField *phoneTextField;
+/** verCode textField */
+@property (weak, nonatomic) UITextField *verCodeTextField;
+/** verCode button */
+@property (nonatomic, strong) UIButton *verCodeButton;
+/** count on the verCode  */
+@property (nonatomic, assign) NSInteger count;
+/** timer */
+@property (nonatomic, strong) NSTimer *timer;
+/** nextStep button */
+@property (nonatomic, strong) UIButton *nextStepButton;
+/** login button */
+@property (nonatomic, strong) UIButton *loginButton;
 
-@property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
 
-@property (weak, nonatomic) IBOutlet UITextField *verCodeTestField;
 @end
+
 @implementation BYRegisterViewController
 
-- (void)viewDidDisappear:(BOOL)animated
+#pragma mark - lazy load
+
+- (UIButton *)backButton
 {
-    [super viewDidDisappear:animated];
-    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+    if (_backButton == nil) {
+        _backButton = [[UIButton alloc] init];
+        [_backButton setBackgroundImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
+        [_backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backButton;
+}
+
+- (UILabel *)titleLabel
+{
+    if (_titleLabel == nil) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.text = @"注册新账号";
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.textColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+    }
+    return _titleLabel;
+}
+
+- (UITextField *)phoneTextField
+{
+    if (_phoneTextField == nil) {
+        UITextField *phoneTextField = [[UITextField alloc] init];
+        phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
+        phoneTextField.placeholder = @"手机号码";
+        phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _phoneTextField = phoneTextField;
+    }
+    return _phoneTextField;
+}
+
+- (UITextField *)verCodeTextField
+{
+    if (_verCodeTextField == nil) {
+        UITextField *verCodeTextField = [[UITextField alloc] init];
+        verCodeTextField.borderStyle = UITextBorderStyleRoundedRect;
+        verCodeTextField.placeholder = @"验证码";
+        verCodeTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        verCodeTextField.rightViewMode = UITextFieldViewModeAlways;
+        verCodeTextField.rightView = ({
+            _verCodeButton = [[UIButton alloc] init];
+            _verCodeButton.frame = CGRectMake(0, 0, 140, 40);
+            [_verCodeButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+            [_verCodeButton setTitleColor:[UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f] forState:UIControlStateNormal];
+            _verCodeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+            [_verCodeButton addTarget:self action:@selector(verCodeClick) forControlEvents:UIControlEventTouchUpInside];
+            _verCodeButton;
+        });
+        _verCodeTextField = verCodeTextField;
+    }
+    return _verCodeTextField;
+}
+
+- (UIButton *)nextStepButton
+{
+    if (_nextStepButton == nil) {
+        _nextStepButton = [UIButton new];
+        [_nextStepButton setTitle:@"下一步" forState:UIControlStateNormal];
+        _nextStepButton.backgroundColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _nextStepButton.layer.masksToBounds = YES;
+        _nextStepButton.layer.cornerRadius = 5;
+        [_nextStepButton addTarget:self action:@selector(nextStepButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _nextStepButton;
+}
+
+- (UIButton *)loginButton
+{
+    if (_loginButton == nil) {
+        _loginButton = [UIButton new];
+        [_loginButton setTitle:@"已有账号" forState:UIControlStateNormal];
+        [_loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_loginButton addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _loginButton;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.phoneNumberTextField becomeFirstResponder];
+    [self.view addSubview:self.backButton];
+    [self.view addSubview:self.titleLabel];
+    [self.view addSubview:self.phoneTextField];
+    [self.view addSubview:self.verCodeTextField];
+    [self.view addSubview:self.nextStepButton];
+    [self.view addSubview:self.loginButton];
+    
+    [self setupAutoLayout];
 }
+
+- (void)verCodeClick
+{
+    if (self.phoneTextField.text.length == 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入手机号码";
+        [hud hide:YES afterDelay:1];
+        return;
+    }
+    if (![NSString validatePhone:self.phoneTextField.text]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入正确的手机号码";
+        [hud hide:YES afterDelay:1];
+        return;
+    }
+    _count = 60;
+    NSString *str = [NSString stringWithFormat:@"%2zd秒后重新发送", _count];
+    [_verCodeButton setTitle:str forState:UIControlStateNormal];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    
+    NSDictionary *dic = @{@"phone": self.phoneTextField.text};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:@"http://192.168.4.249/api/sms/send?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+    }];
+    
+}
+
+- (void)timerFired
+{
+    _verCodeButton.enabled = NO;
+    _count--;
+    if (_count == 0) {
+        [_timer invalidate];
+        _verCodeButton.enabled = YES;
+        [_verCodeButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+        return;
+    }
+    NSString *str = [NSString stringWithFormat:@"%02zd秒后重新发送", _count];
+    [_verCodeButton setTitle:str forState:UIControlStateNormal];
+}
+
+- (void)nextStepButtonClick
+{
+    if (self.phoneTextField.text.length == 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入手机号码";
+        [hud hide:YES afterDelay:1];
+        return;
+    }
+    if (![NSString validatePhone:self.phoneTextField.text]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入正确的手机号码";
+        [hud hide:YES afterDelay:1];
+        return;
+    }
+    if (self.verCodeTextField.text.length == 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请输入验证码";
+        [hud hide:YES afterDelay:1];
+        return;
+    }
+    BYRegisterNextStepViewController *vc = [BYRegisterNextStepViewController new];
+    vc.phone = self.phoneTextField.text;
+    vc.verCode = self.verCodeTextField.text;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 /**
  *  返回
  */
-- (IBAction)Back {
+- (void)back {
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-/**
- *  注册
- */
-- (IBAction)registerAction {
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.labelText = @"验证码已发送";
-//    hud.mode= MBProgressHUDModeText;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//    });
-    
-    NSString *username = self.phoneNumberTextField.text;
-    NSString *password = self.verCodeTestField.text;
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    if (username.length == 0) {
-        hud.labelText = @"请输入账号";
-        hud.mode = MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-        return;
-    }
-    if (password.length == 0) {
-        hud.labelText = @"请输入密码";
-        hud.mode = MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-        return;
-    }
-    // 注册模式分两种，开放注册和授权注册。只有开放注册时，才可以客户端注册。开放注册是为了测试使用，正式环境中不推荐使用该方式注册环信账号， 授权注册的流程应该是您服务器通过环信提供的rest api注册，之后保存到您的服务器或返回给客户端
-    EMError *error = [[EMClient sharedClient] registerWithUsername:username password:password];
-    if (error == nil) {
-        NSLog(@"注册成功");
-        hud.labelText = @"注册成功";
-        hud.mode= MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-    } else {
-        NSLog(@"注册失败 %@",error);
-        hud.labelText = @"注册失败";
-        hud.mode= MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-    }
-    
+
+- (void)loginClick
+{
+    BYLoginViewController *vc = [BYLoginViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
 /**
  *  登录
  */
@@ -95,7 +233,7 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    if ([_phoneNumberTextField.text isEqualToString:@""]) {
+    if ([_phoneTextField.text isEqualToString:@""]) {
         hud.labelText = @"请输入账号";
         hud.mode= MBProgressHUDModeText;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
@@ -103,7 +241,7 @@
         });
         return;
     }
-    if ([_verCodeTestField.text isEqualToString:@""]) {
+    if ([_verCodeTextField.text isEqualToString:@""]) {
         hud.labelText = @"请输入密码";
         hud.mode= MBProgressHUDModeText;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
@@ -112,8 +250,8 @@
         return;
     }
     
-    NSString *username = self.phoneNumberTextField.text;
-    NSString *password = self.verCodeTestField.text;
+    NSString *username = self.phoneTextField.text;
+    NSString *password = self.verCodeTextField.text;
     
     BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
     if (!isAutoLogin) {
@@ -134,7 +272,6 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             });
             
-            
         } else {
             hud.labelText = @"登录失败";
             hud.mode = MBProgressHUDModeText;
@@ -143,29 +280,6 @@
             });
         }
     }
-    
-    // yes：登录成功  no:登录失败
-//    BOOL isLogin = YES;
-//    
-//    if (isLogin) {
-//        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//            
-//            // 本地缓存
-//            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:loginStatus];
-//            
-//            [self.view endEditing:YES];
-//            [self dismissViewControllerAnimated:YES completion:nil];
-//        });
-//        
-//    } else {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-//            hud.labelText = @"登录失败";
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        });
-//    }
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -173,4 +287,46 @@
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
 }
+
+#pragma mark - autoLayout
+
+- (void)setupAutoLayout
+{
+    _backButton.sd_layout
+    .leftSpaceToView(self.view, 20)
+    .topSpaceToView(self.view, 20)
+    .widthIs(25)
+    .heightIs(25);
+    
+    _titleLabel.sd_layout
+    .centerXIs(self.view.centerX)
+    .topSpaceToView(self.view, 20)
+    .widthIs(200)
+    .heightIs(25);
+    
+    _phoneTextField.sd_layout
+    .leftSpaceToView(self.view, 20)
+    .topSpaceToView(_titleLabel, 20)
+    .widthIs(self.view.width - 40)
+    .heightIs(40);
+    
+    _verCodeTextField.sd_layout
+    .leftSpaceToView(self.view, 20)
+    .topSpaceToView(self.phoneTextField, 10)
+    .widthIs(self.view.width - 40)
+    .heightIs(40);
+    
+    _nextStepButton.sd_layout
+    .centerXIs(self.view.centerX)
+    .topSpaceToView(_verCodeTextField, 20)
+    .widthIs(150)
+    .heightIs(40);
+    
+    _loginButton.sd_layout
+    .centerXIs(self.view.centerX)
+    .bottomSpaceToView(self.view, 20)
+    .widthIs(100)
+    .heightIs(40);
+}
+
 @end

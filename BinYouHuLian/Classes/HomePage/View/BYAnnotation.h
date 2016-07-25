@@ -10,12 +10,21 @@
 #import <MapKit/MapKit.h>
 
 @interface BYAnnotation : NSObject <MKAnnotation>
-
+/**
+ *  坐标
+ */
 @property (nonatomic) CLLocationCoordinate2D coordinate;
+/**
+ *  店名
+ */
 @property (nonatomic, copy) NSString *title;
+/**
+ *  店铺描述
+ */
 @property (nonatomic, copy) NSString *subtitle;
 
 #pragma mark 自定义一个图片属性在创建大头针视图时使用
+
 @property (nonatomic,strong) UIImage *image;
 
 #pragma mark 大头针详情左侧图标

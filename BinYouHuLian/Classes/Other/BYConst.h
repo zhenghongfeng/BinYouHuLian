@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 //****************************frame const****************************************
 
 UIKIT_EXTERN CGFloat const BYMargin;

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BYSelectPlaceViewControllerDelegate <NSObject>
+
+- (void)selectedLocation:(NSString *)location longitude:(NSString *)longitude latitude:(NSString *)latitude;
+
+@end
+
 @interface BYSelectPlaceViewController : UIViewController
+
+@property (nonatomic, weak) id<BYSelectPlaceViewControllerDelegate> delegate;
 
 @end

@@ -20,14 +20,16 @@
 #import "BYDefine.h"
 #import "BYConst.h"
 
+#import <AFNetworking.h>
 #import <IQKeyboardManager.h>
 #import <MBProgressHUD.h>
 #import <Masonry.h>
-#import <YYCategories.h>
 #import <UIView+SDAutoLayout.h>
 
 
 #import "UITextField+Category.h"
+#import "NSString+Category.h"
+#import "UIView+BYCategory.h"
 
 #endif
 

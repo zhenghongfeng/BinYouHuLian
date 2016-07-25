@@ -49,7 +49,7 @@
     if (self.childViewControllers.count > 0) { // 如果push进来的不是第一个控制器
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [button setTitle:@"返回" forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"ac_back"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"myback"] forState:UIControlStateNormal];
         button.size = CGSizeMake(25, 25);
         // 让按钮内部的所有内容左对齐
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;

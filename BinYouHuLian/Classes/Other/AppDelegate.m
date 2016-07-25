@@ -27,6 +27,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    // key board manager
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    
     // set up root controller
     BYHomePageViewController *vc = [BYHomePageViewController new];
     self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:vc];
@@ -62,6 +65,9 @@
     EMError *error = nil;
     EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
     pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
+    
+    
+    
     
     return YES;
 }

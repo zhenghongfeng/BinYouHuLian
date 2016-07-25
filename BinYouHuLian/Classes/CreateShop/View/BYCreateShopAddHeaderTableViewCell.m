@@ -10,18 +10,33 @@
 
 @implementation BYCreateShopAddHeaderTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-    
-//    self.addHeadButton.layer.masksToBounds = YES;
-//    self.addHeadButton.layer.cornerRadius = 50;
+- (UIButton *)addPhotoButton
+{
+    if (_addPhotoButton == nil) {
+        _addPhotoButton = [UIButton new];
+        [_addPhotoButton setBackgroundImage:[UIImage imageNamed:@"addPhoto"] forState:UIControlStateNormal];
+    }
+    return _addPhotoButton;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self.contentView addSubview:self.addPhotoButton];
+    }
+    return self;
+}
 
-    // Configure the view for the selected state
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    _addPhotoButton.sd_layout
+    .centerXIs(self.contentView.centerX)
+    .centerYIs(self.contentView.centerY)
+    .widthIs(100)
+    .heightIs(100);
+    
 }
 
 @end

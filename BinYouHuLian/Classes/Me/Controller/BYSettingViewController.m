@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray *titles3;
 
 @end
+
 @implementation BYSettingViewController
 
 - (void)viewWillAppear:(BOOL)animated
@@ -41,6 +42,7 @@
 }
 
 #pragma mark - UITableViewDataSource
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 4;
@@ -97,20 +99,52 @@
         
         UIAlertAction *logoutAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
-            EMError *error = [[EMClient sharedClient] logout:YES];
-            if (!error) {
-                NSLog(@"退出成功");
-                // 清空该用户的搜索记录
-                [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
+            [manager POST:@"http://192.168.4.249/api/user/logout?" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
                 
-                [self.navigationController popToRootViewControllerAnimated:YES];
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                NSLog(@"responseObject = %@", responseObject);
+                 
+                NSInteger code = [responseObject[@"code"] integerValue];
+                if (code == 1) {
+                    [hud hide:YES];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:nil forKey:@"access_token"];
+                    [userDefaults synchronize];
+                    
+                } else {
+                    hud.mode = MBProgressHUDModeText;
+                    hud.labelText = @"退出失败";
+                    [hud hide:YES afterDelay:1];
+                }
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[BYRegisterViewController new] animated:YES completion:nil];
-                });
-            } else {
-                NSLog(@"退出失败");
-            }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                NSLog(@"error = %@", error.localizedDescription);
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"退出失败";
+                [hud hide:YES afterDelay:1];
+            }];
+            
+            
+//            EMError *error = [[EMClient sharedClient] logout:YES];
+//            if (!error) {
+//                NSLog(@"退出成功");
+//                // 清空该用户的搜索记录
+//                [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+//                
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//                
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[BYRegisterViewController new] animated:YES completion:nil];
+//                });
+//            } else {
+//                NSLog(@"退出失败");
+//            }
 //            // 清空账号信息
 //            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:loginStatus]; // 登录状态
         }];

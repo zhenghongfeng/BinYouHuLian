@@ -10,6 +10,6 @@
 
 @interface BYCreateShopAddHeaderTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *addHeadButton;
+@property (nonatomic, strong) UIButton *addPhotoButton;
 
 @end

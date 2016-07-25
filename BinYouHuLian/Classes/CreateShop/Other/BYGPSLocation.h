@@ -12,8 +12,10 @@
 
 @interface BYGPSLocation : NSObject <CLLocationManagerDelegate>
 
-@property(nonatomic,strong)CLLocationManager *locMgr;
+@property(nonatomic,strong) CLLocationManager *locationManager;
+
 + (BYGPSLocation *)sharedGPSLocation;
+
 - (void)startLocation;
 
 @end

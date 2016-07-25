@@ -16,17 +16,19 @@
 }
 
 #pragma mark -懒加载
-- (CLLocationManager*)locMgr
+- (CLLocationManager*)locationManager
 {
-    if (_locMgr == nil) {
+    if (_locationManager == nil) {
         //1.创建位置管理器（定位用户的位置）
-        self.locMgr = [[CLLocationManager alloc] init];
+        _locationManager = [[CLLocationManager alloc] init];
         //2.设置代理
-        self.locMgr.delegate = self;
-        self.locMgr.distanceFilter = 200; //当你移动一段位移后，所以移动距离大于筛选器说设置200m时候，通知委托更新位置；
+        _locationManager.delegate = self;
+        //当你移动一段位移后，所以移动距离大于筛选器说设置200m时候，通知委托更新位置；
+        _locationManager.distanceFilter = MAXFLOAT;
     }
-    return _locMgr;
+    return _locationManager;
 }
+
 + (BYGPSLocation *)sharedGPSLocation
 {
     static BYGPSLocation * location = nil;
@@ -40,11 +42,12 @@
 {
     //请求定位服务
     if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self.locMgr requestWhenInUseAuthorization];
+        [self.locationManager requestWhenInUseAuthorization];
     }
-    [self.locMgr startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
 }
 #pragma mark CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager*)manager didUpdateLocations:(NSArray*)locations
 {
     //CLLocation中存放的是一些经纬度, 速度等信息. 要获取地理位置需要转换做地理位置编码.
@@ -69,7 +72,7 @@
     ////    longitude = coordinate.longitude;
     ////
     //    // 停止定位(省电措施：只要不想用定位服务，就马上停止定位服务)
-    [self.locMgr stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 }
 //-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 //    CLLocation *newLocation = [locations lastObject];

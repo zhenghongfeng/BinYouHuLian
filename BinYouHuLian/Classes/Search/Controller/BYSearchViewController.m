@@ -187,12 +187,41 @@
         return;
     }
     [self.searchData removeAllObjects];
-    for (NSInteger i = 0; i < 5; i++) {
-        NSString *str = [NSString stringWithFormat:@"%@%zd", searchText, i];
-        [self.searchData addObject:str];
-    }
-    [self.view addSubview:self.searchTableView];
-    [self.searchTableView reloadData];
+    
+    NSDictionary *dic = @{
+                          @"key": searchText
+                          };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:@"http://192.168.4.249/api/shop/search?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            NSArray *arr = responseObject[@"stores"];
+            for (int i = 0; i < arr.count; i++) {
+                NSString *name = [arr[i] objectForKey:@"name"];
+                [self.searchData addObject:name];
+            }
+            [self.view addSubview:self.searchTableView];
+            [self.searchTableView reloadData];
+        } else {
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+
+    }];
+    
+    
+//    for (NSInteger i = 0; i < 5; i++) {
+//        NSString *str = [NSString stringWithFormat:@"%@%zd", searchText, i];
+//        [self.searchData addObject:str];
+//    }
+//    [self.view addSubview:self.searchTableView];
+//    [self.searchTableView reloadData];
 }
 
 - (IBAction)back {
