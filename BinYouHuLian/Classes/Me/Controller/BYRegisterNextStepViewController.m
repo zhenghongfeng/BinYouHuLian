@@ -224,7 +224,7 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.249/api/user/regist?" parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:@"http://192.168.4.181/api/user/regist?" parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //单张图片
         UIImage *image = self.avatarButton.currentBackgroundImage;//获得一张Image
         NSData *data = UIImageJPEGRepresentation(image, 1.0);//将UIImage转为NSData，1.0表示不压缩图片质量。
@@ -281,7 +281,7 @@
         [hud hide:YES afterDelay:1];
     }];
     
-//    [manager POST:@"http://192.168.4.249/api/user/regist?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+//    [manager POST:@"http://192.168.4.181/api/user/regist?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
 //        
 //    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //        NSLog(@"responseObject = %@", responseObject);

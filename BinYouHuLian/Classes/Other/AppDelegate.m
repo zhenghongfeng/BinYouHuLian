@@ -10,7 +10,7 @@
 #import "BYNavigationController.h"
 #import "BYHomePageViewController.h"
 
-#define IMAPPKEY @"binyou#binyouhulian"
+#define IMAPPKEY @"binyou#binyouapp"
 #define IMAPNsCertName @"aps_development"
 
 @interface AppDelegate () <EMClientDelegate, EMContactManagerDelegate, EMChatManagerDelegate>
@@ -65,8 +65,6 @@
     EMError *error = nil;
     EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
     pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
-    
-    
     
     
     return YES;
@@ -191,12 +189,12 @@
 
 // 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
-//                                                    message:error.description
-//                                                   delegate:nil
-//                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                          otherButtonTitles:nil];
-//    [alert show];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
+                                                    message:error.description
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end

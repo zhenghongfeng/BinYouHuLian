@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BYShop.h"
 
 @interface BYShopDetailViewController : UITableViewController
+
+/** shop */
+@property (nonatomic, strong) BYShop *shop;
 
 @end

@@ -7,8 +7,17 @@
 //
 
 #import "BYAnnotation.h"
+#import "BYShop.h"
 
 @implementation BYAnnotation
 
+
+- (void)setShop:(BYShop *)shop
+{
+    _shop = shop;
+    _title = shop.name;
+    _subtitle = shop.myDescription;
+    _image = [UIImage imageNamed:@"icon_map_arrow"];
+}
 
 @end

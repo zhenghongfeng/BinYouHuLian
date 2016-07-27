@@ -9,7 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
+@class BYShop;
+
 @interface BYAnnotation : NSObject <MKAnnotation>
+
+/** tag */
+@property (nonatomic, assign) NSInteger tag;
+
+/** shop */
+@property (nonatomic, strong) BYShop *shop;
+
 /**
  *  坐标
  */

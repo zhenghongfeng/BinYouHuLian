@@ -33,6 +33,21 @@
 		BA159F4B1CCDF7CB00FE34F0 /* BYAddBlackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */; };
 		BA159F4C1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */; };
 		BA2E53A81CBBBEDD00AD323B /* BYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E53A71CBBBEDD00AD323B /* BYConst.m */; };
+		BA3218721D46F45400DE990D /* ELCAlbumPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA32185C1D46F45400DE990D /* ELCAlbumPickerController.m */; };
+		BA3218731D46F45400DE990D /* ELCAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = BA32185E1D46F45400DE990D /* ELCAsset.m */; };
+		BA3218741D46F45400DE990D /* ELCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3218601D46F45400DE990D /* ELCAssetCell.m */; };
+		BA3218751D46F45400DE990D /* ELCAssetTablePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3218641D46F45400DE990D /* ELCAssetTablePicker.m */; };
+		BA3218761D46F45400DE990D /* ELCConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3218661D46F45400DE990D /* ELCConsole.m */; };
+		BA3218771D46F45400DE990D /* ELCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3218681D46F45400DE990D /* ELCImagePickerController.m */; };
+		BA3218781D46F45400DE990D /* ELCOverlayImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA32186B1D46F45400DE990D /* ELCOverlayImageView.m */; };
+		BA3218791D46F45400DE990D /* ELCAlbumPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA32186D1D46F45400DE990D /* ELCAlbumPickerController.xib */; };
+		BA32187A1D46F45400DE990D /* ELCAssetPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA32186E1D46F45400DE990D /* ELCAssetPicker.xib */; };
+		BA32187B1D46F45400DE990D /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA32186F1D46F45400DE990D /* ELCAssetTablePicker.xib */; };
+		BA32187C1D46F45400DE990D /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = BA3218701D46F45400DE990D /* Overlay.png */; };
+		BA32187D1D46F45400DE990D /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA3218711D46F45400DE990D /* Overlay@2x.png */; };
+		BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */; };
+		BA59B2C41D470380003007CE /* BYLookBigPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C31D470380003007CE /* BYLookBigPictureView.m */; };
+		BA59B2C61D47190F003007CE /* addImage.png in Resources */ = {isa = PBXBuildFile; fileRef = BA59B2C51D47190F003007CE /* addImage.png */; };
 		BA68E10F1CC0B4C800A85FCD /* EaseUI.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68DFEE1CC0B4C800A85FCD /* EaseUI.m */; };
 		BA68E1101CC0B4C800A85FCD /* EMAudioPlayerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68DFF81CC0B4C800A85FCD /* EMAudioPlayerUtil.m */; };
 		BA68E1111CC0B4C800A85FCD /* EMAudioRecorderUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68DFFA1CC0B4C800A85FCD /* EMAudioRecorderUtil.m */; };
@@ -441,6 +456,33 @@
 		BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYAddBlackViewController.xib; sourceTree = "<group>"; };
 		BA2E53A61CBBBEDD00AD323B /* BYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYConst.h; sourceTree = "<group>"; };
 		BA2E53A71CBBBEDD00AD323B /* BYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYConst.m; sourceTree = "<group>"; };
+		BA32185B1D46F45400DE990D /* ELCAlbumPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAlbumPickerController.h; sourceTree = "<group>"; };
+		BA32185C1D46F45400DE990D /* ELCAlbumPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAlbumPickerController.m; sourceTree = "<group>"; };
+		BA32185D1D46F45400DE990D /* ELCAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAsset.h; sourceTree = "<group>"; };
+		BA32185E1D46F45400DE990D /* ELCAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAsset.m; sourceTree = "<group>"; };
+		BA32185F1D46F45400DE990D /* ELCAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetCell.h; sourceTree = "<group>"; };
+		BA3218601D46F45400DE990D /* ELCAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetCell.m; sourceTree = "<group>"; };
+		BA3218611D46F45400DE990D /* ELCAssetPickerFilterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetPickerFilterDelegate.h; sourceTree = "<group>"; };
+		BA3218621D46F45400DE990D /* ELCAssetSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetSelectionDelegate.h; sourceTree = "<group>"; };
+		BA3218631D46F45400DE990D /* ELCAssetTablePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetTablePicker.h; sourceTree = "<group>"; };
+		BA3218641D46F45400DE990D /* ELCAssetTablePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetTablePicker.m; sourceTree = "<group>"; };
+		BA3218651D46F45400DE990D /* ELCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCConsole.h; sourceTree = "<group>"; };
+		BA3218661D46F45400DE990D /* ELCConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCConsole.m; sourceTree = "<group>"; };
+		BA3218671D46F45400DE990D /* ELCImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerController.h; sourceTree = "<group>"; };
+		BA3218681D46F45400DE990D /* ELCImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCImagePickerController.m; sourceTree = "<group>"; };
+		BA3218691D46F45400DE990D /* ELCImagePickerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerHeader.h; sourceTree = "<group>"; };
+		BA32186A1D46F45400DE990D /* ELCOverlayImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCOverlayImageView.h; sourceTree = "<group>"; };
+		BA32186B1D46F45400DE990D /* ELCOverlayImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCOverlayImageView.m; sourceTree = "<group>"; };
+		BA32186D1D46F45400DE990D /* ELCAlbumPickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAlbumPickerController.xib; sourceTree = "<group>"; };
+		BA32186E1D46F45400DE990D /* ELCAssetPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetPicker.xib; sourceTree = "<group>"; };
+		BA32186F1D46F45400DE990D /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
+		BA3218701D46F45400DE990D /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
+		BA3218711D46F45400DE990D /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		BA59B2BF1D4702E3003007CE /* BYLookBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigImageViewController.h; sourceTree = "<group>"; };
+		BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLookBigImageViewController.m; sourceTree = "<group>"; };
+		BA59B2C21D470380003007CE /* BYLookBigPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigPictureView.h; sourceTree = "<group>"; };
+		BA59B2C31D470380003007CE /* BYLookBigPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLookBigPictureView.m; sourceTree = "<group>"; };
+		BA59B2C51D47190F003007CE /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		BA68DFEC1CC0B4C800A85FCD /* EaseUI-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseUI-Prefix.pch"; sourceTree = "<group>"; };
 		BA68DFED1CC0B4C800A85FCD /* EaseUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseUI.h; sourceTree = "<group>"; };
 		BA68DFEE1CC0B4C800A85FCD /* EaseUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseUI.m; sourceTree = "<group>"; };
@@ -1087,6 +1129,51 @@
 				BAE0F42F1CBB9AD5002009F6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BA3218591D46F44A00DE990D /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				BA32185A1D46F45400DE990D /* ELCImagePicker */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		BA32185A1D46F45400DE990D /* ELCImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				BA32185B1D46F45400DE990D /* ELCAlbumPickerController.h */,
+				BA32185C1D46F45400DE990D /* ELCAlbumPickerController.m */,
+				BA32185D1D46F45400DE990D /* ELCAsset.h */,
+				BA32185E1D46F45400DE990D /* ELCAsset.m */,
+				BA32185F1D46F45400DE990D /* ELCAssetCell.h */,
+				BA3218601D46F45400DE990D /* ELCAssetCell.m */,
+				BA3218611D46F45400DE990D /* ELCAssetPickerFilterDelegate.h */,
+				BA3218621D46F45400DE990D /* ELCAssetSelectionDelegate.h */,
+				BA3218631D46F45400DE990D /* ELCAssetTablePicker.h */,
+				BA3218641D46F45400DE990D /* ELCAssetTablePicker.m */,
+				BA3218651D46F45400DE990D /* ELCConsole.h */,
+				BA3218661D46F45400DE990D /* ELCConsole.m */,
+				BA3218671D46F45400DE990D /* ELCImagePickerController.h */,
+				BA3218681D46F45400DE990D /* ELCImagePickerController.m */,
+				BA3218691D46F45400DE990D /* ELCImagePickerHeader.h */,
+				BA32186A1D46F45400DE990D /* ELCOverlayImageView.h */,
+				BA32186B1D46F45400DE990D /* ELCOverlayImageView.m */,
+				BA32186C1D46F45400DE990D /* Resources */,
+			);
+			path = ELCImagePicker;
+			sourceTree = "<group>";
+		};
+		BA32186C1D46F45400DE990D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BA32186D1D46F45400DE990D /* ELCAlbumPickerController.xib */,
+				BA32186E1D46F45400DE990D /* ELCAssetPicker.xib */,
+				BA32186F1D46F45400DE990D /* ELCAssetTablePicker.xib */,
+				BA3218701D46F45400DE990D /* Overlay.png */,
+				BA3218711D46F45400DE990D /* Overlay@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BA68DFEB1CC0B4C800A85FCD /* EaseUI */ = {
@@ -1833,6 +1920,8 @@
 				BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */,
 				BA04BE5C1CC4E0E8000270EB /* BYShopDetailViewController.h */,
 				BA04BE5D1CC4E0E8000270EB /* BYShopDetailViewController.m */,
+				BA59B2BF1D4702E3003007CE /* BYLookBigImageViewController.h */,
+				BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1854,6 +1943,8 @@
 				BA9E3DAD1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib */,
 				BA04BE781CC5DB35000270EB /* BYShopIntroTableViewCell.h */,
 				BA04BE791CC5DB35000270EB /* BYShopIntroTableViewCell.m */,
+				BA59B2C21D470380003007CE /* BYLookBigPictureView.h */,
+				BA59B2C31D470380003007CE /* BYLookBigPictureView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1972,6 +2063,7 @@
 		BAE0F3581CBB9AA4002009F6 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				BA3218591D46F44A00DE990D /* Lib */,
 				BAE0F35C1CBB9AA4002009F6 /* Category */,
 				BAE0F35D1CBB9AA4002009F6 /* Controller */,
 				BAE0F3601CBB9AA4002009F6 /* View */,
@@ -2020,6 +2112,7 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BA59B2C51D47190F003007CE /* addImage.png */,
 				BA14B3671D3F5F1A0030CD61 /* addPhoto.png */,
 				BAC5EFBF1D3C790200E29B55 /* myback.png */,
 				BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */,
@@ -2400,6 +2493,7 @@
 				BAD26EB01CBF866D00F355C5 /* anon_chat_bottom_emotion_press@3x.png in Resources */,
 				BA68E1E81CC0B4F300A85FCD /* VoiceSearchFeedback001@2x.png in Resources */,
 				BAE0F3FE1CBB9AA5002009F6 /* icon_map_cateid_default.png in Resources */,
+				BA59B2C61D47190F003007CE /* addImage.png in Resources */,
 				BAE0F4301CBB9AD5002009F6 /* Info.plist in Resources */,
 				BAE0F3EB1CBB9AA4002009F6 /* icon_food_homepage_map.png in Resources */,
 				BAE0F3E41CBB9AA4002009F6 /* btn_htl_map_prepay_big@2x.png in Resources */,
@@ -2434,6 +2528,7 @@
 				BAE0F3D61CBB9AA4002009F6 /* bg_htl_map_tip@2x.png in Resources */,
 				BA68E1D81CC0B4F300A85FCD /* chatBar_faceSelected@2x.png in Resources */,
 				BA68E1EE1CC0B4F300A85FCD /* VoiceSearchFeedback007@2x.png in Resources */,
+				BA32187B1D46F45400DE990D /* ELCAssetTablePicker.xib in Resources */,
 				BAE0F4181CBB9AA5002009F6 /* map_icon_301@2x.png in Resources */,
 				BA68E1FE1CC0B4FD00A85FCD /* EaseUIResource.bundle in Resources */,
 				BAE0F3D41CBB9AA4002009F6 /* bg_back_merchant_detail_map@2x.png in Resources */,
@@ -2454,6 +2549,7 @@
 				BA68E1C51CC0B4F300A85FCD /* in.caf in Resources */,
 				BAD26E851CBF7F6100F355C5 /* chatBar_face.png in Resources */,
 				BA68E1E91CC0B4F300A85FCD /* VoiceSearchFeedback002@2x.png in Resources */,
+				BA32187A1D46F45400DE990D /* ELCAssetPicker.xib in Resources */,
 				BAE0F40A1CBB9AA5002009F6 /* icon_map_poi_big@2x.png in Resources */,
 				BAE0F3EA1CBB9AA4002009F6 /* icon_error_merchant_detail_map@2x.png in Resources */,
 				BAD26EAC1CBF7FF200F355C5 /* messageToolbarBg@2x.png in Resources */,
@@ -2509,6 +2605,7 @@
 				BAE0F3DF1CBB9AA4002009F6 /* btn_htl_map_location_highlighted@2x.png in Resources */,
 				BAE0F4261CBB9AA5002009F6 /* mapTabLeftButton@2x.png in Resources */,
 				BAD26E921CBF7F8200F355C5 /* chatBar_keyboardSelected@2x.png in Resources */,
+				BA32187C1D46F45400DE990D /* Overlay.png in Resources */,
 				BA68E1DE1CC0B4F300A85FCD /* chatBar_recordBg@2x.png in Resources */,
 				BAE0F3EE1CBB9AA4002009F6 /* icon_homepage_map_old.png in Resources */,
 				BA68E1CE1CC0B4F300A85FCD /* chatBar_colorMore_cameraSelected@2x.png in Resources */,
@@ -2524,6 +2621,7 @@
 				BAE0F3D31CBB9AA4002009F6 /* arrow_merchant_detail_map_normal@2x.png in Resources */,
 				BAE0F4201CBB9AA5002009F6 /* map_icon_309@2x.png in Resources */,
 				BADE66771CCE12CA00843708 /* delete.png in Resources */,
+				BA3218791D46F45400DE990D /* ELCAlbumPickerController.xib in Resources */,
 				BAE0F3E81CBB9AA4002009F6 /* btn_htl_map_userlocation@2x.png in Resources */,
 				BAE0F3F91CBB9AA5002009F6 /* icon_map_cateid_3.png in Resources */,
 				BAE0F4291CBB9AA5002009F6 /* mapTabRightButton.png in Resources */,
@@ -2533,6 +2631,7 @@
 				BA68E1FC1CC0B4F300A85FCD /* user@2x.png in Resources */,
 				BA68E1E61CC0B4F300A85FCD /* messageSendFail@2x.png in Resources */,
 				BA68E1CF1CC0B4F300A85FCD /* chatBar_colorMore_location@2x.png in Resources */,
+				BA32187D1D46F45400DE990D /* Overlay@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2600,6 +2699,7 @@
 				BAD26DC31CBF6F0500F355C5 /* BYMyShopBusinessViewController.m in Sources */,
 				BAE0F3CF1CBB9AA4002009F6 /* main.m in Sources */,
 				BA68E1501CC0B4C900A85FCD /* PSTCollectionViewItemKey.m in Sources */,
+				BA3218761D46F45400DE990D /* ELCConsole.m in Sources */,
 				BA68E16B1CC0B4C900A85FCD /* EaseMessageViewController.m in Sources */,
 				BA159F4B1CCDF7CB00FE34F0 /* BYAddBlackViewController.m in Sources */,
 				BA68E12B1CC0B4C800A85FCD /* MJRefreshStateHeader.m in Sources */,
@@ -2635,6 +2735,7 @@
 				BADD96F61CD308F1008CFF3D /* BYAddGroupViewController.m in Sources */,
 				BA68E1811CC0B4C900A85FCD /* EaseFacialView.m in Sources */,
 				BA68E1431CC0B4C900A85FCD /* UIButton+EMWebCache.m in Sources */,
+				BA3218741D46F45400DE990D /* ELCAssetCell.m in Sources */,
 				BA68E1121CC0B4C800A85FCD /* EMCDDeviceManager+Media.m in Sources */,
 				BA04BE7F1CC61EA8000270EB /* BYCalloutAnnotation.m in Sources */,
 				BA68E1591CC0B4C900A85FCD /* EaseConversationModel.m in Sources */,
@@ -2646,6 +2747,7 @@
 				BA68E1361CC0B4C900A85FCD /* MWTapDetectingImageView.m in Sources */,
 				BA68E1681CC0B4C900A85FCD /* FixFopen.c in Sources */,
 				BA68E1491CC0B4C900A85FCD /* UIView+EMWebCacheOperation.m in Sources */,
+				BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */,
 				BA68E14B1CC0B4C900A85FCD /* PSTCollectionView.m in Sources */,
 				BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */,
 				BA68E13C1CC0B4C900A85FCD /* EMSDWebImageDecoder.m in Sources */,
@@ -2664,6 +2766,7 @@
 				BA68E1221CC0B4C800A85FCD /* MJRefreshHeader.m in Sources */,
 				BA68E1611CC0B4C900A85FCD /* EaseChineseToPinyin.m in Sources */,
 				BAD26DA01CBF37D100F355C5 /* BYCaredLocationViewController.m in Sources */,
+				BA3218751D46F45400DE990D /* ELCAssetTablePicker.m in Sources */,
 				BA68E1141CC0B4C800A85FCD /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				BA68E1841CC0B4C900A85FCD /* EaseConversationCell.m in Sources */,
 				BA68E16A1CC0B4C900A85FCD /* EaseLocationViewController.m in Sources */,
@@ -2680,6 +2783,7 @@
 				BA04BE861CC7BEF4000270EB /* BYGPSLocation.m in Sources */,
 				BA68E1421CC0B4C900A85FCD /* NSData+EMImageContentType.m in Sources */,
 				BAD9C0361D38D3860040E1F1 /* NSString+Category.m in Sources */,
+				BA59B2C41D470380003007CE /* BYLookBigPictureView.m in Sources */,
 				BAE0F3CE1CBB9AA4002009F6 /* AppDelegate.m in Sources */,
 				BA68E17D1CC0B4C900A85FCD /* EaseChatToolbarItem.m in Sources */,
 				BA68E15C1CC0B4C900A85FCD /* NSDate+Category.m in Sources */,
@@ -2702,6 +2806,7 @@
 				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
 				BA68E1281CC0B4C800A85FCD /* MJRefreshBackStateFooter.m in Sources */,
 				BA68E1721CC0B4C900A85FCD /* EaseMessageCell.m in Sources */,
+				BA3218781D46F45400DE990D /* ELCOverlayImageView.m in Sources */,
 				BA68E12D1CC0B4C900A85FCD /* MJRefreshConst.m in Sources */,
 				BA68E1311CC0B4C900A85FCD /* MWCaptionView.m in Sources */,
 				BA68E1291CC0B4C800A85FCD /* MJRefreshGifHeader.m in Sources */,
@@ -2732,7 +2837,9 @@
 				BA68E1341CC0B4C900A85FCD /* MWPhoto.m in Sources */,
 				BA68E1301CC0B4C900A85FCD /* UIView+MJExtension.m in Sources */,
 				BA68E15B1CC0B4C900A85FCD /* EaseUserModel.m in Sources */,
+				BA3218731D46F45400DE990D /* ELCAsset.m in Sources */,
 				BA68E13B1CC0B4C900A85FCD /* EMSDWebImageCompat.m in Sources */,
+				BA3218771D46F45400DE990D /* ELCImagePickerController.m in Sources */,
 				BA68E17E1CC0B4C900A85FCD /* EaseImageView.m in Sources */,
 				BA68E1651CC0B4C900A85FCD /* EaseEmojiEmoticons.m in Sources */,
 				BA68E1251CC0B4C800A85FCD /* MJRefreshAutoStateFooter.m in Sources */,
@@ -2743,6 +2850,7 @@
 				BA9E3DAE1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.m in Sources */,
 				BA68E15A1CC0B4C900A85FCD /* EaseMessageModel.m in Sources */,
 				BA68E1801CC0B4C900A85FCD /* EaseFaceView.m in Sources */,
+				BA3218721D46F45400DE990D /* ELCAlbumPickerController.m in Sources */,
 				BA68E1631CC0B4C900A85FCD /* EaseMessageReadManager.m in Sources */,
 				BA68E1751CC0B4C900A85FCD /* EaseBubbleView+Gif.m in Sources */,
 				BA68E10F1CC0B4C800A85FCD /* EaseUI.m in Sources */,
@@ -2892,7 +3000,7 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
+				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2935,7 +3043,7 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.binyouhulian.binyoudemo;
+				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

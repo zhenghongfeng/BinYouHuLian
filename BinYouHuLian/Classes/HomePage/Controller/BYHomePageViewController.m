@@ -18,6 +18,7 @@
 #import "BYCalloutAnnotation.h"
 #import "BYCalloutAnnotatonView.h"
 #import "BYGPSLocation.h"
+#import "BYShop.h"
 
 @interface BYHomePageViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 
@@ -27,19 +28,20 @@
     BOOL isAppear;//地图是否显示完成
 }
 
-@property (nonatomic, strong) MKMapView *mapView;
-
+/** 位置管理者 */
 @property (nonatomic, strong) CLLocationManager *locationManager;
+/** 地图 */
+@property (nonatomic, strong) MKMapView *mapView;
 
 @property (nonatomic, strong) CLLocation *location;
 /** 回到当前位置 */
 @property (nonatomic, strong) UIButton *locateBtn;
+/** 搜索 */
+@property (nonatomic, strong) UIButton *searchBtn;
 /** 我的 */
 @property (nonatomic, strong) UIButton *mineBtn;
 /** 开店 */
 @property (nonatomic, strong) UIButton *createShopBtn;
-/** 搜索 */
-@property (nonatomic, strong) UIButton *searchBtn;
 
 @property (nonatomic, strong) UIImageView *centerImageView;
 
@@ -49,10 +51,11 @@
 
 @property (nonatomic, strong) NSMutableArray *annotations;
 
+@property (nonatomic, strong) NSMutableArray *shops;
+
 @end
 
 @implementation BYHomePageViewController
-
 
 #pragma mark - getter
 
@@ -62,33 +65,33 @@
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         // 每隔多远定位一次
-        _locationManager.distanceFilter = 100;
+        //        _locationManager.distanceFilter = 100;
         /**
-          CLLocationAccuracy kCLLocationAccuracyBestForNavigation;  // 最合适导航
-          CLLocationAccuracy kCLLocationAccuracyBest; // 最好的
-          CLLocationAccuracy kCLLocationAccuracyNearestTenMeters; // 10m
-          CLLocationAccuracy kCLLocationAccuracyHundredMeters; // 100m
-          CLLocationAccuracy kCLLocationAccuracyKilometer; // 1000m
-          CLLocationAccuracy kCLLocationAccuracyThreeKilometers; // 3000m
+         CLLocationAccuracy kCLLocationAccuracyBestForNavigation;  // 最合适导航
+         CLLocationAccuracy kCLLocationAccuracyBest; // 最好的
+         CLLocationAccuracy kCLLocationAccuracyNearestTenMeters; // 10m
+         CLLocationAccuracy kCLLocationAccuracyHundredMeters; // 100m
+         CLLocationAccuracy kCLLocationAccuracyKilometer; // 1000m
+         CLLocationAccuracy kCLLocationAccuracyThreeKilometers; // 3000m
          */
-        // 精确度越高，越耗电，定位时间越长
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//         精确度越高，越耗电，定位时间越长
+//                _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         //请求定位服务
-//        if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
-//            [self.locationManager requestWhenInUseAuthorization];
-//        }
-//        if (kIOS_VERSION >= 8.0) {
-//            [self.locationManager requestWhenInUseAuthorization];
-//        }
+        //        if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        //            [self.locationManager requestWhenInUseAuthorization];
+        //        }
+        //        if (kIOS_VERSION >= 8.0) {
+        //            [self.locationManager requestWhenInUseAuthorization];
+        //        }
         // 系统适配
         if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
             
             // 前后台定位授权
-//            [self.locationManager requestAlwaysAuthorization];
+            //            [self.locationManager requestAlwaysAuthorization];
             
             // 前台定位授权
-            [self.locationManager requestWhenInUseAuthorization];
+            [_locationManager requestWhenInUseAuthorization];
         }
     }
     return _locationManager;
@@ -106,9 +109,17 @@
         // 禁止地图旋转
         _mapView.rotateEnabled = NO;
         
-        CLLocationCoordinate2D coord = _mapView.centerCoordinate;
-        //放大地图的经纬度位置。
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 250, 250);
+        CLLocationCoordinate2D coord2D = _mapView.centerCoordinate;
+//        //放大地图的经纬度位置。
+//        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord2D, 250, 250);
+        
+        //提供经纬度信息
+//        CLLocationCoordinate2D coord2D = {39.910650, 116.47030};
+        //显示区域精度
+        MKCoordinateSpan span = {0.1, 0.1};
+        //设置显示区域，MKCoordinateRegion是结构体类型
+        MKCoordinateRegion region = {coord2D, span};
+        //给地图设置显示区域
         [_mapView setRegion:region animated:YES];
     }
     return _mapView;
@@ -203,20 +214,10 @@
     
     [super viewDidLoad];
     
-    BOOL a = [CLLocationManager locationServicesEnabled];
-    NSLog(@"a = %d", a);
-    
-    
-    
     [self.locationManager startUpdatingLocation];
     
-    
-//    [[BYGPSLocation sharedGPSLocation] startLocation];
-//
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayUserLocation:) name:@"homeinceptCoordinate" object:nil];
-    
     isAppear = NO;
-
+    
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.searchBtn];
     [self.view addSubview:self.locateBtn];
@@ -245,10 +246,10 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     NSLog(@"定位到了");
+    
     // 拿到位置，做一些业务逻辑操作
     // 停止更新
-    [manager stopUpdatingLocation];
-    
+    [self.locationManager stopUpdatingLocation];
 }
 /**
  *  授权状态发生改变时调用
@@ -256,7 +257,7 @@
  *  @param manager 位置管理者
  *  @param status  状态
  */
- - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     switch (status) {
         case kCLAuthorizationStatusNotDetermined:
@@ -266,7 +267,7 @@
         case kCLAuthorizationStatusRestricted:
             NSLog(@"访问受限");
             break;
-        
+            
         case kCLAuthorizationStatusDenied:
             // 定位是否可用（是否支持定位或者定位是否开启）
             if ([CLLocationManager locationServicesEnabled]) {
@@ -274,7 +275,7 @@
             } else {
                 NSLog(@"定位关闭，不可用");
             }
-//            NSLog(@"被拒");
+            //            NSLog(@"被拒");
             break;
             
         case kCLAuthorizationStatusAuthorizedAlways:
@@ -290,7 +291,6 @@
     }
 }
 
-
 #pragma mark - MKMapViewDelegate
 /**
  *  每次添加大头针都会调用此方法  可以自定义大头针的样式
@@ -299,6 +299,7 @@
 {
     //由于当前位置的标注也是一个大头针，所以此时需要判断，此代理方法返回nil使用默认大头针视图
     if ([annotation isKindOfClass:[BYAnnotation class]]) {
+        /*
         static NSString *key1 = @"AnnotationKey1";
         MKAnnotationView *annotationView = [_mapView dequeueReusableAnnotationViewWithIdentifier:key1];
         //如果缓存池中不存在则新建
@@ -311,68 +312,69 @@
             //定义右视图
             annotationView.rightCalloutAccessoryView = ({
                 UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
+                button.tag = [(BYAnnotation *)annotation tag];
                 [button setTitle:@"查看详情" forState:UIControlStateNormal];
                 [button setTitleColor:kMainColor forState:UIControlStateNormal];
                 button.titleLabel.numberOfLines = 2;
-                [button addTarget:self action:@selector(shopDetailClick) forControlEvents:UIControlEventTouchUpInside];
+                [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
+                
                 button;
             });
-//            annotationView.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_classify_cafe.png"]];//定义详情左侧视图
         }
+         */
+        
+        MKAnnotationView *annotationView = [[MKAnnotationView alloc] init];
+        //允许交互点击
+        annotationView.canShowCallout = YES;
+        //定义详情视图偏移量
+        annotationView.calloutOffset = CGPointMake(0, 1);
+        //定义右视图
+        annotationView.rightCalloutAccessoryView = ({
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
+            button.tag = [(BYAnnotation *)annotation tag];
+            [button setTitle:@"查看详情" forState:UIControlStateNormal];
+            [button setTitleColor:kMainColor forState:UIControlStateNormal];
+            button.titleLabel.numberOfLines = 2;
+            [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+        
         //修改大头针视图
         //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
         annotationView.annotation = annotation;
         annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
         return annotationView;
     }
-//    else if ([annotation isKindOfClass:[BYCalloutAnnotation class]]){
-//        //对于作为弹出详情视图的自定义大头针视图无弹出交互功能（canShowCallout=false，这是默认值），在其中可以自由添加其他视图（因为它本身继承于UIView）
-//        BYCalloutAnnotatonView *calloutView = [BYCalloutAnnotatonView calloutViewWithMapView:mapView];
-//        calloutView.annotation = annotation;
-//        return calloutView;
-//    }
+    //    else if ([annotation isKindOfClass:[BYCalloutAnnotation class]]){
+    //        //对于作为弹出详情视图的自定义大头针视图无弹出交互功能（canShowCallout=false，这是默认值），在其中可以自由添加其他视图（因为它本身继承于UIView）
+    //        BYCalloutAnnotatonView *calloutView = [BYCalloutAnnotatonView calloutViewWithMapView:mapView];
+    //        calloutView.annotation = annotation;
+    //        return calloutView;
+    //    }
     else {
         return nil;
     }
 }
 
-
-- (void)addAnnotationLocation:(CLLocationCoordinate2D)location title:(NSString *)title subtitle:(NSString *)subtitle imageName:(NSString *)imageName
-{
-    CLLocationCoordinate2D locationCoordinate2D = location;
-    BYAnnotation *annotation = [[BYAnnotation alloc] init];
-    annotation.coordinate = locationCoordinate2D;
-    annotation.title = title;
-    annotation.subtitle = subtitle;
-    annotation.image = [UIImage imageNamed:imageName];
-//    annotation1.icon = [UIImage imageNamed:@"icon_map_cateid_3"];
-//    annotation1.detail = @"各种小猫、小狗、可爱的小动物";
-//    annotation1.rate = [UIImage imageNamed:@"red_check@3x"];
-    [_mapView addAnnotation:annotation];
-    [self.annotations addObject:annotation];
-}
-
-
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-        
+    
     CLLocationCoordinate2D coord = [userLocation coordinate];
     
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     
     _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
-    
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     _adressLabel.text = @"正在获取你选择的地点...";
     NSLog(@"将要变化");
-//    if (_geocoder == nil) {
-//        _geocoder = [[CLGeocoder alloc] init];
-//    }
-//    [_geocoder cancelGeocode];
+    //    if (_geocoder == nil) {
+    //        _geocoder = [[CLGeocoder alloc] init];
+    //    }
+    //    [_geocoder cancelGeocode];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
@@ -405,6 +407,16 @@
 #pragma mark 反地理编码
 - (void)homereverseGeocode1:(double)_lat longitude:(double)_long
 {
+    //UIKit坐标点转化 ——>  经纬度
+    CLLocationCoordinate2D leftTopCoornation = [_mapView convertPoint:CGPointMake(0, 0) toCoordinateFromView:_mapView];
+    NSLog(@"leftTopCoornation = %f, %f", leftTopCoornation.latitude, leftTopCoornation.longitude);
+    
+    CLLocationCoordinate2D rightBottomcoornation = [_mapView convertPoint:CGPointMake(kScreenWidth, kScreenHeight) toCoordinateFromView:_mapView];
+    NSLog(@"rightBottomcoornation = %f, %f", rightBottomcoornation.latitude, rightBottomcoornation.longitude);
+    
+    
+    
+    
     NSLog(@"转换后:%f,%f",_lat,_long);
     NSDictionary *dic = @{
                           @"longitude": @(_long),
@@ -413,44 +425,43 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.249/api/shop/search?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:@"http://192.168.4.181/api/shop/search?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"responseObject = %@", responseObject);
+                NSLog(@"responseObject = %@", responseObject);
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-//            [hud hide:YES];
+            //            [hud hide:YES];
             
             [_mapView removeAnnotations:_mapView.annotations];
             
             NSMutableArray *annotationArr = [NSMutableArray array];
             
-            NSArray *arr = responseObject[@"stores"];
-            for (int i = 0; i < arr.count; i++) {
-                CLLocationDegrees latitude = [[arr[i] objectForKey:@"latitude"] doubleValue];
-                CLLocationDegrees longitude = [[arr[i] objectForKey:@"longitude"] doubleValue];
-                NSString *name = [arr[i] objectForKey:@"name"];
-                NSString *description = [arr[i] objectForKey:@"description"];
-                
+            self.shops = [BYShop mj_objectArrayWithKeyValuesArray:responseObject[@"stores"]];
+            
+            for (int i = 0; i < self.shops.count; i++) {
+                BYShop *shop = self.shops[i];
+                CLLocationDegrees latitude = [shop.latitude doubleValue];
+                CLLocationDegrees longitude = [shop.longitude doubleValue];
                 CLLocationCoordinate2D locationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude);
                 BYAnnotation *annotation = [[BYAnnotation alloc] init];
                 annotation.coordinate = locationCoordinate2D;
-                annotation.title = name;
-                annotation.subtitle = description;
-                annotation.image = [UIImage imageNamed:@"icon_map_arrow"];
+                annotation.tag = i;
+                annotation.shop = shop;
                 [annotationArr addObject:annotation];
             }
             [_mapView addAnnotations:annotationArr];
             
         } else {
-//            hud.mode = MBProgressHUDModeText;
-//            hud.labelText = @"失败";
-//            [hud hide:YES afterDelay:1];
+            //            hud.mode = MBProgressHUDModeText;
+            //            hud.labelText = @"失败";
+            //            [hud hide:YES afterDelay:1];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //        hud.mode = MBProgressHUDModeText;
 //        hud.labelText = @"登录失败";
 //        [hud hide:YES afterDelay:1];
@@ -462,14 +473,14 @@
     //注意初使化location参数 double转换，这里犯过错， 此外一般会用 全局_currLocation，在定位后得到
     CLLocation* location = [[CLLocation alloc] initWithLatitude:_lat longitude:_long];
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
-                        CLPlacemark* placemark = [placemarks firstObject];
-//                        NSLog(@"详细信息:%@", placemark.addressDictionary);
-                        if(placemark.addressDictionary == nil){
-                            self.adressLabel.text = @"地图君没有识别此地。。。";
-                        } else {
-                            self.adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
-                        }
-                    }];
+        CLPlacemark* placemark = [placemarks firstObject];
+        //                        NSLog(@"详细信息:%@", placemark.addressDictionary);
+        if(placemark.addressDictionary == nil){
+            self.adressLabel.text = @"地图君没有识别此地。。。";
+        } else {
+            self.adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
+        }
+    }];
 }
 
 #pragma mark 火星坐标转换成地球坐标
@@ -536,9 +547,6 @@ static double hometransformLon(double x, double y)
 }
 
 #pragma mark - even response
-/**
- *  mine button
- */
 - (void)mineBtnClick
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -553,17 +561,12 @@ static double hometransformLon(double x, double y)
         [self presentViewController:nav animated:YES completion:nil];
     }
 }
-/**
- *  search button click
- */
 - (void)searchBtnClick
 {
     BYSearchViewController *vc = [[BYSearchViewController alloc] init];
     [self presentViewController:vc animated:YES completion:nil];
 }
-/**
- *  createshop button click
- */
+
 - (void)createShopBtnClick
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -577,19 +580,15 @@ static double hometransformLon(double x, double y)
         nav.navigationBar.hidden = YES;
         [self presentViewController:nav animated:YES completion:nil];
     }
-    
 }
-/**
- *  shopdetail button click
- */
-- (void)shopDetailClick
+
+- (void)shopDetailClick:(UIButton *)button
 {
     BYShopDetailViewController *vc = [[BYShopDetailViewController alloc] init];
+    vc.shop = self.shops[button.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }
-/**
- *  locate button click
- */
+
 - (void)locateBtnClick
 {
     [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];

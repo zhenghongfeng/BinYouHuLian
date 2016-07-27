@@ -13,10 +13,13 @@
 
 @interface BYSelectPlaceViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 {
-    NSString *_longitude;//用户经度
-    NSString *_latitude;//用户纬度
+    NSString *_userLongitude;//用户经度
+    NSString *_userLatitude;//用户纬度
     BOOL isAppear;//地图是否显示完成
 }
+
+/** 返回 */
+@property (nonatomic, strong) UIButton *backBtn;
 
 @property (nonatomic, strong) MKMapView *mapView;
 
@@ -35,10 +38,65 @@
 
 @property (nonatomic, strong) UILabel *adressLabel;
 
+/** 经度 */
+@property (nonatomic, copy) NSString *longitude;
+/** 纬度 */
+@property (nonatomic, copy) NSString *latitude;
 
 @end
 
 @implementation BYSelectPlaceViewController
+
+- (UIButton *)backBtn
+{
+    if (_backBtn == nil) {
+        _backBtn = [UIButton new];
+        [_backBtn setTitle:@"返回" forState:UIControlStateNormal];
+        _backBtn.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [_backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _backBtn.layer.masksToBounds = YES;
+        _backBtn.layer.cornerRadius = 5;
+    }
+    return _backBtn;
+}
+
+- (CLLocationManager *)locationManager
+{
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        // 每隔多远定位一次
+        //        _locationManager.distanceFilter = 100;
+        /**
+         CLLocationAccuracy kCLLocationAccuracyBestForNavigation;  // 最合适导航
+         CLLocationAccuracy kCLLocationAccuracyBest; // 最好的
+         CLLocationAccuracy kCLLocationAccuracyNearestTenMeters; // 10m
+         CLLocationAccuracy kCLLocationAccuracyHundredMeters; // 100m
+         CLLocationAccuracy kCLLocationAccuracyKilometer; // 1000m
+         CLLocationAccuracy kCLLocationAccuracyThreeKilometers; // 3000m
+         */
+        // 精确度越高，越耗电，定位时间越长
+        //        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        //请求定位服务
+        //        if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        //            [self.locationManager requestWhenInUseAuthorization];
+        //        }
+        //        if (kIOS_VERSION >= 8.0) {
+        //            [self.locationManager requestWhenInUseAuthorization];
+        //        }
+        // 系统适配
+        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            
+            // 前后台定位授权
+            //            [self.locationManager requestAlwaysAuthorization];
+            
+            // 前台定位授权
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+    }
+    return _locationManager;
+}
 
 - (MKMapView *)mapView
 {
@@ -83,24 +141,11 @@
     return button;
 }
 
-- (void)setupConstraints
-{
-    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
-    }];
-    
-    [self.okButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo((kScreenWidth - BYHomePageMineButtonW)  * 0.5);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageMineButtonH - BYHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
-    }];
-}
+#pragma mark - life cycle
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
     //        //    //只要加上这段代码他就会出现一个图片
@@ -117,13 +162,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[BYGPSLocation sharedGPSLocation] startLocation];
+//    [[BYGPSLocation sharedGPSLocation] startLocation];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayUserLocation:) name:@"inceptCoordinate" object:nil];
     
-    isAppear = NO;
+//    [self.locationManager startUpdatingLocation];
     
+    isAppear = NO;
+
     [self.view addSubview:self.mapView];
+    [self.view addSubview:self.backBtn];
     
     _centerImageView = [[UIImageView alloc] init];
     _centerImageView.centerX = self.view.centerX;
@@ -253,12 +301,18 @@
 }
 
 #pragma mark mapViewDelegate
+
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
+    
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
-    _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
-    _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
+    _userLongitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
+    _userLatitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
+    
+    [self.locationManager stopUpdatingHeading];
 }
+
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
     NSLog(@"定位失败：%@",error);
@@ -272,7 +326,7 @@
     [_geocoder cancelGeocode];
 }
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-    if (_longitude != nil && isAppear == YES) {
+    if (_userLongitude != nil && isAppear == YES) {
         CLLocationCoordinate2D cl =  mapView.centerCoordinate;
         NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
         typeof(BYSelectPlaceViewController *)weakSelf = self;
@@ -372,6 +426,35 @@ static double transformLon(double x, double y)
     dLon = (dLon * 180.0) / (a / sqrtMagic * cos(radLat) * M_PI);
     return CLLocationCoordinate2DMake(wgLat + dLat, wgLon + dLon);
     
+}
+
+#pragma mark - back button click
+
+- (void)backBtnClick
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - autoLayout
+
+- (void)setupConstraints
+{
+    self.backBtn.sd_layout.leftSpaceToView(self.view, BYMargin)
+    .topSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
+    
+    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
+    }];
+    
+    [self.okButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).mas_equalTo((kScreenWidth - BYHomePageMineButtonW)  * 0.5);
+        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageMineButtonH - BYHomePageLocationButtonToBottomMargin));
+        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
+    }];
 }
 
 - (void)dealloc

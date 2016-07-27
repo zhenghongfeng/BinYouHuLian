@@ -10,4 +10,19 @@
 
 @implementation BYShop
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        // 替换属性名
+        [BYShop mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+            return @{
+                     @"myDescription": @"description",
+                     @"myId": @"id",
+                     };
+        }];
+    }
+    return self;
+}
+
 @end

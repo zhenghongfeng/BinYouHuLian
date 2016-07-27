@@ -161,7 +161,7 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.249/api/user/login?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:@"http://192.168.4.181/api/user/login?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);

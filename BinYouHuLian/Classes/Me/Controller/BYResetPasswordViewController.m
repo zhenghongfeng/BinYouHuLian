@@ -177,7 +177,7 @@
     NSDictionary *dic = @{@"phone": self.phoneTextField.text};
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.249/api/sms/send?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:@"http://192.168.4.181/api/sms/send?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
@@ -241,7 +241,7 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.249/api/user/forget?" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:@"http://192.168.4.181/api/user/forget?" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);

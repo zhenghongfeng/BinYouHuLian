@@ -10,9 +10,32 @@
 
 @interface BYShop : NSObject
 
-@property(nonatomic, copy) NSString *mname;//标题
-@property(nonatomic, strong) NSNumber *price;//价格
-@property(nonatomic, copy) NSString *imgurl;//图片
-@property(nonatomic, strong) NSMutableArray *rdplocs;//坐标等
+/** name */
+@property (nonatomic, copy) NSString *name;
+/** 分类 */
+@property(nonatomic, copy) NSString *category;
+/** 描述 */
+@property(nonatomic, copy) NSString *myDescription;
+/** legalPerson */
+@property (nonatomic, copy) NSString *legalPerson;
+/** id */
+@property (nonatomic, copy) NSString *myId;
+/** 纬度 latitude */
+@property (nonatomic, copy) NSString *latitude;
+/** 经度 longitude */
+@property (nonatomic, copy) NSString *longitude;
+/** location */
+@property (nonatomic, copy) NSString *location;
+/** locs */
+@property (nonatomic, strong) NSDictionary *locs;
+/** picshow1 */
+@property (nonatomic, copy) NSString *picshow1;
+/** picshow2 */
+@property (nonatomic, copy) NSString *picshow2;
+/** picshow3 */
+@property (nonatomic, copy) NSString *picshow3;
+
+
+
 
 @end

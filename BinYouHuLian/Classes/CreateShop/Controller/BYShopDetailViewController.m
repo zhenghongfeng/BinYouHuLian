@@ -25,9 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"shop==%@", self.shop.name);
     
     self.title = @"店铺详情";
     self.titles = @[@"店名", @"电话", @"图文简介"];
+    
     self.contents = @[@"吴老板的书店", @"18816889999", @"《岛上书店》是一本关于全世界所有书的书，写给全世界所有真正爱书的人。 岛上书店是间维多利亚风格的小屋，门廊上挂着褪色的招牌，上面写着：没有谁是一座孤岛，每本书都是一个世界A．J．费克里，人近中年，在一座与世隔绝的小岛上，经营一家书店。"];
 
     [self setupTabelView];
@@ -99,7 +101,21 @@
         cell = [[BYShopIntroTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
     cell.titleLabel.text = self.titles[indexPath.row];
-    cell.contentLabel.text = self.contents[indexPath.row];
+    
+    switch (indexPath.row) {
+        case 0:
+            cell.contentLabel.text = self.shop.name;
+            break;
+        case 1:
+            cell.contentLabel.text = self.shop.category;
+            break;
+        case 2:
+            cell.contentLabel.text = self.shop.myDescription;
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
