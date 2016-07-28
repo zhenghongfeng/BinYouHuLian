@@ -45,6 +45,7 @@
 		BA32187B1D46F45400DE990D /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA32186F1D46F45400DE990D /* ELCAssetTablePicker.xib */; };
 		BA32187C1D46F45400DE990D /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = BA3218701D46F45400DE990D /* Overlay.png */; };
 		BA32187D1D46F45400DE990D /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA3218711D46F45400DE990D /* Overlay@2x.png */; };
+		BA48B0611D48642600145F98 /* MBProgressHUD+BYCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48B0601D48642600145F98 /* MBProgressHUD+BYCategory.m */; };
 		BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */; };
 		BA59B2C41D470380003007CE /* BYLookBigPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C31D470380003007CE /* BYLookBigPictureView.m */; };
 		BA59B2C61D47190F003007CE /* addImage.png in Resources */ = {isa = PBXBuildFile; fileRef = BA59B2C51D47190F003007CE /* addImage.png */; };
@@ -478,6 +479,8 @@
 		BA32186F1D46F45400DE990D /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		BA3218701D46F45400DE990D /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		BA3218711D46F45400DE990D /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		BA48B05F1D48642600145F98 /* MBProgressHUD+BYCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+BYCategory.h"; sourceTree = "<group>"; };
+		BA48B0601D48642600145F98 /* MBProgressHUD+BYCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+BYCategory.m"; sourceTree = "<group>"; };
 		BA59B2BF1D4702E3003007CE /* BYLookBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigImageViewController.h; sourceTree = "<group>"; };
 		BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLookBigImageViewController.m; sourceTree = "<group>"; };
 		BA59B2C21D470380003007CE /* BYLookBigPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigPictureView.h; sourceTree = "<group>"; };
@@ -2087,6 +2090,8 @@
 				BAD9C0351D38D3860040E1F1 /* NSString+Category.m */,
 				BA14B3641D3F30FC0030CD61 /* UIView+BYCategory.h */,
 				BA14B3651D3F30FC0030CD61 /* UIView+BYCategory.m */,
+				BA48B05F1D48642600145F98 /* MBProgressHUD+BYCategory.h */,
+				BA48B0601D48642600145F98 /* MBProgressHUD+BYCategory.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2802,6 +2807,7 @@
 				BA68E1171CC0B4C800A85FCD /* amrFileCodec.mm in Sources */,
 				BA68E1741CC0B4C900A85FCD /* EaseBubbleView+File.m in Sources */,
 				BA68E1391CC0B4C900A85FCD /* DACircularProgressView.m in Sources */,
+				BA48B0611D48642600145F98 /* MBProgressHUD+BYCategory.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
 				BA68E1281CC0B4C800A85FCD /* MJRefreshBackStateFooter.m in Sources */,

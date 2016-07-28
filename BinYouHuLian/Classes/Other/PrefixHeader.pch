@@ -30,6 +30,7 @@
 //#import <UIImageView+WebCache.h>
 
 
+#import "MBProgressHUD+BYCategory.h"
 #import "UITextField+Category.h"
 #import "NSString+Category.h"
 #import "UIView+BYCategory.h"

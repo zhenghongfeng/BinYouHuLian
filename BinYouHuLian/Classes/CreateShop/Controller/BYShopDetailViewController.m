@@ -138,8 +138,8 @@
 
 - (void)chatClick
 {
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeChat];
-    vc.title = @"wuzong";
+    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"18612129273" conversationType:EMConversationTypeChat];
+    vc.title = @"18612129273";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

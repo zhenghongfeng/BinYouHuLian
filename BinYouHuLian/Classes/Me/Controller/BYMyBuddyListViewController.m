@@ -43,6 +43,9 @@
     // 从服务器获取所有的好友  有网络的情况
     EMError *error = nil;
     self.buddyList = [[NSMutableArray alloc] initWithArray:[[EMClient sharedClient].contactManager getContactsFromServerWithError:&error]];
+    NSLog(@"error = %@", error.errorDescription);
+    NSLog(@"error = %d", error.code);
+    
     if (!error) {
         NSLog(@"获取成功 -- %@",self.buddyList);
     }

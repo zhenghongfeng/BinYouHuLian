@@ -131,33 +131,27 @@
 - (void)loginCLick
 {
     if (self.phoneTextField.text.length == 0) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入手机号码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入手机号码" view:self.view];
         return;
     }
     if (![NSString validatePhone:self.phoneTextField.text]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入正确的手机号码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入正确的手机号码" view:self.view];
         return;
     }
     if (self.passwordTextField.text.length == 0) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入密码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入密码" view:self.view];
         return;
     }
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"登录中...";
     
+    NSString *phone = self.phoneTextField.text;
+    NSString *password = [NSString md5:self.passwordTextField.text];
+    
     NSDictionary *dic = @{
-                          @"phone": self.phoneTextField.text,
-                          @"password": [NSString md5:self.passwordTextField.text]
+                          @"phone": phone,
+                          @"password": password
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -174,6 +168,13 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
             [userDefaults synchronize];
+            
+            EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
+            
+            if (!error) {
+                NSLog(@"登录成功");
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+            }
             
         } else {
             hud.mode = MBProgressHUDModeText;

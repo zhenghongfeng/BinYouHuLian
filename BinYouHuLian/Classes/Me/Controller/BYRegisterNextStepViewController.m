@@ -217,8 +217,9 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"注册中...";
     
+    NSString *password = [NSString md5:self.passwordTextField.text];
     NSDictionary *dic = @{@"phone": self.phone,
-                          @"password": [NSString md5:self.passwordTextField.text],
+                          @"password": password,
                           @"nickname": self.nicknameTextField.text,
                           @"vcode": self.verCode
                           };
@@ -268,6 +269,14 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
             [userDefaults synchronize];
+            
+            EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
+            
+            if (!error) {
+                NSLog(@"登录成功");
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+            }
+            
         } else {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"请输入昵称";

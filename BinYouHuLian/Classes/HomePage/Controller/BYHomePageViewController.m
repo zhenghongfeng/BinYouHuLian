@@ -414,9 +414,6 @@
     CLLocationCoordinate2D rightBottomcoornation = [_mapView convertPoint:CGPointMake(kScreenWidth, kScreenHeight) toCoordinateFromView:_mapView];
     NSLog(@"rightBottomcoornation = %f, %f", rightBottomcoornation.latitude, rightBottomcoornation.longitude);
     
-    
-    
-    
     NSLog(@"转换后:%f,%f",_lat,_long);
     NSDictionary *dic = @{
                           @"longitude": @(_long),
@@ -428,11 +425,10 @@
     [manager POST:@"http://192.168.4.181/api/shop/search?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSLog(@"responseObject = %@", responseObject);
+        NSLog(@"responseObject = %@", responseObject);
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            //            [hud hide:YES];
             
             [_mapView removeAnnotations:_mapView.annotations];
             
@@ -442,9 +438,7 @@
             
             for (int i = 0; i < self.shops.count; i++) {
                 BYShop *shop = self.shops[i];
-                CLLocationDegrees latitude = [shop.latitude doubleValue];
-                CLLocationDegrees longitude = [shop.longitude doubleValue];
-                CLLocationCoordinate2D locationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude);
+                CLLocationCoordinate2D locationCoordinate2D = CLLocationCoordinate2DMake([shop.latitude doubleValue], [shop.longitude doubleValue]);
                 BYAnnotation *annotation = [[BYAnnotation alloc] init];
                 annotation.coordinate = locationCoordinate2D;
                 annotation.tag = i;
@@ -547,6 +541,7 @@ static double hometransformLon(double x, double y)
 }
 
 #pragma mark - even response
+
 - (void)mineBtnClick
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -598,44 +593,35 @@ static double hometransformLon(double x, double y)
 
 - (void)setupConstraints
 {
-    // SDAutoLayout
-    // 搜索
+    //搜索
     self.searchBtn.sd_layout.leftSpaceToView(self.view, BYMargin)
     .topSpaceToView(self.view, BYMargin * 2)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
-    // 当前位置
+    //当前位置
     self.locateBtn.sd_layout
     .leftSpaceToView(self.view, BYMargin)
     .bottomSpaceToView(self.view, BYMargin * 2)
     .widthIs(BYHomeButtonH)
     .heightIs(BYHomeButtonH);
-    // 我的
+    //我的
     self.mineBtn.sd_layout
     .bottomSpaceToView(self.view, BYMargin * 2)
     .centerXEqualToView(self.view)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
-    // 开店
+    //开店
     self.createShopBtn.sd_layout
     .rightSpaceToView(self.view, BYMargin)
     .bottomSpaceToView(self.view,BYMargin * 2)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
-    
+    //中心大头针
     self.centerImageView.sd_layout
     .centerXIs(self.view.centerX)
     .centerYIs(self.view.centerY)
     .widthIs(30)
     .heightIs(40);
 }
-
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
 
 @end

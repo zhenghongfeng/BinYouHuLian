@@ -280,13 +280,11 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
+            [self.view endEditing:YES];
             if (self.categoryTitles.count > 0) {
                 [self.navigationController.view addSubview:self.coverView];
             } else {
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"请检查您的网络";
-                [hud hide:YES afterDelay:1];
+                [MBProgressHUD showModeText:@"请检查您的网络" view:self.view];
                 return;
             }
         }
@@ -450,10 +448,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 - (void)rightTopDoneClick
 {
     if (self.category == nil) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请选择店铺类别";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请选择店铺类别" view:self.view];
         return;
     }
     
@@ -462,10 +457,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     self.shopName = cell.textField.text;
     
     if (self.shopName == nil) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入店铺名称";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入店铺名称" view:self.view];
         return;
     }
     

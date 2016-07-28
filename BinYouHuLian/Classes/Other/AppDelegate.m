@@ -22,28 +22,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // create the window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    // key board manager
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
-    
-    // set up root controller
     BYHomePageViewController *vc = [BYHomePageViewController new];
     self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:vc];
+    
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     
     // 集成环信SDK, AppKey:注册的appKey, apnsCertName:推送证书名(不需要加后缀)
     EMOptions *options = [EMOptions optionsWithAppkey:IMAPPKEY];
     options.apnsCertName = IMAPNsCertName;
+    
     // 初始化SDK
     [[EMClient sharedClient] initializeSDKWithOptions:options];
+    
     //添加回调监听代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     
     //注册好友回调
-    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+//    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    
     //移除好友回调
 //    [[EMClient sharedClient].contactManager removeDelegate:self];
     
@@ -62,10 +62,43 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
     
-    EMError *error = nil;
-    EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-    pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
+    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+    NSLog(@"isAutoLogin = %d", isAutoLogin);
+//    if (isAutoLogin){
+//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+//    }
+//    else
+//    {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+//    }
     
+    //异步设置apns相关
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = nil;
+        EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+        
+        NSLog(@"push error ========= %@", error.errorDescription);
+        
+        [[EMClient sharedClient] setApnsNickname:@"宾友"];
+        
+        options.displayStyle = EMPushDisplayStyleMessageSummary;
+        
+        options.noDisturbStatus = EMPushNoDisturbStatusClose;
+        //        options.noDisturbingStartH = 23;
+        //        options.noDisturbingEndH = 4;
+        EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+        if (!resultError) {
+            NSLog(@"APNS属性设置成功");
+        }
+    });
+    
+    
+    
+//    EMError *error = nil;
+//    EMPushOptions *pushoptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+//    pushoptions.displayStyle = EMPushDisplayStyleMessageSummary;
+//    NSLog(@"push error ========= %@", error.errorDescription);
+//    NSLog(@"push error ========= %@", error.errorDescription);
     
     return YES;
 }
@@ -78,6 +111,8 @@
 - (void)didAutoLoginWithError:(EMError *)aError
 {
     NSLog(@"aError == %@" , aError);
+    NSLog(@"aError == == %@", aError.errorDescription);
+    NSLog(@"aError == == %@", aError.errorDescription);
 }
 
 #pragma mark - 重连
@@ -151,11 +186,17 @@
     
 }
 
+- (void)didReceiveMessages:(NSArray *)aMessages
+{
+    NSLog(@"didReceiveMessages=====%@", aMessages);
+}
+
 #pragma mark - UIApplicationDelegate
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     
 }
+
 // App进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
@@ -195,6 +236,25 @@
                                           cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - EMPushManagerDelegateDevice
+
+// 打印收到的apns信息
+-(void)didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSError *parseError = nil;
+    NSData  *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
+                                                        options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *str =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.content", @"Apns content")
+                                                    message:str
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+    
 }
 
 @end

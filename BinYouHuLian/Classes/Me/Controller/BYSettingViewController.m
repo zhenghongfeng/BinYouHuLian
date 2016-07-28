@@ -117,6 +117,11 @@
                     [userDefaults setObject:nil forKey:@"access_token"];
                     [userDefaults synchronize];
                     
+                    EMError *error = [[EMClient sharedClient] logout:YES];
+                    if (!error) {
+                        NSLog(@"退出成功");
+                    }
+                    
                 } else {
                     hud.mode = MBProgressHUDModeText;
                     hud.labelText = @"退出失败";
