@@ -14,6 +14,8 @@
 
 #ifdef __OBJC__
 
+#define BYUrl_dev @"http://www.binyou.info/api"
+
 #import "EMSDK.h"
 #import "EaseUI.h"
 

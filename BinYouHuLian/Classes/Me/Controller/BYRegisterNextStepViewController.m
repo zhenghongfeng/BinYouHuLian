@@ -225,7 +225,7 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.181/api/user/regist?" parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:[BYUrl_dev stringByAppendingString:@"/user/regist?"] parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //单张图片
         UIImage *image = self.avatarButton.currentBackgroundImage;//获得一张Image
         NSData *data = UIImageJPEGRepresentation(image, 1.0);//将UIImage转为NSData，1.0表示不压缩图片质量。
@@ -277,9 +277,28 @@
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
             }
             
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                EMError *error = nil;
+                EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+                
+                NSLog(@"push error ========= %@", error.errorDescription);
+                
+//                [[EMClient sharedClient] setApnsNickname:@"宾友"];
+                
+                options.displayStyle = EMPushDisplayStyleMessageSummary;
+                
+                options.noDisturbStatus = EMPushNoDisturbStatusClose;
+                //        options.noDisturbingStartH = 23;
+                //        options.noDisturbingEndH = 4;
+                EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+                if (!resultError) {
+                    NSLog(@"APNS属性设置成功");
+                }
+            });
+            
         } else {
             hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"请输入昵称";
+            hud.labelText = responseObject[@"msg"];
             [hud hide:YES afterDelay:1];
             return;
         }
@@ -289,15 +308,6 @@
         hud.labelText = @"注册失败";
         [hud hide:YES afterDelay:1];
     }];
-    
-//    [manager POST:@"http://192.168.4.181/api/user/regist?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
-//        
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"responseObject = %@", responseObject);
-//        
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error = %@", error.localizedDescription);
-//    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

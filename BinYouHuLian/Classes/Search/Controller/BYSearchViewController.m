@@ -7,6 +7,8 @@
 //
 
 #import "BYSearchViewController.h"
+#import "BYSearchListTableViewCell.h"
+#import "BYShop.h"
 
 @interface BYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -19,6 +21,12 @@
 @property (nonatomic, strong) UITableView *searchTableView;
 
 @property (nonatomic, strong) NSMutableArray *searchData;
+
+/** shops */
+@property (nonatomic, strong) NSMutableArray *shops;
+
+/** keys */
+@property (nonatomic, strong) NSMutableArray *keys;
 
 @end
 
@@ -96,12 +104,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *ID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-    }
+    
     if (tableView == _tableView) {
+        static NSString *ID = @"cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
         if (indexPath.section == 0) {
             cell.textLabel.text = self.searchHistoryDatas[indexPath.row];
         } else {
@@ -109,23 +118,37 @@
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = kMainColor;
         }
+        return cell;
     } else {
-        cell.textLabel.text = self.searchData[indexPath.row];
+        static NSString *ID = @"cell";
+        BYSearchListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[BYSearchListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        if ([self.searchData[indexPath.row] isKindOfClass:[BYShop class]]) {
+            cell.nameLabel.text = [self.shops[indexPath.row] name];
+            cell.iconImageView.image = [UIImage imageNamed:@"searchShopLocation"];
+        } else {
+            cell.nameLabel.text = self.searchData[indexPath.row];
+            cell.iconImageView.image = [UIImage imageNamed:@"searchResult"];
+        }
+        
+        return cell;
     }
-    
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (tableView == _tableView) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSString *name = cell.textLabel.text;
         if (indexPath.section == 0) {
             [self.view endEditing:YES];
             [self dismissViewControllerAnimated:YES completion:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:name userInfo:nil];
         }
         
         if (indexPath.section == 1) {
@@ -140,11 +163,12 @@
             [hud hide:YES afterDelay:1];
         }
     } else {
+        BYSearchListTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSString *name = cell.nameLabel.text;
         [self.view endEditing:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:name userInfo:nil];
     }
-    
 }
 
 #pragma mark - UISearchBarDelegate
@@ -176,7 +200,7 @@
     
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:searchBar.text userInfo:nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -184,28 +208,44 @@
     NSLog(@"searchText == %@", searchText);
     if (searchText.length == 0) {
         [_searchTableView removeFromSuperview];
+        [self.shops removeAllObjects];
+        
         return;
     }
     [self.searchData removeAllObjects];
     
     NSDictionary *dic = @{
+                          @"lowerlong": @(_leftTopLongitude),
+                          @"lowerlati": @(_leftTopLatitude),
+                          @"upperlong": @(_rightBottomLongitude),
+                          @"upperlati": @(_rightBottomLatitude),
                           @"key": searchText
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.181/api/shop/search?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:[BYUrl_dev stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            NSArray *arr = responseObject[@"stores"];
-            for (int i = 0; i < arr.count; i++) {
-                NSString *name = [arr[i] objectForKey:@"name"];
-                [self.searchData addObject:name];
-            }
+            
+            self.shops = [BYShop mj_objectArrayWithKeyValuesArray:responseObject[@"stores"]];
+            
+            [self.searchData addObjectsFromArray:self.shops];
+            
+//            NSArray *arrStores = responseObject[@"stores"];
+//            for (int i = 0; i < arrStores.count; i++) {
+//                NSString *name = [arrStores[i] objectForKey:@"name"];
+//                [self.searchData addObject:name];
+//            }
+            
+            [self.searchData addObjectsFromArray:responseObject[@"keys"]];
+            NSLog(@"self.searchData = %zd", self.searchData.count);
+            
             [self.view addSubview:self.searchTableView];
+            
             [self.searchTableView reloadData];
         } else {
             

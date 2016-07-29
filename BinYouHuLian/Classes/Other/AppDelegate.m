@@ -62,8 +62,8 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
     
-    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
-    NSLog(@"isAutoLogin = %d", isAutoLogin);
+//    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+//    NSLog(@"isAutoLogin = %d", isAutoLogin);
 //    if (isAutoLogin){
 //        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
 //    }
@@ -73,25 +73,24 @@
 //    }
     
     //异步设置apns相关
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        EMError *error = nil;
-        EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-        
-        NSLog(@"push error ========= %@", error.errorDescription);
-        
-        [[EMClient sharedClient] setApnsNickname:@"宾友"];
-        
-        options.displayStyle = EMPushDisplayStyleMessageSummary;
-        
-        options.noDisturbStatus = EMPushNoDisturbStatusClose;
-        //        options.noDisturbingStartH = 23;
-        //        options.noDisturbingEndH = 4;
-        EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
-        if (!resultError) {
-            NSLog(@"APNS属性设置成功");
-        }
-    });
-    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        EMError *error = nil;
+//        EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+//        
+//        NSLog(@"push error ========= %@", error.errorDescription);
+//        
+//        [[EMClient sharedClient] setApnsNickname:@"宾友"];
+//        
+//        options.displayStyle = EMPushDisplayStyleMessageSummary;
+//        
+//        options.noDisturbStatus = EMPushNoDisturbStatusClose;
+//        //        options.noDisturbingStartH = 23;
+//        //        options.noDisturbingEndH = 4;
+//        EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+//        if (!resultError) {
+//            NSLog(@"APNS属性设置成功");
+//        }
+//    });
     
     
 //    EMError *error = nil;

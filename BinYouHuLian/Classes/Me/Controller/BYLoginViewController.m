@@ -155,7 +155,7 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://192.168.4.181/api/user/login?" parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:[BYUrl_dev stringByAppendingString:@"/user/login?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
@@ -175,6 +175,24 @@
                 NSLog(@"登录成功");
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
             }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                EMError *error = nil;
+                EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+                
+                NSLog(@"push error ========= %@", error.errorDescription);
+                
+//                [[EMClient sharedClient] setApnsNickname:@"宾友"];
+                
+                options.displayStyle = EMPushDisplayStyleMessageSummary;
+                
+                options.noDisturbStatus = EMPushNoDisturbStatusClose;
+                //        options.noDisturbingStartH = 23;
+                //        options.noDisturbingEndH = 4;
+                EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+                if (!resultError) {
+                    NSLog(@"APNS属性设置成功");
+                }
+            });
             
         } else {
             hud.mode = MBProgressHUDModeText;

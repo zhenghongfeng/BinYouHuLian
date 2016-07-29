@@ -10,4 +10,14 @@
 
 @interface BYSearchViewController : UIViewController
 
+/** leftTopLongitude */
+@property (nonatomic, assign) double leftTopLongitude;
+/** leftTopLatitude */
+@property (nonatomic, assign) double leftTopLatitude;
+
+/** rightBottomLongitude */
+@property (nonatomic, assign) double rightBottomLongitude;
+/** rightBottomLatitude */
+@property (nonatomic, assign) double rightBottomLatitude;
+
 @end

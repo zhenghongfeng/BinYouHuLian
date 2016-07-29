@@ -10,6 +10,5 @@
 
 @interface BYHomePageViewController : UIViewController
 
-
 @end
 
