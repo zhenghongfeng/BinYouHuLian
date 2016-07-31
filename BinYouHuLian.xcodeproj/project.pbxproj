@@ -248,6 +248,8 @@
 		BAC5EFBE1D3C716E00E29B55 /* addAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */; };
 		BAC5EFC01D3C790200E29B55 /* myback.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBF1D3C790200E29B55 /* myback.png */; };
 		BAC5EFC31D3CD94200E29B55 /* BYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */; };
+		BACCA6221D4DFFC20070F8A6 /* BYLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */; };
+		BACCA6251D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */; };
 		BAD26DA01CBF37D100F355C5 /* BYCaredLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD26D9F1CBF37D100F355C5 /* BYCaredLocationViewController.m */; };
 		BAD26DA31CBF40E500F355C5 /* BYMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD26DA21CBF40E500F355C5 /* BYMessageListViewController.m */; };
 		BAD26DAD1CBF442E00F355C5 /* xiaoming.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26DA61CBF442E00F355C5 /* xiaoming.png */; };
@@ -872,6 +874,10 @@
 		BAC5EFBF1D3C790200E29B55 /* myback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myback.png; sourceTree = "<group>"; };
 		BAC5EFC11D3CD94200E29B55 /* BYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginViewController.h; sourceTree = "<group>"; };
 		BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLoginViewController.m; sourceTree = "<group>"; };
+		BACCA6201D4DFFC20070F8A6 /* BYLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginUser.h; sourceTree = "<group>"; };
+		BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLoginUser.m; sourceTree = "<group>"; };
+		BACCA6231D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+BYEaseMob.h"; sourceTree = "<group>"; };
+		BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+BYEaseMob.m"; sourceTree = "<group>"; };
 		BAD26D9E1CBF37D100F355C5 /* BYCaredLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCaredLocationViewController.h; sourceTree = "<group>"; };
 		BAD26D9F1CBF37D100F355C5 /* BYCaredLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCaredLocationViewController.m; sourceTree = "<group>"; };
 		BAD26DA11CBF40E500F355C5 /* BYMessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMessageListViewController.h; sourceTree = "<group>"; };
@@ -1897,6 +1903,15 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		BACCA61F1D4DFF7A0070F8A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BACCA6201D4DFFC20070F8A6 /* BYLoginUser.h */,
+				BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BAE0F33D1CBB9AA4002009F6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -2080,11 +2095,14 @@
 			children = (
 				BA3218591D46F44A00DE990D /* Lib */,
 				BAE0F35C1CBB9AA4002009F6 /* Category */,
+				BACCA61F1D4DFF7A0070F8A6 /* Model */,
 				BAE0F35D1CBB9AA4002009F6 /* Controller */,
 				BAE0F3601CBB9AA4002009F6 /* View */,
 				BAE0F35E1CBB9AA4002009F6 /* main.m */,
 				BAE0F3591CBB9AA4002009F6 /* AppDelegate.h */,
 				BAE0F35A1CBB9AA4002009F6 /* AppDelegate.m */,
+				BACCA6231D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.h */,
+				BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */,
 				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
 				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BA2E53A61CBBBEDD00AD323B /* BYConst.h */,
@@ -2775,6 +2793,7 @@
 				BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */,
 				BA68E14B1CC0B4C900A85FCD /* PSTCollectionView.m in Sources */,
 				BAE0F3CA1CBB9AA4002009F6 /* BYHomePageViewController.m in Sources */,
+				BACCA6251D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m in Sources */,
 				BA68E13C1CC0B4C900A85FCD /* EMSDWebImageDecoder.m in Sources */,
 				BA68E1271CC0B4C800A85FCD /* MJRefreshBackNormalFooter.m in Sources */,
 				BA68E1531CC0B4C900A85FCD /* PSTGridLayoutInfo.m in Sources */,
@@ -2797,6 +2816,7 @@
 				BA68E16A1CC0B4C900A85FCD /* EaseLocationViewController.m in Sources */,
 				BA68E1161CC0B4C800A85FCD /* EMCDDeviceManagerBase.m in Sources */,
 				BA68E1561CC0B4C900A85FCD /* PSTGridLayoutSection.m in Sources */,
+				BACCA6221D4DFFC20070F8A6 /* BYLoginUser.m in Sources */,
 				BA68E12A1CC0B4C800A85FCD /* MJRefreshNormalHeader.m in Sources */,
 				BA68E1661CC0B4C900A85FCD /* EaseEmotionEscape.m in Sources */,
 				BA04BE5E1CC4E0E8000270EB /* BYShopDetailViewController.m in Sources */,
@@ -2995,8 +3015,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zheng hongfeng (4U327QE44C)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng hongfeng (4U327QE44C)";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
@@ -3028,7 +3048,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
 			};
 			name = Debug;
 		};
@@ -3038,8 +3058,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zheng hongfeng (4U327QE44C)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng hongfeng (4U327QE44C)";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Other/PrefixHeader.pch;
 				INFOPLIST_FILE = BinYouHuLian/Info.plist;
@@ -3071,7 +3091,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
 			};
 			name = Release;
 		};

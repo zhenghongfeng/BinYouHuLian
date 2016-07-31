@@ -181,7 +181,7 @@
                 
                 NSLog(@"push error ========= %@", error.errorDescription);
                 
-//                [[EMClient sharedClient] setApnsNickname:@"宾友"];
+                [[EMClient sharedClient] setApnsNickname:@"宾友"];
                 
                 options.displayStyle = EMPushDisplayStyleMessageSummary;
                 
