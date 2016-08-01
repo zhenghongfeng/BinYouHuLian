@@ -10,7 +10,7 @@
 
 @interface AppDelegate (BYEaseMob)
 
-- (void)easemobApplication:(UIApplication *)application
+- (void)by_easemobApplication:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                     appkey:(NSString *)appkey
               apnsCertName:(NSString *)apnsCertName

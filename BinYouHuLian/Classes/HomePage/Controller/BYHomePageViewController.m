@@ -18,6 +18,7 @@
 #import "BYCalloutAnnotation.h"
 #import "BYCalloutAnnotatonView.h"
 #import "BYShop.h"
+#import "BYLoginUser.h"
 
 @interface BYHomePageViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 {
@@ -309,16 +310,11 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            
             [_mapView removeAnnotations:_mapView.annotations];
-            
             NSMutableArray *annotationArr = [NSMutableArray array];
-            
             self.shops = [BYShop mj_objectArrayWithKeyValuesArray:responseObject[@"stores"]];
-            
             for (int i = 0; i < self.shops.count; i++) {
                 BYShop *shop = self.shops[i];
                 CLLocationCoordinate2D locationCoordinate2D = CLLocationCoordinate2DMake([shop.latitude doubleValue], [shop.longitude doubleValue]);
@@ -327,23 +323,14 @@
                 annotation.tag = i;
                 annotation.shop = shop;
                 [annotationArr addObject:annotation];
-                NSLog(@"annotation.coordinate = %f",annotation.coordinate.longitude);
-                NSLog(@"annotation.coordinate = %f",annotation.coordinate.latitude);
             }
             [_mapView addAnnotations:annotationArr];
-            
         } else {
-            //            hud.mode = MBProgressHUDModeText;
-            //            hud.labelText = @"失败";
-            //            [hud hide:YES afterDelay:1];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        hud.mode = MBProgressHUDModeText;
-        //        hud.labelText = @"登录失败";
-        //        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 
@@ -416,7 +403,7 @@ static double hometransformLon(double x, double y)
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *str = [userDefaults valueForKey:@"access_token"];
-    if (str.length > 0) {
+    if (str) {
         BYMineViewController *vc = [[BYMineViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     } else {

@@ -244,6 +244,10 @@
 		BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */; };
 		BA9E3DC71CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */; };
 		BA9E3DCB1CBE42EC00E71119 /* red_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */; };
+		BAA388F41D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388F31D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m */; };
+		BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388F61D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m */; };
+		BAA388FA1D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388F91D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m */; };
+		BAA388FD1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388FC1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.m */; };
 		BAC5EFBC1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */; };
 		BAC5EFBE1D3C716E00E29B55 /* addAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */; };
 		BAC5EFC01D3C790200E29B55 /* myback.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBF1D3C790200E29B55 /* myback.png */; };
@@ -868,6 +872,14 @@
 		BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopSuccessViewController.m; sourceTree = "<group>"; };
 		BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopSuccessViewController.xib; sourceTree = "<group>"; };
 		BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_check@3x.png"; sourceTree = "<group>"; };
+		BAA388F21D4F24E300C6FEB4 /* BYAboutMeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAboutMeInfoViewController.h; sourceTree = "<group>"; };
+		BAA388F31D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAboutMeInfoViewController.m; sourceTree = "<group>"; };
+		BAA388F51D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAboutMeInfoHeadTableViewCell.h; sourceTree = "<group>"; };
+		BAA388F61D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAboutMeInfoHeadTableViewCell.m; sourceTree = "<group>"; };
+		BAA388F81D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAboutMeInfoNicknameTableViewCell.h; sourceTree = "<group>"; };
+		BAA388F91D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAboutMeInfoNicknameTableViewCell.m; sourceTree = "<group>"; };
+		BAA388FB1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYModifyNickNameViewController.h; sourceTree = "<group>"; };
+		BAA388FC1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYModifyNickNameViewController.m; sourceTree = "<group>"; };
 		BAC5EFBA1D3C6FA200E29B55 /* BYRegisterNextStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYRegisterNextStepViewController.h; sourceTree = "<group>"; };
 		BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYRegisterNextStepViewController.m; sourceTree = "<group>"; };
 		BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAvatar.png; sourceTree = "<group>"; };
@@ -2033,6 +2045,10 @@
 			children = (
 				BAE0F3511CBB9AA4002009F6 /* BYMineViewController.h */,
 				BAE0F3521CBB9AA4002009F6 /* BYMineViewController.m */,
+				BAA388F21D4F24E300C6FEB4 /* BYAboutMeInfoViewController.h */,
+				BAA388F31D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m */,
+				BAA388FB1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.h */,
+				BAA388FC1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.m */,
 				BAE0F3531CBB9AA4002009F6 /* BYRegisterViewController.h */,
 				BAE0F3541CBB9AA4002009F6 /* BYRegisterViewController.m */,
 				BAC5EFBA1D3C6FA200E29B55 /* BYRegisterNextStepViewController.h */,
@@ -2086,6 +2102,10 @@
 				BAD26DB61CBF5D9E00F355C5 /* BYMessageTableViewCell.xib */,
 				BADE666F1CCE06C000843708 /* BYMyBuddyListTableViewCell.h */,
 				BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */,
+				BAA388F51D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.h */,
+				BAA388F61D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m */,
+				BAA388F81D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.h */,
+				BAA388F91D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2777,7 +2797,9 @@
 				BADD96F61CD308F1008CFF3D /* BYAddGroupViewController.m in Sources */,
 				BA68E1811CC0B4C900A85FCD /* EaseFacialView.m in Sources */,
 				BA68E1431CC0B4C900A85FCD /* UIButton+EMWebCache.m in Sources */,
+				BAA388F41D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m in Sources */,
 				BA3218741D46F45400DE990D /* ELCAssetCell.m in Sources */,
+				BAA388FA1D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m in Sources */,
 				BA68E1121CC0B4C800A85FCD /* EMCDDeviceManager+Media.m in Sources */,
 				BA04BE7F1CC61EA8000270EB /* BYCalloutAnnotation.m in Sources */,
 				BA68E1591CC0B4C900A85FCD /* EaseConversationModel.m in Sources */,
@@ -2850,6 +2872,7 @@
 				BA48B0611D48642600145F98 /* MBProgressHUD+BYCategory.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
+				BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */,
 				BA68E1281CC0B4C800A85FCD /* MJRefreshBackStateFooter.m in Sources */,
 				BA68E1721CC0B4C900A85FCD /* EaseMessageCell.m in Sources */,
 				BA3218781D46F45400DE990D /* ELCOverlayImageView.m in Sources */,
@@ -2868,6 +2891,7 @@
 				BA68E16D1CC0B4C900A85FCD /* EaseUsersListViewController.m in Sources */,
 				BA68E1401CC0B4C900A85FCD /* EMSDWebImagePrefetcher.m in Sources */,
 				BA9E3D9B1CBCC69000E71119 /* BYCreateShopAddHeaderTableViewCell.m in Sources */,
+				BAA388FD1D4F2C7900C6FEB4 /* BYModifyNickNameViewController.m in Sources */,
 				BA68E1241CC0B4C800A85FCD /* MJRefreshAutoNormalFooter.m in Sources */,
 				BA68E16F1CC0B4C900A85FCD /* EaseUserCell.m in Sources */,
 				BA68E1791CC0B4C900A85FCD /* EaseBubbleView+Video.m in Sources */,

@@ -28,7 +28,7 @@
     NSLog(@"shop==%@", self.shop.name);
     
     self.title = @"店铺详情";
-    self.titles = @[@"店名", @"电话", @"图文简介"];
+    self.titles = @[@"店名", @"类型", @"图文简介"];
     
     self.contents = @[@"吴老板的书店", @"18816889999", @"《岛上书店》是一本关于全世界所有书的书，写给全世界所有真正爱书的人。 岛上书店是间维多利亚风格的小屋，门廊上挂着褪色的招牌，上面写着：没有谁是一座孤岛，每本书都是一个世界A．J．费克里，人近中年，在一座与世隔绝的小岛上，经营一家书店。"];
 
@@ -49,21 +49,28 @@
 
 - (void)setupTabelView
 {
-    UIView *header = [UIView new];
-    
-    SDCycleScrollView *scrollView = [SDCycleScrollView new];
-    scrollView.localizationImageNamesGroup = @[@"img_00", @"img_01", @"img_02", @"img_03", @"img_04"];
-    [header addSubview:scrollView];
-    
-    scrollView.sd_layout
-    .leftSpaceToView(header, 0)
-    .topSpaceToView(header, 0)
-    .rightSpaceToView(header, 0)
-    .heightIs(150);
-    
-    [header setupAutoHeightWithBottomView:scrollView bottomMargin:0];
+    if (self.shop.picshow1) {
+        UIView *header = [UIView new];
         
-    self.tableView.tableHeaderView = scrollView;
+        NSString *str1 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow1];
+        NSString *str2 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow2];
+        NSString *str3 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow3];
+        
+        SDCycleScrollView *scrollView = [SDCycleScrollView new];
+        scrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
+        scrollView.imageURLStringsGroup = @[str1, str2, str3];
+        [header addSubview:scrollView];
+        
+        scrollView.sd_layout
+        .leftSpaceToView(header, 0)
+        .topSpaceToView(header, 0)
+        .rightSpaceToView(header, 0)
+        .heightIs(150);
+        
+        [header setupAutoHeightWithBottomView:scrollView bottomMargin:0];
+        
+        self.tableView.tableHeaderView = scrollView;
+    }
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
     

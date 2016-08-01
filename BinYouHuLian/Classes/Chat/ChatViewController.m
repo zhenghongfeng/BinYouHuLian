@@ -72,8 +72,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
     
+    self.showRefreshHeader = YES;
     //通过会话管理者获取已收发消息
-    [self tableViewDidTriggerHeaderRefresh];
+    [self tableViewDidTriggerHeaderRefresh];    
 }
 
 #pragma mark - setup subviews
@@ -291,7 +292,7 @@
 - (void)transpondMenuAction:(id)sender
 {
     if (self.menuIndexPath && self.menuIndexPath.row > 0) {
-        id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
+//        id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
 //        ContactListSelectViewController *listViewController = [[ContactListSelectViewController alloc] initWithNibName:nil bundle:nil];
 //        listViewController.messageModel = model;
 //        [listViewController tableViewDidTriggerHeaderRefresh];

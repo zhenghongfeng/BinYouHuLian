@@ -349,7 +349,7 @@
     _okButton.sd_layout
     .centerXIs(self.view.centerX)
     .topSpaceToView(_affirmPasswordTextField, 20)
-    .widthIs(150)
+    .widthIs(130)
     .heightIs(40);
 }
 

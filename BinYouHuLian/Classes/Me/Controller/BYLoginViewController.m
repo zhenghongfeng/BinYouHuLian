@@ -8,6 +8,7 @@
 
 #import "BYLoginViewController.h"
 #import "BYResetPasswordViewController.h"
+#import "BYLoginUser.h"
 
 @interface BYLoginViewController ()
 
@@ -162,38 +163,35 @@
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
+            
             [hud hide:YES];
+            
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
             [userDefaults synchronize];
             
-            EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
+            BYLoginUser *loginUser = [BYLoginUser mj_objectWithKeyValues:responseObject[@"user"]];
+            NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *path  = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
+            BOOL flag = [NSKeyedArchiver archiveRootObject:loginUser toFile:path];
+            NSLog(@"flag = %d", flag);
             
+            EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
             if (!error) {
                 NSLog(@"登录成功");
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
+                [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
             }
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                EMError *error = nil;
-                EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-                
-                NSLog(@"push error ========= %@", error.errorDescription);
-                
-                [[EMClient sharedClient] setApnsNickname:@"宾友"];
-                
-                options.displayStyle = EMPushDisplayStyleMessageSummary;
-                
-                options.noDisturbStatus = EMPushNoDisturbStatusClose;
-                //        options.noDisturbingStartH = 23;
-                //        options.noDisturbingEndH = 4;
-                EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
-                if (!resultError) {
-                    NSLog(@"APNS属性设置成功");
-                }
-            });
             
+            EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+            //                        [[EMClient sharedClient] setApnsNickname:@"宾友"];
+            options.displayStyle = EMPushDisplayStyleMessageSummary;
+            EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+            if (!resultError) {
+                NSLog(@"APNS属性设置成功");
+            }
         } else {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"登录失败";
@@ -260,7 +258,7 @@
     _loginButton.sd_layout
     .centerXIs(self.view.centerX)
     .topSpaceToView(_passwordTextField, 20)
-    .widthIs(150)
+    .widthIs(130)
     .heightIs(40);
     
     _registerButton.sd_layout

@@ -37,6 +37,9 @@
 #import "NSString+Category.h"
 #import "UIView+BYCategory.h"
 
+
+#import "BYLoginUser.h"
+
 #endif
 
 

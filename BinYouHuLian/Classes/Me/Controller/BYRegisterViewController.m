@@ -162,7 +162,12 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            [_verCodeTextField becomeFirstResponder];
+        } else {
+            [MBProgressHUD showModeText:@"发送失败" view:self.view];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
     }];
@@ -319,7 +324,7 @@
     _nextStepButton.sd_layout
     .centerXIs(self.view.centerX)
     .topSpaceToView(_verCodeTextField, 20)
-    .widthIs(150)
+    .widthIs(130)
     .heightIs(40);
     
     _loginButton.sd_layout

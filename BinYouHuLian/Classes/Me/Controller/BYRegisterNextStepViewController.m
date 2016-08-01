@@ -259,7 +259,6 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [hud hide:YES];
@@ -270,43 +269,33 @@
             [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
             [userDefaults synchronize];
             
-            EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
+            BYLoginUser *loginUser = [BYLoginUser mj_objectWithKeyValues:responseObject[@"user"]];
+            NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *path  = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
+            BOOL flag = [NSKeyedArchiver archiveRootObject:loginUser toFile:path];
+            NSLog(@"flag = %d", flag);
             
+            EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
             if (!error) {
                 NSLog(@"登录成功");
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
             }
+            EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                EMError *error = nil;
-                EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-                
-                NSLog(@"push error ========= %@", error.errorDescription);
-                
-//                [[EMClient sharedClient] setApnsNickname:@"宾友"];
-                
-                options.displayStyle = EMPushDisplayStyleMessageSummary;
-                
-                options.noDisturbStatus = EMPushNoDisturbStatusClose;
-                //        options.noDisturbingStartH = 23;
-                //        options.noDisturbingEndH = 4;
-                EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
-                if (!resultError) {
-                    NSLog(@"APNS属性设置成功");
-                }
-            });
-            
+            NSLog(@"push error ========= %@", error.errorDescription);
+                        
+            options.displayStyle = EMPushDisplayStyleMessageSummary;
+            EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+            if (!resultError) {
+                NSLog(@"APNS属性设置成功");
+            }
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = responseObject[@"msg"];
-            [hud hide:YES afterDelay:1];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
             return;
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"注册失败";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 
@@ -394,7 +383,7 @@
     _okButton.sd_layout
     .centerXIs(self.view.centerX)
     .topSpaceToView(_affirmPasswordTextField, 20)
-    .widthIs(150)
+    .widthIs(130)
     .heightIs(40);
 }
 

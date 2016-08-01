@@ -11,6 +11,7 @@
 #import "BYMyBuddyListTableViewCell.h"
 #import "BYChatViewController.h"
 #import "BYFriend.h"
+#import "ChatViewController.h"
 
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -33,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"好友列表";
+    self.navigationItem.title = @"好友列表";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBuddy)];
     
@@ -46,11 +47,17 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    //1.获取文件路径
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
+    NSLog(@"path=%@",path);
+    
+    //2.从文件中读取对象
+    BYLoginUser *loginUser = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSDictionary *dic = @{
-                          @"phone": @"15942601275"
+                          @"phone": loginUser.phone
                           };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
     [manager POST:[BYUrl_dev stringByAppendingString:@"/ease/users/friends?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -60,45 +67,25 @@
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [hud hide:YES];
-            
-            self.friends = [BYFriend mj_objectArrayWithKeyValuesArray:responseObject[@"friends"]];
-            
+            NSArray *array = responseObject[@"friends"];
+            if (array.count == 0) {
+                [MBProgressHUD showModeText:@"您还没有好友，去添加好友吧" view:self.view];
+                return ;
+            }
+            self.friends = [BYFriend mj_objectArrayWithKeyValuesArray:array];
             [self.tableView reloadData];
-            
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = responseObject[@"msg"];
-            [hud hide:YES afterDelay:1];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
             return;
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"重置失败";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    
-    // 从服务器获取所有的好友  有网络的情况
-//    EMError *error = nil;
-//    self.buddyList = [[NSMutableArray alloc] initWithArray:[[EMClient sharedClient].contactManager getContactsFromServerWithError:&error]];
-//    NSLog(@"error = %@", error.errorDescription);
-//    NSLog(@"error = %d", error.code);
-//    
-//    if (!error) {
-//        NSLog(@"获取成功 -- %@",self.buddyList);
-//    }
+    [hud hide:YES];
     
     // 从数据库获取所有的好友  无网络的情况
 //    self.buddyList = [[EMClient sharedClient].contactManager getContactsFromDB];
-}
-/**
- *  添加好友
- */
-- (void)addBuddy
-{
-    BYAddBuddyViewController *vc = [[BYAddBuddyViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -119,7 +106,7 @@
     
     cell.textLabel.text = friend.nickname;
     cell.detailTextLabel.text = friend.phone;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://www.binyou.info" stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
     
     return cell;
 }
@@ -130,7 +117,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BYFriend *friend = self.friends[indexPath.row];
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
+//    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
+    ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
     vc.title = friend.nickname;
     
     [self.navigationController pushViewController:vc animated:YES];
@@ -163,6 +151,13 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - 跳到添加好友界面
+
+- (void)addBuddy
+{
+    BYAddBuddyViewController *vc = [[BYAddBuddyViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 

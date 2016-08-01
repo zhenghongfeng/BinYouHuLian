@@ -24,15 +24,22 @@
 }
 - (IBAction)addBuddy:(id)sender {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
     
     if (self.userName.text.length == 0) {
         hud.labelText = @"账号不能为空";
     }
     
+    //1.获取文件路径
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
+    NSLog(@"path=%@",path);
+    
+    //2.从文件中读取对象
+    BYLoginUser *loginUser = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
     NSDictionary *dic = @{
-                          @"friendName": @"15942661212",
-                          @"username": @"15942601275"
+                          @"friendName": self.userName.text,
+                          @"username": loginUser.phone
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -44,22 +51,18 @@
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
+            hud.mode = MBProgressHUDModeText;
             hud.labelText = @"添加成功";
             [hud hide:YES afterDelay:1];
             
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = responseObject[@"msg"];
-            [hud hide:YES afterDelay:1];
-            return;
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"重置失败";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    
+    [hud hide:YES];
     
     // 发送加好友申请
 //    EMError *error = [[EMClient sharedClient].contactManager addContact:_userName.text message:@"我想加您为好友"];

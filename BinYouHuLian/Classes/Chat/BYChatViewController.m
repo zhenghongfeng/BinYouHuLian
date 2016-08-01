@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
 }
 
 - (void)viewWillAppear:(BOOL)animated

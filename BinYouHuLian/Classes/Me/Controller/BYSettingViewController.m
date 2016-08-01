@@ -113,14 +113,16 @@
                     [hud hide:YES];
                     [self.navigationController popToRootViewControllerAnimated:YES];
                     
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults setObject:nil forKey:@"access_token"];
-                    [userDefaults synchronize];
-                    
                     EMError *error = [[EMClient sharedClient] logout:YES];
                     if (!error) {
                         NSLog(@"退出成功");
                     }
+                    
+                    // 清空本地缓存
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults removeObjectForKey:@"access_token"];
+                    [userDefaults synchronize];
+                    [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
                     
                 } else {
                     hud.mode = MBProgressHUDModeText;
