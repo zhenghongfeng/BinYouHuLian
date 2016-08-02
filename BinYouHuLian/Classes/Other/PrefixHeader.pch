@@ -16,7 +16,10 @@
 
 #define BYUrl_dev @"http://123.56.186.178/api"
 
-#import "EMSDK.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+#import "EMSDKFull.h"
 #import "EaseUI.h"
 
 #import "BYDefine.h"

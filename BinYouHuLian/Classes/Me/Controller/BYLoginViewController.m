@@ -180,8 +180,12 @@
                 EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (!error) {
+                        NSLog(@"登录成功");
+                        [hud hide:YES];
                         //设置是否自动登录
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
+                        NSArray *arr = [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
+                        NSLog(@"arr = %@", arr);
 //                        //获取数据库中数据
 //                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 //                            [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
@@ -195,12 +199,14 @@
             });
         } else {
             [MBProgressHUD showModeText:@"登录失败" view:self.view];
+            [hud hide:YES];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+        [hud hide:YES];
     }];
-    [hud hide:YES];
+    
 }
 
 - (void)registerClick

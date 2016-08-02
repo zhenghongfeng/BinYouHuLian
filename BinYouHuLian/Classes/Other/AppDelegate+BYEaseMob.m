@@ -16,49 +16,28 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
               apnsCertName:(NSString *)apnsCertName
                otherConfig:(NSDictionary *)otherConfig
 {
-    application.applicationIconBadgeNumber = 0;
-    // 集成环信SDK, AppKey:注册的appKey, apnsCertName:推送证书名(不需要加后缀)
-    EMOptions *options = [EMOptions optionsWithAppkey:appkey];
-    options.apnsCertName = apnsCertName;
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
-//    options.isAutoAcceptGroupInvitation = NO;
-//    if ([otherConfig objectForKey:kSDKConfigEnableConsoleLogger]) {
-//        options.enableConsoleLog = YES;
-//    }
-//    BOOL sandBox = [otherConfig objectForKey:@"easeSandBox"] && [[otherConfig objectForKey:@"easeSandBox"] boolValue];
-//    if (!sandBox) {
-//        [[EMClient sharedClient] initializeSDKWithOptions:options];
-//    }
-    
-    //iOS8 注册APNS
-    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
-        [application registerForRemoteNotifications];
-        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge |
-        UIUserNotificationTypeSound |
-        UIUserNotificationTypeAlert;
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
-        [application registerUserNotificationSettings:settings];
-    } else {
-        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
-        UIRemoteNotificationTypeSound |
-        UIRemoteNotificationTypeAlert;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-    }
-    
     //注册登录状态监听
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(loginStateChange:)
-//                                                 name:KNOTIFICATION_LOGINCHANGE
-//                                               object:nil];
-//    
-//    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
-//    if (isAutoLogin){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
-//    }
-//    else
-//    {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
-//    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginStateChange:)
+                                                 name:KNOTIFICATION_LOGINCHANGE
+                                               object:nil];
+    
+    [[EaseSDKHelper shareHelper] easemobApplication:application
+                      didFinishLaunchingWithOptions:launchOptions
+                                             appkey:appkey
+                                       apnsCertName:apnsCertName
+                                        otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
+    
+//    [ChatUIHelper shareHelper];
+    
+    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+    if (isAutoLogin){
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+    }
 }
 
 #pragma mark - AppDelegate

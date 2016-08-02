@@ -37,13 +37,13 @@ typedef NS_ENUM(int, DXDeleteConvesationType) {
 
 @optional
 
-//- (void)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
-//                 didDeleteConversation:(id<IConversationModel>)conversation
-//                          deletionMode:(DXDeleteConvesationType)deletionType;
-//
-//- (void)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
-//           didFailDeletingConversation:(id<IConversationModel>)conversation
-//                          deletionMode:(DXDeleteConvesationType)deletionType;
+- (void)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
+                 didDeleteConversation:(id<IConversationModel>)conversation
+                          deletionMode:(DXDeleteConvesationType)deletionType;
+
+- (void)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
+           didFailDeletingConversation:(id<IConversationModel>)conversation
+                          deletionMode:(DXDeleteConvesationType)deletionType;
 
 
 @end

@@ -49,6 +49,7 @@
     [super viewDidLoad];
     
 //    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+    
 //    [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
     self.showRefreshHeader = YES;
     self.delegate = self;
