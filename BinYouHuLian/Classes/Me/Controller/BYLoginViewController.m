@@ -164,8 +164,6 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             
-            [hud hide:YES];
-            
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -178,31 +176,31 @@
             BOOL flag = [NSKeyedArchiver archiveRootObject:loginUser toFile:path];
             NSLog(@"flag = %d", flag);
             
-            EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
-            if (!error) {
-                NSLog(@"登录成功");
-                [[EMClient sharedClient].options setIsAutoLogin:YES];
-                [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
-            }
-            
-            EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-            //                        [[EMClient sharedClient] setApnsNickname:@"宾友"];
-            options.displayStyle = EMPushDisplayStyleMessageSummary;
-            EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
-            if (!resultError) {
-                NSLog(@"APNS属性设置成功");
-            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!error) {
+                        //设置是否自动登录
+                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+//                        //获取数据库中数据
+//                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                            [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
+//                            dispatch_async(dispatch_get_main_queue(), ^{
+//                                //发送自动登陆状态通知
+//                                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@([[EMClient sharedClient] isLoggedIn])];
+//                            });
+//                        });
+                    }
+                });
+            });
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"登录失败";
-            [hud hide:YES afterDelay:1];
+            [MBProgressHUD showModeText:@"登录失败" view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"登录失败";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
+    [hud hide:YES];
 }
 
 - (void)registerClick

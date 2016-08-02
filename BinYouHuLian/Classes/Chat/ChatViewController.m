@@ -48,6 +48,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+//    [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
@@ -72,7 +74,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
     
-    self.showRefreshHeader = YES;
     //通过会话管理者获取已收发消息
     [self tableViewDidTriggerHeaderRefresh];    
 }
