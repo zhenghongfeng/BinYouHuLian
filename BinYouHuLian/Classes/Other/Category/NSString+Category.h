@@ -19,4 +19,9 @@
  */
 + (BOOL)validatePhone:(NSString *)phone;
 
+/**
+ *  有效字符串判断
+ */
++ (BOOL)isValueableString:(NSString *)content;
+
 @end

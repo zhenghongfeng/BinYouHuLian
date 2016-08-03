@@ -14,8 +14,6 @@
 
 #ifdef __OBJC__
 
-#define BYUrl_dev @"http://123.56.186.178/api"
-
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 

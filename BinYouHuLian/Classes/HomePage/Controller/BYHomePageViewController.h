@@ -10,5 +10,9 @@
 
 @interface BYHomePageViewController : UIViewController
 
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification;
+
+- (void)jumpToChatVC;
+
 @end
 

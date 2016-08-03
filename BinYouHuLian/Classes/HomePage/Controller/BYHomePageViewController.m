@@ -19,6 +19,12 @@
 #import "BYCalloutAnnotatonView.h"
 #import "BYShop.h"
 #import "BYLoginUser.h"
+#import "ChatViewController.h"
+
+static const CGFloat kDefaultPlaySoundInterval = 3.0;
+static NSString *kMessageType = @"MessageType";
+static NSString *kConversationChatter = @"ConversationChatter";
+static NSString *kGroupName = @"GroupName";
 
 @interface BYHomePageViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 {
@@ -306,10 +312,10 @@
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:[BYUrl_dev stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager POST:[BYURL_Development stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@", responseObject);
+//        NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [_mapView removeAnnotations:_mapView.annotations];
@@ -401,9 +407,8 @@ static double hometransformLon(double x, double y)
 
 - (void)mineBtnClick
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *str = [userDefaults valueForKey:@"access_token"];
-    if (str) {
+    NSLog(@"token = %@", GetToken);
+    if ([NSString isValueableString:GetToken]) {
         BYMineViewController *vc = [[BYMineViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     } else {
@@ -455,6 +460,149 @@ static double hometransformLon(double x, double y)
 {
     [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
 }
+
+#pragma mark - public
+
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSString *from = [notification.userInfo valueForKey:@"from"];
+    
+    NSDictionary *dic = @{
+                          @"friend": from
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friendinfo?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"userinfo == %@", responseObject);
+        
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            
+        } else {
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+    }];
+    
+    NSDictionary *userInfo = notification.userInfo;
+    if (userInfo)
+    {
+        if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
+            //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+            //            [chatController hideImagePicker];
+        } else {
+            if (userInfo)
+            {
+                NSArray *viewControllers = self.navigationController.viewControllers;
+                [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+                    if (obj != self)
+                    {
+                        if (![obj isKindOfClass:[ChatViewController class]])
+                        {
+                            [self.navigationController popViewControllerAnimated:NO];
+                        }
+                        else
+                        {
+                            NSString *conversationChatter = userInfo[kConversationChatter];
+                            ChatViewController *chatViewController = (ChatViewController *)obj;
+                            if (![chatViewController.conversation.conversationId isEqualToString:conversationChatter])
+                            {
+                                [self.navigationController popViewControllerAnimated:NO];
+                                EMChatType messageType = [userInfo[kMessageType] intValue];
+                                chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+                                switch (messageType) {
+                                    case EMChatTypeChat:
+                                    {
+//                                        chatViewController.title = chater;
+//                                        chatViewController.imageURL = chaterImage;
+                                        NSArray *groupArray = [[EMClient sharedClient].groupManager getAllGroups];
+                                        for (EMGroup *group in groupArray) {
+                                            
+                                            if ([group.groupId isEqualToString:conversationChatter]) {
+                                                
+                                                
+                                                //   chatViewController.title = group.subject;
+//                                                chatViewController.title = chater;
+//                                                chatViewController.imageURL = chaterImage;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                        break;
+                                    default:
+                                        // chatViewController.title = conversationChatter;
+//                                        chatViewController.title = chater;
+//                                        chatViewController.imageURL = chaterImage;
+                                        break;
+                                }
+                                [self.navigationController pushViewController:chatViewController animated:NO];
+                            }
+                            *stop= YES;
+                        }
+                    }
+                    else
+                    {
+                        ChatViewController *chatViewController = (ChatViewController *)obj;
+                        NSString *conversationChatter = userInfo[kConversationChatter];
+                        EMChatType messageType = [userInfo[kMessageType] intValue];
+                        chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+                        switch (messageType) {
+                            case EMChatTypeGroupChat:
+                            {
+                                NSArray *groupArray = [[EMClient sharedClient].groupManager getAllGroups];
+                                for (EMGroup *group in groupArray) {
+                                    if ([group.groupId isEqualToString:conversationChatter]) {
+                                        //      chatViewController.title = group.subject;
+//                                        chatViewController.title = chater;
+//                                        chatViewController.imageURL = chaterImage;
+                                        break;
+                                    }
+                                }
+                            }
+                                break;
+                            default:
+                                //  chatViewController.title = conversationChatter;
+//                                chatViewController.title = chater;
+//                                chatViewController.imageURL = chaterImage;
+                                break;
+                        }
+//                        [self.navigationController pushViewController:chatViewController animated:NO];
+                    }
+                }];
+            }
+        }
+    }
+}
+
+- (EMConversationType)conversationTypeFromMessageType:(EMChatType)type
+{
+    EMConversationType conversatinType = EMConversationTypeChat;
+    switch (type) {
+        case EMChatTypeChat:
+            conversatinType = EMConversationTypeChat;
+            break;
+        case EMChatTypeGroupChat:
+            conversatinType = EMConversationTypeGroupChat;
+            break;
+        case EMChatTypeChatRoom:
+            conversatinType = EMConversationTypeChatRoom;
+            break;
+        default:
+            break;
+    }
+    return conversatinType;
+}
+
+- (void)jumpToChatList
+{
+    ChatViewController *vc = [ChatViewController new];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma mark - lazy load
 - (CLLocationManager *)locationManager
@@ -591,5 +739,7 @@ static double hometransformLon(double x, double y)
     .widthIs(20)
     .heightIs(30);
 }
+
+
 
 @end

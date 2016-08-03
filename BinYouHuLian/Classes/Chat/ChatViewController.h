@@ -12,6 +12,14 @@
 
 #define KNOTIFICATIONNAME_DELETEALLMESSAGE @"RemoveAllMessages"
 
+@class BYFriend;
+
 @interface ChatViewController : EaseMessageViewController
+
+/** <#注释#> */
+@property (nonatomic, strong) NSDictionary *dic;
+
+/** friend */
+@property (nonatomic, strong) BYFriend *myFriend;
 
 @end

@@ -26,9 +26,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                       didFinishLaunchingWithOptions:launchOptions
                                              appkey:appkey
                                        apnsCertName:apnsCertName
-                                        otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
-    
-//    [ChatUIHelper shareHelper];
+                                        otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:NO]}];
     
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (isAutoLogin){
@@ -41,7 +39,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 }
 
 #pragma mark - AppDelegate
-
 // 您注册了推送功能，iOS 会自动回调以下方法，得到deviceToken，您需要将deviceToken传给SDK
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -71,7 +68,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
     }
 }
-
 
 #pragma mark - EMPushManagerDelegateDevice
 

@@ -87,4 +87,15 @@
         return NO;
     }
 }
+
++ (BOOL)isValueableString:(NSString *)content
+{
+    if (content != nil && (NSNull *)content != [NSNull null] && ![content isEqualToString:@""]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+
 @end

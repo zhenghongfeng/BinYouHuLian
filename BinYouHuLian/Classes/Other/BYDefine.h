@@ -9,7 +9,25 @@
 #ifndef BYDefine_h
 #define BYDefine_h
 
-//#define APIKEY @"dc7237217f752ba1a2c5be2bb90ac1d7" 高德地图 appkey
+#define BYURL_Development @"http://123.56.186.178/api"
+
+// NSUserDefaults本地保存
+#define Get(a) [[NSUserDefaults standardUserDefaults] objectForKey:a]
+#define Save(a,b) [[NSUserDefaults standardUserDefaults] setObject:a forKey:b]; [[NSUserDefaults standardUserDefaults] synchronize]
+
+#define GetToken          Get(@"user_accessToken") ? Get(@"user_accessToken") : @""
+#define SaveToken(a)      Save(a,@"user_accessToken")
+
+#define GetPhone         Get(@"user_phone") ? Get(@"user_phone") : @""
+#define SavePhone(a)      Save(a,@"user_phone")
+
+#define GetNickName      Get(@"user_nickname")
+#define SaveNickName(a)   Save(a,@"user_nickname")
+
+#define GetAvatar      Get(@"user_avatar")
+#define SaveAvatar(a)   Save(a,@"user_avatar")
+
+
 
 #define loginStatus @"isLogin"
 
@@ -39,6 +57,9 @@ alpha:1.0] \
 #define NSLog(...) NSLog(__VA_ARGS__)
 #else
 #define NSLog(...) {}
+
+
+
 
 #endif
 

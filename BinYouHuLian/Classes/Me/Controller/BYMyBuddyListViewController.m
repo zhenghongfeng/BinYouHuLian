@@ -46,21 +46,12 @@
     self.tableView = tableView;
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    //1.获取文件路径
-    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *path = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
-    NSLog(@"path=%@",path);
-    
-    //2.从文件中读取对象
-    BYLoginUser *loginUser = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    
     NSDictionary *dic = @{
-                          @"phone": loginUser.phone
+                          @"phone": GetPhone
                           };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
-    [manager POST:[BYUrl_dev stringByAppendingString:@"/ease/users/friends?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friends?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
@@ -120,7 +111,7 @@
 //    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
     ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
     vc.title = friend.nickname;
-    
+    vc.myFriend = friend;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

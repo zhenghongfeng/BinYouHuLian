@@ -159,8 +159,8 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
-    [manager POST:[BYUrl_dev stringByAppendingString:@"/shop/cates?"] parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/shop/cates?"] parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
@@ -477,9 +477,9 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     NSLog(@"");
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
     
-    [manager POST:[BYUrl_dev stringByAppendingString:@"/shop/create?"] parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:[BYURL_Development stringByAppendingString:@"/shop/create?"] parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         /*
          Data: 要上传的二进制数据
          name:保存在服务器上时用的Key值

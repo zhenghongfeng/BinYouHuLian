@@ -106,6 +106,15 @@ static EaseSDKHelper *helper = nil;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
 #endif
+    
+    EMError *error = nil;
+    EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+    options.displayStyle = EMPushDisplayStyleMessageSummary;
+    options.noDisturbStatus = EMPushNoDisturbStatusClose;
+    EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
+    if (!resultError) {
+        NSLog(@"APNS属性设置成功");
+    }
 }
 
 #pragma mark - init easemob

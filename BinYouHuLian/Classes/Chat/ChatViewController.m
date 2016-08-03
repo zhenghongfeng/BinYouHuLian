@@ -12,6 +12,8 @@
 
 #import "ChatViewController.h"
 
+#import "BYFriend.h"
+
 //#import "ChatGroupDetailViewController.h"
 //#import "ChatroomDetailViewController.h"
 //#import "UserProfileViewController.h"
@@ -48,9 +50,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
-    
-//    [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
@@ -158,6 +157,14 @@
 //        model.avatarURLPath = profileEntity.imageUrl;
 //        model.nickname = profileEntity.nickname;
 //    }
+    
+    if (model.isSender) {
+        model.avatarURLPath = [@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar];
+        model.nickname = GetNickName;
+    } else {
+        model.avatarURLPath = [@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:self.myFriend.avatar];
+        model.nickname = self.myFriend.nickname;
+    }
     model.failImageName = @"imageDownloadFail";
     return model;
 }

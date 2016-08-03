@@ -102,8 +102,8 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
-            [manager POST:[BYUrl_dev stringByAppendingString:@"/user/logout?"] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+            [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+            [manager POST:[BYURL_Development stringByAppendingString:@"/user/logout?"] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSLog(@"responseObject = %@", responseObject);
@@ -118,10 +118,11 @@
                         NSLog(@"退出成功");
                     }
                     
-                    // 清空本地缓存
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults removeObjectForKey:@"access_token"];
-                    [userDefaults synchronize];
+                    SaveToken(nil);
+                    SavePhone(nil);
+                    SaveNickName(nil);
+                    SaveAvatar(nil);
+                    
                     [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
                     
                 } else {

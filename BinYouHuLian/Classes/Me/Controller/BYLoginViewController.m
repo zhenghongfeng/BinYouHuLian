@@ -60,6 +60,7 @@
         phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
         phoneTextField.placeholder = @"手机号码";
         phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         _phoneTextField = phoneTextField;
     }
@@ -72,6 +73,7 @@
         _passwordTextField = [[UITextField alloc] init];
         _passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _passwordTextField.placeholder = @"密码";
+        _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _passwordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         _passwordTextField.secureTextEntry = YES;
     }
@@ -125,105 +127,90 @@
     [self.view addSubview:self.loginButton];
     [self.view addSubview:self.registerButton];
     [self.view addSubview:self.forgetPasswordButton];
-    
-    [self setupAutoLayout];
 }
+
+#pragma mark - login
 
 - (void)loginCLick
 {
     if (self.phoneTextField.text.length == 0) {
-        [MBProgressHUD showModeText:@"请输入手机号码" view:self.view];
+        [MBProgressHUD showModeText:@"请输入手机号" view:self.view];
         return;
     }
     if (![NSString validatePhone:self.phoneTextField.text]) {
-        [MBProgressHUD showModeText:@"请输入正确的手机号码" view:self.view];
+        [MBProgressHUD showModeText:@"请输入正确的手机号格式" view:self.view];
         return;
     }
     if (self.passwordTextField.text.length == 0) {
         [MBProgressHUD showModeText:@"请输入密码" view:self.view];
         return;
     }
-    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"登录中...";
-    
     NSString *phone = self.phoneTextField.text;
     NSString *password = [NSString md5:self.passwordTextField.text];
-    
-    NSDictionary *dic = @{
+    NSDictionary *parameters = @{
                           @"phone": phone,
                           @"password": password
                           };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:[BYUrl_dev stringByAppendingString:@"/user/login?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSString *urlString = [BYURL_Development stringByAppendingString:@"/user/login?"];
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
-        NSInteger code = [responseObject[@"code"] integerValue];
-        if (code == 1) {
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
-            [userDefaults synchronize];
-            
-            BYLoginUser *loginUser = [BYLoginUser mj_objectWithKeyValues:responseObject[@"user"]];
-            NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString *path  = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
-            BOOL flag = [NSKeyedArchiver archiveRootObject:loginUser toFile:path];
-            NSLog(@"flag = %d", flag);
-            
+        if ([responseObject[@"code"] integerValue] == 1) {
+            // async login EM
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 EMError *error = [[EMClient sharedClient] loginWithUsername:phone password:password];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    [hud hide:YES];
                     if (!error) {
-                        NSLog(@"登录成功");
-                        [hud hide:YES];
-                        //设置是否自动登录
+                        NSLog(@"环信登录成功");
+                        // save token and userInfo(phone\nickname\avatar)
+                        SaveToken(responseObject[@"access_token"]);
+                        SavePhone([responseObject[@"user"] valueForKey:@"phone"]);
+                        SaveNickName([responseObject[@"user"] valueForKey:@"nickname"]);
+                        SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
+                        // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
-                        NSArray *arr = [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
-                        NSLog(@"arr = %@", arr);
-//                        //获取数据库中数据
-//                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                            [[EMClient sharedClient].chatManager loadAllConversationsFromDB];
-//                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                //发送自动登陆状态通知
-//                                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@([[EMClient sharedClient] isLoggedIn])];
-//                            });
-//                        });
+                        // dismissVC
+                        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [MBProgressHUD showModeText:@"登录异常" view:self.view];
                     }
                 });
             });
         } else {
-            [MBProgressHUD showModeText:@"登录失败" view:self.view];
-            [hud hide:YES];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error = %@", error.localizedDescription);
-        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
         [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    
 }
+
+#pragma mark - pop to registerVC
 
 - (void)registerClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - push to forgetPasswordVC
 - (void)forgetPasswordClick
 {
     BYResetPasswordViewController *vc = [BYResetPasswordViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - back
+
 - (void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - touch began
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
@@ -233,8 +220,9 @@
 
 #pragma mark - autoLayout
 
-- (void)setupAutoLayout
+- (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     _backButton.sd_layout
     .leftSpaceToView(self.view, 20)
     .topSpaceToView(self.view, 20)
@@ -276,7 +264,6 @@
     .topSpaceToView(_passwordTextField, 5)
     .widthIs(80)
     .heightIs(30);
-    
 }
 
 
