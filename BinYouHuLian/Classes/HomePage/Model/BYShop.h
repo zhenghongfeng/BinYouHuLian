@@ -24,6 +24,8 @@
 @property (nonatomic, copy) NSString *latitude;
 /** 经度 longitude */
 @property (nonatomic, copy) NSString *longitude;
+/** phone */
+@property (nonatomic, copy) NSString *myLegalPerson;
 /** location */
 @property (nonatomic, copy) NSString *location;
 /** locs */

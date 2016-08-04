@@ -187,25 +187,10 @@
         [hud hide:YES afterDelay:1.5];
         return;
     }
-    // 读取沙盒中pilst数据
-    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
     
-    NSMutableArray *arr = [NSMutableArray array];
+    [self requestShopsDataWithSearchText:searchBar.text isSearchButtonClicked:YES];
     
-    // 判断是否为nil
-    if (array) {
-        [array insertObject:searchBar.text atIndex:0];
-        [array writeToFile:[self plistPath] atomically:YES];
-    } else {
-        [arr addObject:searchBar.text];
-        [arr writeToFile:[self plistPath] atomically:YES];
-    }
-    //  沙盒路径
-    NSLog(@"%@", NSHomeDirectory());
     
-    [self.view endEditing:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:searchBar.text userInfo:nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -219,6 +204,11 @@
     }
     [self.searchData removeAllObjects];
     
+    [self requestShopsDataWithSearchText:searchText isSearchButtonClicked:NO];
+}
+
+- (void)requestShopsDataWithSearchText:(NSString *)searchText isSearchButtonClicked:(BOOL)isClicked
+{
     NSDictionary *dic = @{
                           @"lowerlong": @(_leftTopLongitude),
                           @"lowerlati": @(_leftTopLatitude),
@@ -226,47 +216,55 @@
                           @"upperlati": @(_rightBottomLatitude),
                           @"key": searchText
                           };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:[BYURL_Development stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            
             self.shops = [BYShop mj_objectArrayWithKeyValuesArray:responseObject[@"stores"]];
-            
             [self.searchData addObjectsFromArray:self.shops];
-            
-//            NSArray *arrStores = responseObject[@"stores"];
-//            for (int i = 0; i < arrStores.count; i++) {
-//                NSString *name = [arrStores[i] objectForKey:@"name"];
-//                [self.searchData addObject:name];
-//            }
-            
-            [self.searchData addObjectsFromArray:responseObject[@"keys"]];
-            NSLog(@"self.searchData = %zd", self.searchData.count);
-            
-            [self.view addSubview:self.searchTableView];
-            
-            [self.searchTableView reloadData];
+            if (isClicked) {
+                if (self.searchData.count == 0) {
+                    [MBProgressHUD showModeText:@"未搜索到相关店铺" view:self.view];
+                    return ;
+                } else {
+                    // 读取沙盒中pilst数据
+                    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
+                    
+                    NSMutableArray *arr = [NSMutableArray array];
+                    
+                    // 判断是否为nil
+                    if (array) {
+                        [array insertObject:searchText atIndex:0];
+                        [array writeToFile:[self plistPath] atomically:YES];
+                    } else {
+                        [arr addObject:searchText];
+                        [arr writeToFile:[self plistPath] atomically:YES];
+                    }
+                    //  沙盒路径
+                    NSLog(@"%@", NSHomeDirectory());
+                    
+                    
+                    [self.view endEditing:YES];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:searchText userInfo:nil];
+                }
+            } else {
+                if (self.searchData.count == 0) {
+                    return ;
+                }
+                [self.searchData addObjectsFromArray:responseObject[@"keys"]];
+                [self.view addSubview:self.searchTableView];
+            }
         } else {
-            
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    
-    
-//    for (NSInteger i = 0; i < 5; i++) {
-//        NSString *str = [NSString stringWithFormat:@"%@%zd", searchText, i];
-//        [self.searchData addObject:str];
-//    }
-//    [self.view addSubview:self.searchTableView];
-//    [self.searchTableView reloadData];
 }
 
 - (IBAction)back {

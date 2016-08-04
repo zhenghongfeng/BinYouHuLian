@@ -28,6 +28,7 @@
 #define SaveAvatar(a)   Save(a,@"user_avatar")
 
 
+#define WeakSelf __weak typeof(self) weakSelf = self;
 
 #define loginStatus @"isLogin"
 

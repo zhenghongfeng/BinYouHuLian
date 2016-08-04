@@ -18,7 +18,8 @@
         [BYShop mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
             return @{
                      @"myDescription": @"description",
-                     @"myId": @"id",
+                     @"myLegalPerson": @"legalPerson",
+                     @"myId": @"id"
                      };
         }];
     }

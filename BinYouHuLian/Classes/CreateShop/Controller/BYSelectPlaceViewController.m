@@ -337,9 +337,9 @@
             [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.8 animations:^{
-                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-25);
+//                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-25);
                 } completion:^(BOOL finished) {
-                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-15);
+//                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-15);
                 }];
             });
         });

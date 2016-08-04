@@ -18,30 +18,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"添加朋友";
+    self.navigationItem.title = @"添加朋友";
     
     
 }
 - (IBAction)addBuddy:(id)sender {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     if (self.userName.text.length == 0) {
-        hud.labelText = @"账号不能为空";
+        [MBProgressHUD showModeText:@"账号不能为空" view:self.view];
+        return;
     }
-    
-    //1.获取文件路径
-    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *path = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
-    NSLog(@"path=%@",path);
-    
-    //2.从文件中读取对象
-    BYLoginUser *loginUser = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *dic = @{
                           @"friendName": self.userName.text,
-                          @"username": loginUser.phone
+                          @"username": GetPhone
                           };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
     [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/addfriend?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -54,25 +45,15 @@
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"添加成功";
             [hud hide:YES afterDelay:1];
-            
         } else {
+            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    [hud hide:YES];
-    
-    // 发送加好友申请
-//    EMError *error = [[EMClient sharedClient].contactManager addContact:_userName.text message:@"我想加您为好友"];
-//    if (!error) {
-//        NSLog(@"添加成功");
-//        hud.labelText = @"添加成功";
-//    } else {
-//        NSLog(@"如果您已经发过，并且对方没有处理，您将不能再次发送");
-//    }
-//    [hud hide:YES afterDelay:1.5];
 }
 
 #pragma mark - UITextFieldDelegate

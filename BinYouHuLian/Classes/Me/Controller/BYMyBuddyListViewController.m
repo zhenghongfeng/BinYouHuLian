@@ -25,26 +25,28 @@
 
 @implementation BYMyBuddyListViewController
 
+#pragma mark - getter
+
+- (UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.tableFooterView = [UIView new];
+    }
+    return _tableView;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self requestData];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.navigationItem.title = @"好友列表";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBuddy)];
-    
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.tableFooterView = [UIView new];
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    
+- (void)requestData
+{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *dic = @{
                           @"phone": GetPhone
@@ -55,25 +57,35 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             NSArray *array = responseObject[@"friends"];
             if (array.count == 0) {
+                [hud hide:YES];
                 [MBProgressHUD showModeText:@"您还没有好友，去添加好友吧" view:self.view];
-                return ;
             }
             self.friends = [BYFriend mj_objectArrayWithKeyValuesArray:array];
             [self.tableView reloadData];
         } else {
+            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
-            return;
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    [hud hide:YES];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.navigationItem.title = @"好友列表";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBuddy)];
+    
+    [self.view addSubview:self.tableView];
     
     // 从数据库获取所有的好友  无网络的情况
 //    self.buddyList = [[EMClient sharedClient].contactManager getContactsFromDB];
@@ -110,7 +122,6 @@
     BYFriend *friend = self.friends[indexPath.row];
 //    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
     ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
-    vc.title = friend.nickname;
     vc.myFriend = friend;
     [self.navigationController pushViewController:vc animated:YES];
 }

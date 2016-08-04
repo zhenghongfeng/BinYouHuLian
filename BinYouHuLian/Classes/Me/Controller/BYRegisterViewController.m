@@ -65,6 +65,7 @@
         UITextField *phoneTextField = [[UITextField alloc] init];
         phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
         phoneTextField.placeholder = @"手机号码";
+        phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         _phoneTextField = phoneTextField;
@@ -80,6 +81,7 @@
         verCodeTextField.placeholder = @"验证码";
         verCodeTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         verCodeTextField.rightViewMode = UITextFieldViewModeAlways;
+        verCodeTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         verCodeTextField.rightView = ({
             _verCodeButton = [[UIButton alloc] init];
             _verCodeButton.frame = CGRectMake(0, 0, 140, 40);
@@ -153,7 +155,6 @@
     _count = 60;
     NSString *str = [NSString stringWithFormat:@"%2zd秒后重新发送", _count];
     [_verCodeButton setTitle:str forState:UIControlStateNormal];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     
     NSDictionary *dic = @{@"phone": self.phoneTextField.text};
     
@@ -165,13 +166,14 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [_verCodeTextField becomeFirstResponder];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
         } else {
-            [MBProgressHUD showModeText:@"发送失败" view:self.view];
+            [MBProgressHUD showModeText:@"获取失败" view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
-    
 }
 
 - (void)timerFired

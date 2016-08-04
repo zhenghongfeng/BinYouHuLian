@@ -85,7 +85,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                           cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
-    
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

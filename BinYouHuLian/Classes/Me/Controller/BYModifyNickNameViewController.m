@@ -41,9 +41,36 @@
     
 }
 #pragma mark - 导航栏右侧按钮点击事件
-- (void)clickRightBarButton
+- (void)rightTopDoneClick
 {
-    
+    if (_nickNameTextField.text.length == 0) {
+        [MBProgressHUD showModeText:@"请输入昵称" view:self.view];
+        return;
+    }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSDictionary *dic = @{
+                          @"phone": GetPhone,
+                          @"nickname": _nickNameTextField.text
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/nickname?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            SaveNickName(_nickNameTextField.text);
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [hud hide:YES];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
 }
 
 - (void)textFieldDidChange:(UITextField *)textField

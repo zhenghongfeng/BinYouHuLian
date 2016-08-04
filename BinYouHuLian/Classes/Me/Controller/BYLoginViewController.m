@@ -173,6 +173,11 @@
                         SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
                         // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
+                        
+                        [[EMClient sharedClient].pushOptions setDisplayStyle:EMPushDisplayStyleMessageSummary];
+                        [[EMClient sharedClient].pushOptions setNickname:GetNickName];
+                        [[EMClient sharedClient] updatePushOptionsToServer];
+                        
                         // dismissVC
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                     } else {
@@ -181,6 +186,7 @@
                 });
             });
         } else {
+            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

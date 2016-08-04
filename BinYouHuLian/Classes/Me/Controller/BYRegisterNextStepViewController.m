@@ -74,6 +74,7 @@
         _nicknameTextField = [[UITextField alloc] init];
         _nicknameTextField.borderStyle = UITextBorderStyleRoundedRect;
         _nicknameTextField.placeholder = @"昵称(必填)";
+        _nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _nicknameTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
     }
     return _nicknameTextField;
@@ -85,6 +86,8 @@
         _passwordTextField = [[UITextField alloc] init];
         _passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _passwordTextField.placeholder = @"密码(不少于八位)";
+        _passwordTextField.secureTextEntry = YES;
+        _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _passwordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         _passwordTextField.delegate = self;
     }
@@ -97,6 +100,8 @@
         _affirmPasswordTextField = [[UITextField alloc] init];
         _affirmPasswordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _affirmPasswordTextField.placeholder = @"确认密码(请再次输入以上密码)";
+        _affirmPasswordTextField.secureTextEntry = YES;
+        _affirmPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _affirmPasswordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
         _affirmPasswordTextField.delegate = self;
     }
@@ -146,7 +151,7 @@
     imagePickerController.allowsEditing = YES;
     
     UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }];
     
@@ -261,37 +266,36 @@
         NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [hud hide:YES];
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:responseObject[@"access_token"] forKey:@"access_token"];
-            [userDefaults synchronize];
-            
-            BYLoginUser *loginUser = [BYLoginUser mj_objectWithKeyValues:responseObject[@"user"]];
-            NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString *path  = [docPath stringByAppendingPathComponent:@"loginUser.archiver"];
-            BOOL flag = [NSKeyedArchiver archiveRootObject:loginUser toFile:path];
-            NSLog(@"flag = %d", flag);
-            
-            EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
-            if (!error) {
-                NSLog(@"登录成功");
-                [[EMClient sharedClient].options setIsAutoLogin:YES];
-            }
-            EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-            
-            NSLog(@"push error ========= %@", error.errorDescription);
+            // async login EM
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [hud hide:YES];
+                    if (!error) {
+                        NSLog(@"环信登录成功");
+                        // save token and userInfo(phone\nickname\avatar)
+                        SaveToken(responseObject[@"access_token"]);
+                        SavePhone([responseObject[@"user"] valueForKey:@"phone"]);
+                        SaveNickName([responseObject[@"user"] valueForKey:@"nickname"]);
+                        SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
+                        // set auto login
+                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+//                        EMError *error = nil;
+//                        EMPushOptions *pushOptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
+//                        pushOptions.displayStyle = EMPushDisplayStyleMessageSummary;
+                        [[EMClient sharedClient].pushOptions setDisplayStyle:EMPushDisplayStyleMessageSummary];
+                        [[EMClient sharedClient].pushOptions setNickname:GetNickName];
+                        [[EMClient sharedClient] updatePushOptionsToServer];
                         
-            options.displayStyle = EMPushDisplayStyleMessageSummary;
-            EMError *resultError = [[EMClient sharedClient] updatePushOptionsToServer];
-            if (!resultError) {
-                NSLog(@"APNS属性设置成功");
-            }
+                        // dismissVC
+                        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [MBProgressHUD showModeText:@"登录异常" view:self.view];
+                    }
+                });
+            });
         } else {
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
-            return;
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);

@@ -12,6 +12,9 @@
 
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification;
 
+- (void)didReceiveRemoteNotification:(NSDictionary *)userInfo;
+
+
 - (void)jumpToChatVC;
 
 @end

@@ -45,11 +45,13 @@
             self.title = [self.conversation.ext objectForKey:@"subject"];
         }
     }
+    self.navigationController.navigationBarHidden = NO;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.title = self.myFriend.nickname;
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;

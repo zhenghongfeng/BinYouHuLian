@@ -12,10 +12,13 @@
 #import <SDCycleScrollView.h>
 #import "BYChatViewController.h"
 
+#import "BYFriend.h"
+
 @interface BYShopDetailViewController ()
 
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *contents;
+@property (nonatomic, strong) BYFriend *friend;
 
 @end
 
@@ -29,8 +32,6 @@
     
     self.title = @"店铺详情";
     self.titles = @[@"店名", @"类型", @"图文简介"];
-    
-    self.contents = @[@"吴老板的书店", @"18816889999", @"《岛上书店》是一本关于全世界所有书的书，写给全世界所有真正爱书的人。 岛上书店是间维多利亚风格的小屋，门廊上挂着褪色的招牌，上面写着：没有谁是一座孤岛，每本书都是一个世界A．J．费克里，人近中年，在一座与世隔绝的小岛上，经营一家书店。"];
 
     [self setupTabelView];
 }
@@ -73,22 +74,22 @@
     }
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
-    
-    UIButton *groupChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 30)];
-    groupChatbtn.backgroundColor = kMainColor;
-    groupChatbtn.layer.masksToBounds = YES;
-    groupChatbtn.layer.cornerRadius = 5;
-    [groupChatbtn setTitle:@"和老板群聊" forState:UIControlStateNormal];
-    [groupChatbtn addTarget:self action:@selector(groupChatClick) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:groupChatbtn];
-    
-    UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width * 0.5 + 10, 10, self.view.width * 0.5 - 20, 30)];
+
+    UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 30)];
     privateChatbtn.backgroundColor = kMainColor;
     privateChatbtn.layer.masksToBounds = YES;
     privateChatbtn.layer.cornerRadius = 5;
     [privateChatbtn setTitle:@"和老板私聊" forState:UIControlStateNormal];
     [privateChatbtn addTarget:self action:@selector(chatClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:privateChatbtn];
+    
+    UIButton *groupChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width * 0.5 + 10, 10, self.view.width * 0.5 - 20, 30)];
+    groupChatbtn.backgroundColor = kMainColor;
+    groupChatbtn.layer.masksToBounds = YES;
+    groupChatbtn.layer.cornerRadius = 5;
+    [groupChatbtn setTitle:@"和老板群聊" forState:UIControlStateNormal];
+    [groupChatbtn addTarget:self action:@selector(groupChatClick) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:groupChatbtn];
     
     self.tableView.tableFooterView = footerView;
 }
@@ -145,9 +146,33 @@
 
 - (void)chatClick
 {
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"18612129273" conversationType:EMConversationTypeChat];
-    vc.title = @"18612129273";
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
+        [MBProgressHUD showModeText:@"不能与本人自己私聊" view:self.view];
+        return;
+    }
+    WeakSelf;
+    NSDictionary *dic = @{
+                          @"friend": self.shop.myLegalPerson
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friendinfo?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
+            ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:weakSelf.friend.phone conversationType:EMConversationTypeChat];
+            chatViewController.myFriend = weakSelf.friend;
+            [weakSelf.navigationController pushViewController:chatViewController animated:YES];
+        } else {
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
+    }];
 }
 
 - (void)groupChatClick

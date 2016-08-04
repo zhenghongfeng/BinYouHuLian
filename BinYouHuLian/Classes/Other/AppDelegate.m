@@ -22,7 +22,7 @@
 
 @interface AppDelegate () <EMClientDelegate, EMChatManagerDelegate>
 
-@property (nonatomic, strong) BYHomePageViewController *vc;
+@property (nonatomic, strong) BYHomePageViewController *homeVC;
 
 @end
 
@@ -34,8 +34,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    _vc = [BYHomePageViewController new];
-    self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:_vc];
+    _homeVC = [BYHomePageViewController new];
+    self.window.rootViewController = [[BYNavigationController alloc] initWithRootViewController:_homeVC];
     
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     
@@ -43,33 +43,36 @@
     
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     
-//    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-//        [self application:application didReceiveRemoteNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
-//        
+    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+//        launchOptions = @{UIApplicationLaunchOptionsRemoteNotificationKey:@{
+//                                  @"f":@"18018089091",
+//                                  @"m":@"226038831944565224",
+//                                  @"t":@"18842310610"
+//                                  }};
+        if (_homeVC) {
+            [_homeVC didReceiveRemoteNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+        }
 //        ChatViewController *vc = [[ChatViewController alloc] init];
-//        vc.dic = launchOptions;
-//        [_vc.navigationController pushViewController:vc animated:YES];
-//    }
+//        [_homeVC.navigationController pushViewController:vc animated:YES];
+    }
     return YES;
 }
 
 #pragma mark - UIApplicationDelegate
-
+// 离线推送
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"离线推送");
-    if (_vc) {
+    if (_homeVC) {
         ChatViewController *vc = [[ChatViewController alloc] init];
-//        vc.dic = launchOptions;
-        [_vc.navigationController pushViewController:vc animated:YES];
+        [_homeVC.navigationController pushViewController:vc animated:YES];
     }
 }
-//
+// 本地推送
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    if (_vc) {
-        [_vc didReceiveLocalNotification:notification];
-        
+    if (_homeVC) {
+        [_homeVC didReceiveLocalNotification:notification];
     }
 }
 
@@ -227,7 +230,6 @@
     notification.timeZone = [NSTimeZone defaultTimeZone];
 //    [[ChatUIHelper shareHelper] playSoundAndVibration];
     
-    
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     [userInfo setObject:[NSNumber numberWithInt:message.chatType] forKey:@"MessageType"];
     [userInfo setObject:message.conversationId forKey:@"ConversationChatter"];
@@ -240,5 +242,7 @@
     application.applicationIconBadgeNumber += 1;
     
 }
+
+
 
 @end

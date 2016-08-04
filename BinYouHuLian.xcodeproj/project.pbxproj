@@ -981,8 +981,8 @@
 		BAE0F3591CBB9AA4002009F6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BAE0F35A1CBB9AA4002009F6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDefine.h; sourceTree = "<group>"; };
-		BAE0F35E1CBB9AA4002009F6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		BAE0F35E1CBB9AA4002009F6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Other/main.m; sourceTree = "<group>"; };
+		BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Classes/Other/PrefixHeader.pch; sourceTree = "<group>"; };
 		BAE0F3621CBB9AA4002009F6 /* ac_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ac_back@2x.png"; sourceTree = "<group>"; };
 		BAE0F3631CBB9AA4002009F6 /* ac_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ac_back@3x.png"; sourceTree = "<group>"; };
 		BAE0F3641CBB9AA4002009F6 /* arrow_merchant_detail_map_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_merchant_detail_map_highlighted@2x.png"; sourceTree = "<group>"; };
@@ -1167,6 +1167,8 @@
 				BAE0F3611CBB9AA4002009F6 /* Resource */,
 				BA04BE551CC0D91B000270EB /* Localizable.strings */,
 				BA0857951CB60E4F00D4454C /* Assets.xcassets */,
+				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
+				BAE0F35E1CBB9AA4002009F6 /* main.m */,
 				BAE0F42F1CBB9AD5002009F6 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -2140,12 +2142,10 @@
 				BACCA61F1D4DFF7A0070F8A6 /* Model */,
 				BAE0F35D1CBB9AA4002009F6 /* Controller */,
 				BAE0F3601CBB9AA4002009F6 /* View */,
-				BAE0F35E1CBB9AA4002009F6 /* main.m */,
 				BAE0F3591CBB9AA4002009F6 /* AppDelegate.h */,
 				BAE0F35A1CBB9AA4002009F6 /* AppDelegate.m */,
 				BACCA6231D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.h */,
 				BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */,
-				BAE0F35F1CBB9AA4002009F6 /* PrefixHeader.pch */,
 				BAE0F35B1CBB9AA4002009F6 /* BYDefine.h */,
 				BA2E53A61CBBBEDD00AD323B /* BYConst.h */,
 				BA2E53A71CBBBEDD00AD323B /* BYConst.m */,
