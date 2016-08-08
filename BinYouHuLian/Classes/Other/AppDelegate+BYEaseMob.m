@@ -16,7 +16,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
               apnsCertName:(NSString *)apnsCertName
                otherConfig:(NSDictionary *)otherConfig
 {
-    //注册登录状态监听
+    
+    // 监听登录状态
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginStateChange:)
                                                  name:KNOTIFICATION_LOGINCHANGE
@@ -28,12 +29,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                        apnsCertName:apnsCertName
                                         otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:NO]}];
     
-    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
     if (isAutoLogin){
         [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
-    }
-    else
-    {
+    } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
     }
 }
@@ -89,7 +88,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
 }
 
 @end

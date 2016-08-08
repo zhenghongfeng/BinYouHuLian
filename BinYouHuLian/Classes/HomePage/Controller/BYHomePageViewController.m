@@ -262,14 +262,11 @@ static NSString *kGroupName = @"GroupName";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
             dispatch_async(dispatch_get_main_queue(), ^{
-                
                 [UIView animateWithDuration:0.8 animations:^{
                     self.centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
                     
                 } completion:^(BOOL finished) {
-                    
                     self.centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-                    
                 }];
             });
         });
@@ -378,9 +375,9 @@ static double hometransformLon(double x, double y)
 
 - (CLLocationCoordinate2D)homegcj2wgs:(CLLocationCoordinate2D)coordinate
 {
-    if ([self homeoutOfChina:coordinate]) {
-        return coordinate;
-    }
+//    if ([self homeoutOfChina:coordinate]) {
+//        return coordinate;
+//    }
     CLLocationCoordinate2D c2 = [self homewgs2gcj:coordinate];
     return CLLocationCoordinate2DMake(2 * coordinate.latitude - c2.latitude, 2 * coordinate.longitude - c2.longitude);
 }
@@ -390,9 +387,9 @@ static double hometransformLon(double x, double y)
 {
     const double a = 6378245.0;
     const double ee = 0.00669342162296594323;
-    if ([self homeoutOfChina:coordinate]) {
-        return coordinate;
-    }
+//    if ([self homeoutOfChina:coordinate]) {
+//        return coordinate;
+//    }
     double wgLat = coordinate.latitude;
     double wgLon = coordinate.longitude;
     double dLat = hometransformLat(wgLon - 105.0, wgLat - 35.0);
@@ -634,7 +631,6 @@ static double hometransformLon(double x, double y)
     }];
 }
 
-
 #pragma mark - lazy load
 - (CLLocationManager *)locationManager
 {
@@ -734,7 +730,6 @@ static double hometransformLon(double x, double y)
     button.layer.cornerRadius = 5;
     return button;
 }
-
 #pragma mark - autoLayout
 
 - (void)viewDidLayoutSubviews
@@ -770,7 +765,5 @@ static double hometransformLon(double x, double y)
     .widthIs(20)
     .heightIs(30);
 }
-
-
 
 @end

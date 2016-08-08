@@ -112,49 +112,25 @@
                 if (code == 1) {
                     [hud hide:YES];
                     [self.navigationController popToRootViewControllerAnimated:YES];
-                    
                     EMError *error = [[EMClient sharedClient] logout:YES];
                     if (!error) {
                         NSLog(@"退出成功");
+                        SaveToken(nil);
+                        SavePhone(nil);
+                        SaveNickName(nil);
+                        SaveAvatar(nil);
+                        [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
                     }
-                    
-                    SaveToken(nil);
-                    SavePhone(nil);
-                    SaveNickName(nil);
-                    SaveAvatar(nil);
-                    
-                    [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
-                    
                 } else {
-                    hud.mode = MBProgressHUDModeText;
-                    hud.labelText = @"退出失败";
-                    [hud hide:YES afterDelay:1];
+                    [hud hide:YES];
+                    [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
                 }
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"error = %@", error.localizedDescription);
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"退出失败";
-                [hud hide:YES afterDelay:1];
+                [hud hide:YES];
+                [MBProgressHUD showModeText:error.localizedDescription view:self.view];
             }];
-            
-            
-//            EMError *error = [[EMClient sharedClient] logout:YES];
-//            if (!error) {
-//                NSLog(@"退出成功");
-//                // 清空该用户的搜索记录
-//                [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
-//                
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//                
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[BYRegisterViewController new] animated:YES completion:nil];
-//                });
-//            } else {
-//                NSLog(@"退出失败");
-//            }
-//            // 清空账号信息
-//            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:loginStatus]; // 登录状态
         }];
         
         [alert addAction:cancelAction];

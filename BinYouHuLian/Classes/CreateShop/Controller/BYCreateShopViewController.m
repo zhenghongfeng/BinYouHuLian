@@ -227,14 +227,14 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
             BYCreateShopEditTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BYCreateShopEditCellID];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textField.placeholder = @"请输入店铺名称（建议少于10个字）";
-            [cell.textField setPlaceholderColor:[UIColor blackColor]];
+//            [cell.textField setPlaceholderColor:[UIColor blackColor]];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         } else if (indexPath.row == 2) {
             BYCreateShopEditTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BYCreateShopEditCellID];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textField.placeholder = @"请输入店铺简介";
-            [cell.textField setPlaceholderColor:[UIColor blackColor]];
+//            [cell.textField setPlaceholderColor:[UIColor blackColor]];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         } else {
@@ -447,7 +447,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 #pragma mark - 右上角的done
 - (void)rightTopDoneClick
 {
-    if (self.category == nil) {
+    if (![NSString isValueableString:self.category]) {
         [MBProgressHUD showModeText:@"请选择店铺类别" view:self.view];
         return;
     }
@@ -456,7 +456,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     BYCreateShopEditTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     self.shopName = cell.textField.text;
     
-    if (self.shopName == nil) {
+    if (![NSString isValueableString:self.shopName]) {
         [MBProgressHUD showModeText:@"请输入店铺名称" view:self.view];
         return;
     }
@@ -467,15 +467,15 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSDictionary *dic = @{@"name": self.shopName,
+    NSDictionary *dic = @{
+                          @"name": self.shopName,
+                          @"legalPerson": GetPhone,
                           @"description": self.shopDescription,
                           @"category": self.category,
                           @"longitude": self.longitude,
                           @"latitude": self.latitude,
                           @"location": self.location
                           };
-    NSLog(@"");
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
     
@@ -489,8 +489,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         
          //多张图片
 //         NSArray *images = @[[UIImage imageNamed:@"anon_chat_bottom_Camera_press@3x"], [UIImage imageNamed:@"addAvatar"], [UIImage imageNamed:@"ac_back"]];//获得一组Image
-         for(NSInteger i = 0; i < self.array1.count; i++)
-         {
+         for(NSInteger i = 0; i < self.array1.count; i++) {
          // 取出图片
          UIImage *image = [self.array1 objectAtIndex:i];
          // 转成二进制
@@ -499,7 +498,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
          NSString * Name = [NSString stringWithFormat:@"image %ld", i];
          // 上传fileName
          NSString * fileName = [NSString stringWithFormat:@"%@.jpg", Name];
-         
          [formData appendPartWithFileData:imageData name:@"files" fileName:fileName mimeType:@"image/jpeg"];
          }
         
@@ -509,24 +507,17 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         NSLog(@"responseObject = %@", responseObject);
         
         NSInteger code = [responseObject[@"code"] integerValue];
-        
         if (code == 1) {
-            
             [hud hide:YES];
-            
             [self.navigationController popViewControllerAnimated:YES];
-
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"请输入昵称";
-            [hud hide:YES afterDelay:1];
-            return;
+            [hud hide:YES];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"注册失败";
-        [hud hide:YES afterDelay:1];
+        [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 

@@ -7,56 +7,140 @@
 //
 
 #import "BYAddBuddyViewController.h"
+#import "BYFriend.h"
+#import "BYMyBuddyListTableViewCell.h"
+#import "BYApplyReasonViewController.h"
 
-@interface BYAddBuddyViewController () <UITextFieldDelegate>
+@interface BYAddBuddyViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *userName;
+/** searchBar */
+@property (nonatomic, strong) UISearchBar *searchBar;
+
+/** tableView */
+@property (nonatomic, strong) UITableView *tableView;
+
+/** friend */
+@property (nonatomic, strong) BYFriend *friend;
+
 @end
 
 @implementation BYAddBuddyViewController
 
+#pragma mark - getter
+
+- (UISearchBar *)searchBar
+{
+    if (_searchBar == nil) {
+        _searchBar = [[UISearchBar alloc] init];
+        _searchBar.delegate = self;
+        _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+        _searchBar.placeholder = @"请输入对方的手机号";
+        _searchBar.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    }
+    return _searchBar;
+}
+
+- (UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.searchBar.frame) + 20, self.view.width, kScreenHeight - CGRectGetMaxY(self.searchBar.frame) - 20) style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.tableFooterView = [UIView new];
+    }
+    return _tableView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"添加朋友";
     
-    
+    [self.view addSubview:self.searchBar];
 }
-- (IBAction)addBuddy:(id)sender {
-    
-    if (self.userName.text.length == 0) {
-        [MBProgressHUD showModeText:@"账号不能为空" view:self.view];
-        return;
-    }
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+#pragma mark - UISearchDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    WeakSelf;
     NSDictionary *dic = @{
-                          @"friendName": self.userName.text,
-                          @"username": GetPhone
+                          @"friend": searchBar.text
                           };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
-    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/addfriend?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friendinfo?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@", responseObject);
+        NSLog(@"userinfo == %@", responseObject);
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"添加成功";
-            [hud hide:YES afterDelay:1];
+            weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
+            [weakSelf.view addSubview:weakSelf.tableView];
+            [weakSelf.tableView reloadData];
         } else {
-            [hud hide:YES];
-            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+            if (weakSelf.tableView) {
+                [weakSelf.tableView removeFromSuperview];
+            }
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:weakSelf.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        [hud hide:YES];
-        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+        [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
     }];
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITableViewDataSource
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BYMyBuddyListTableViewCell *cell = [[BYMyBuddyListTableViewCell alloc] init];
+    cell.textLabel.text = self.friend.nickname;
+    cell.detailTextLabel.text = self.friend.phone;
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:self.friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+    
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 54, 0, 44, 44)];
+    [addButton setTitle:@"添加" forState:UIControlStateNormal];
+    [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [cell.contentView addSubview:addButton];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)addButtonClick
+{
+    NSLog(@"添加");
+    BYApplyReasonViewController *vc =[BYApplyReasonViewController new];
+    vc.userName = self.friend.phone;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - auto layout
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    _searchBar.sd_layout
+    .leftSpaceToView(self.view, 10)
+    .topSpaceToView(self.navigationController.navigationBar, 10)
+    .rightSpaceToView(self.view, 10)
+    .heightIs(30);
+}
 
 @end

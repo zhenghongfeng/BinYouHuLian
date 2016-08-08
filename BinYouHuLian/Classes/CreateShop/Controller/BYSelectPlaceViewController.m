@@ -107,9 +107,36 @@
         _mapView.showsUserLocation = YES;
         _mapView.mapType = MKMapTypeStandard;
         _mapView.userTrackingMode = MKUserTrackingModeFollow;//是否跟踪
+        // 禁止地图旋转
         _mapView.rotateEnabled = NO;
+        
+        CLLocationCoordinate2D coord2D = _mapView.centerCoordinate;
+        // 显示区域精度
+        MKCoordinateSpan span = {0.1, 0.1};
+        // 设置显示区域
+        MKCoordinateRegion region = {coord2D, span};
+        // 给地图设置显示区域
+        [_mapView setRegion:region animated:YES];
     }
     return _mapView;
+}
+
+- (UIImageView *)centerImageView
+{
+    if (_centerImageView == nil) {
+        _centerImageView = [[UIImageView alloc] init];
+        _centerImageView.image = [UIImage imageNamed:@"map_point_on"];
+    }
+    return _centerImageView;
+}
+
+- (UILabel *)adressLabel
+{
+    if (_adressLabel == nil) {
+        _adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 50 - 10 - 40, kScreenWidth, 40)];
+        _adressLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _adressLabel;
 }
 
 - (UIButton *)locateBtn
@@ -162,52 +189,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [[BYGPSLocation sharedGPSLocation] startLocation];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayUserLocation:) name:@"inceptCoordinate" object:nil];
-    
-//    [self.locationManager startUpdatingLocation];
-    
     isAppear = NO;
-
+    [self.locationManager startUpdatingLocation];
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.backBtn];
-    
-    _centerImageView = [[UIImageView alloc] init];
-    _centerImageView.centerX = self.view.centerX;
-    _centerImageView.centerY = self.view.centerY;
-    _centerImageView.width = 30;
-    _centerImageView.height = 40;
-    _centerImageView.image = [UIImage imageNamed:@"map_point_on"];
-    [self.view addSubview:_centerImageView];
-    
-    _adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 50 - 10 - 40, kScreenWidth, 40)];
-    _adressLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_adressLabel];
-    
-    [self setupConstraints];
-}
-
-//- (void)displayUserLocation:(NSNotification *)notification
-//{
-//    NSDictionary *dict = notification.userInfo;
-//    CLLocationCoordinate2D cl = CLLocationCoordinate2DMake([dict[@"latitude"] floatValue], [dict[@"longitude"] floatValue]);
-//    _mapView.centerCoordinate = cl;
-//}
-
-#pragma mark - 选好了点击事件
-
-- (void)okBtnClick
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
-        [self.delegate selectedLocation:_adressLabel.text longitude:_longitude latitude:_latitude];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)locateBtnClick
-{
-    [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
+    [self.view addSubview:self.centerImageView];
+    [self.view addSubview:self.adressLabel];
 }
 
 #pragma mark - CLLocationManagerDelegate  位置更新后的回调
@@ -216,60 +203,6 @@
 {
     //停止位置更新
     [_locationManager stopUpdatingLocation];
-    
-    CLLocation *loc = [locations firstObject];
-    CLLocationCoordinate2D theCoordinate;
-    //位置更新后的经纬度
-    theCoordinate.latitude = loc.coordinate.latitude;
-    theCoordinate.longitude = loc.coordinate.longitude;
-    //设定显示范围
-    MKCoordinateSpan theSpan;
-    theSpan.latitudeDelta = 0.01;
-    theSpan.longitudeDelta = 0.01;
-    //设置地图显示的中心及范围
-    MKCoordinateRegion theRegion;
-    theRegion.center = theCoordinate;
-    theRegion.span = theSpan;
-    [_mapView setRegion:theRegion];
-    _location = [locations lastObject];
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    
-    [geocoder reverseGeocodeLocation:_location completionHandler:^(NSArray *array, NSError *error)
-     {
-         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-         [geocoder reverseGeocodeLocation:_location completionHandler:^(NSArray *array, NSError *error) {
-             
-             if (array.count > 0)
-             {
-                 CLPlacemark *placemark = [array objectAtIndex:0];
-                 // 将获得的所有信息显示到label上
-                 NSLog(@"%@",placemark.name);
-                 // 获取城市
-                 NSString *city = placemark.name;
-                 if (!city) {
-                     // 四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
-                     city = placemark.name;
-                 }
-                 NSLog(@"当前城市:%@",city);
-                 // 设置地图显示的类型及根据范围进行显示  安放大头针
-                 MKPointAnnotation *pinAnnotation = [[MKPointAnnotation alloc] init];
-                 pinAnnotation.coordinate = theCoordinate;
-                 pinAnnotation.title = city;
-                 [_mapView addAnnotation:pinAnnotation];
-             }
-             else if (error == nil && [array count] == 0)
-             {
-                 NSLog(@"No results were returned.");
-             }
-             else if (error != nil)
-             {
-                 NSLog(@"An error occurred = %@", error);
-             }
-             
-             
-         }];
-         
-     }];
 }
 
 #pragma mark - MKMapViewDelegate
@@ -301,22 +234,18 @@
 }
 
 #pragma mark mapViewDelegate
-
-
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
-    
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _userLongitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _userLatitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
-    
-    [self.locationManager stopUpdatingHeading];
 }
 
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
     NSLog(@"定位失败：%@",error);
 }
+
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
     _adressLabel.text = @"正在获取你选择的地点...";
     NSLog(@"将要变化");
@@ -332,14 +261,15 @@
         typeof(BYSelectPlaceViewController *)weakSelf = self;
         
         CLLocationCoordinate2D earthCL = [self gcj2wgs:cl ];
+        
         //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.8 animations:^{
-//                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-25);
+                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
                 } completion:^(BOOL finished) {
-//                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y-15);
+                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
                 }];
             });
         });
@@ -428,21 +358,42 @@ static double transformLon(double x, double y)
     
 }
 
-#pragma mark - back button click
+#pragma mark - custom event
 
 - (void)backBtnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)okBtnClick
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
+        [self.delegate selectedLocation:_adressLabel.text longitude:_longitude latitude:_latitude];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)locateBtnClick
+{
+    [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
+}
+
 #pragma mark - autoLayout
 
-- (void)setupConstraints
+- (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
+    
     self.backBtn.sd_layout.leftSpaceToView(self.view, BYMargin)
     .topSpaceToView(self.view, BYMargin * 2)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
+    
+    self.centerImageView.sd_layout
+    .centerXIs(self.view.centerX)
+    .centerYIs(self.view.centerY)
+    .widthIs(20)
+    .heightIs(30);
     
     [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);

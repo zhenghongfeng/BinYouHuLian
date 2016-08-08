@@ -135,7 +135,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     options.apnsCertName = apnsCertName;
     options.isAutoAcceptGroupInvitation = NO;
     if ([otherConfig objectForKey:kSDKConfigEnableConsoleLogger]) {
-        options.enableConsoleLog = YES;
+        options.enableConsoleLog = NO;
     }
     
     BOOL sandBox = [otherConfig objectForKey:@"easeSandBox"] && [[otherConfig objectForKey:@"easeSandBox"] boolValue];
@@ -146,7 +146,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)dealloc
 {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - send message

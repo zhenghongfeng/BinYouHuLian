@@ -76,7 +76,7 @@
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
 
     UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 30)];
-    privateChatbtn.backgroundColor = kMainColor;
+    privateChatbtn.backgroundColor = [UIColor blackColor];
     privateChatbtn.layer.masksToBounds = YES;
     privateChatbtn.layer.cornerRadius = 5;
     [privateChatbtn setTitle:@"和老板私聊" forState:UIControlStateNormal];
@@ -84,7 +84,7 @@
     [footerView addSubview:privateChatbtn];
     
     UIButton *groupChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width * 0.5 + 10, 10, self.view.width * 0.5 - 20, 30)];
-    groupChatbtn.backgroundColor = kMainColor;
+    groupChatbtn.backgroundColor = [UIColor blackColor];
     groupChatbtn.layer.masksToBounds = YES;
     groupChatbtn.layer.cornerRadius = 5;
     [groupChatbtn setTitle:@"和老板群聊" forState:UIControlStateNormal];
@@ -146,9 +146,12 @@
 
 - (void)chatClick
 {
-    
+    if (![NSString isValueableString:GetToken]) {
+        [MBProgressHUD showModeText:@"请先登录" view:self.view];
+        return;
+    }
     if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
-        [MBProgressHUD showModeText:@"不能与本人自己私聊" view:self.view];
+        [MBProgressHUD showModeText:@"不能与您自己私聊" view:self.view];
         return;
     }
     WeakSelf;
@@ -177,6 +180,14 @@
 
 - (void)groupChatClick
 {
+    if (![NSString isValueableString:GetToken]) {
+        [MBProgressHUD showModeText:@"请先登录" view:self.view];
+        return;
+    }
+    if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
+        [MBProgressHUD showModeText:@"不能与您自己私聊" view:self.view];
+        return;
+    }
     BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeGroupChat];
     vc.title = @"wuzong";
     [self.navigationController pushViewController:vc animated:YES];

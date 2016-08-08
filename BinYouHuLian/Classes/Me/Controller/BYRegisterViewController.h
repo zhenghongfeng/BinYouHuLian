@@ -10,4 +10,7 @@
 
 @interface BYRegisterViewController : UIViewController
 
+/** tag */
+@property (nonatomic, assign) BOOL isPopToHome;
+
 @end

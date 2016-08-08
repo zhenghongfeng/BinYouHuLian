@@ -146,7 +146,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (tableView == _tableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         NSString *name = cell.textLabel.text;
@@ -155,17 +154,10 @@
             [self dismissViewControllerAnimated:YES completion:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:name userInfo:nil];
         }
-        
         if (indexPath.section == 1) {
-            
             [_tableView removeFromSuperview];
-            
             [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
-            
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"已清空历史记录";
-            [hud hide:YES afterDelay:1];
+            [MBProgressHUD showModeText:@"已清空历史记录" view:self.view];
         }
     } else {
         BYSearchListTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -181,16 +173,10 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     if (searchBar.text.length == 0) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入关键字";
-        [hud hide:YES afterDelay:1.5];
+        [MBProgressHUD showModeText:@"请输入关键字" view:self.view];
         return;
     }
-    
     [self requestShopsDataWithSearchText:searchBar.text isSearchButtonClicked:YES];
-    
-    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -199,22 +185,24 @@
     if (searchText.length == 0) {
         [_searchTableView removeFromSuperview];
         [self.shops removeAllObjects];
-        
         return;
     }
     [self.searchData removeAllObjects];
-    
     [self requestShopsDataWithSearchText:searchText isSearchButtonClicked:NO];
 }
 
 - (void)requestShopsDataWithSearchText:(NSString *)searchText isSearchButtonClicked:(BOOL)isClicked
 {
+    NSString *key = [searchText stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (key.length == 0) {
+        return;
+    }
     NSDictionary *dic = @{
                           @"lowerlong": @(_leftTopLongitude),
                           @"lowerlati": @(_leftTopLatitude),
                           @"upperlong": @(_rightBottomLongitude),
                           @"upperlati": @(_rightBottomLatitude),
-                          @"key": searchText
+                          @"key": key
                           };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:[BYURL_Development stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {

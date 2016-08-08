@@ -28,7 +28,6 @@
 		BA14B3681D3F5F1A0030CD61 /* addPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = BA14B3671D3F5F1A0030CD61 /* addPhoto.png */; };
 		BA159F3F1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */; };
 		BA159F431CCDED0300FE34F0 /* BYAddBuddyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */; };
-		BA159F441CCDED0300FE34F0 /* BYAddBuddyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */; };
 		BA159F471CCDF66600FE34F0 /* BYMyBlackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */; };
 		BA159F4B1CCDF7CB00FE34F0 /* BYAddBlackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F491CCDF7CB00FE34F0 /* BYAddBlackViewController.m */; };
 		BA159F4C1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA159F4A1CCDF7CB00FE34F0 /* BYAddBlackViewController.xib */; };
@@ -227,6 +226,7 @@
 		BA68E1FB1CC0B4F300A85FCD /* VoiceSearchFeedback020@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA68E1C11CC0B4F300A85FCD /* VoiceSearchFeedback020@2x.png */; };
 		BA68E1FC1CC0B4F300A85FCD /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA68E1C21CC0B4F300A85FCD /* user@2x.png */; };
 		BA68E1FE1CC0B4FD00A85FCD /* EaseUIResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA68E1FD1CC0B4FD00A85FCD /* EaseUIResource.bundle */; };
+		BA6C26B41D5464550050940E /* BYApplyReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C26B31D5464550050940E /* BYApplyReasonViewController.m */; };
 		BA906FF21D3E0F090014C7E6 /* BYResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA906FF11D3E0F090014C7E6 /* BYResetPasswordViewController.m */; };
 		BA99421A1D4AEE8E00BF9E04 /* searchShopLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9942181D4AEE8E00BF9E04 /* searchShopLocation.png */; };
 		BA99421B1D4AEE8E00BF9E04 /* searchResult.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9942191D4AEE8E00BF9E04 /* searchResult.png */; };
@@ -307,6 +307,9 @@
 		BADE66711CCE06C000843708 /* BYMyBuddyListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */; };
 		BADE66731CCE080900843708 /* groupPublicHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BADE66721CCE080900843708 /* groupPublicHeader@2x.png */; };
 		BADE66771CCE12CA00843708 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = BADE66761CCE12CA00843708 /* delete.png */; };
+		BAE05F551D58336C00CA2503 /* BYAddApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE05F541D58336C00CA2503 /* BYAddApplyViewController.m */; };
+		BAE05F581D58810900CA2503 /* BYApply.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE05F571D58810900CA2503 /* BYApply.m */; };
+		BAE05F5B1D5883B400CA2503 /* BYApplyListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE05F5A1D5883B400CA2503 /* BYApplyListTableViewCell.m */; };
 		BAE0F31E1CBB6CF3002009F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31D1CBB6CF3002009F6 /* MobileCoreServices.framework */; };
 		BAE0F3241CBB6D16002009F6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3231CBB6D16002009F6 /* libc++.tbd */; };
 		BAE0F3261CBB6D25002009F6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3251CBB6D25002009F6 /* libresolv.tbd */; };
@@ -462,7 +465,6 @@
 		BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBuddyListViewController.m; sourceTree = "<group>"; };
 		BA159F401CCDED0300FE34F0 /* BYAddBuddyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddBuddyViewController.h; sourceTree = "<group>"; };
 		BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddBuddyViewController.m; sourceTree = "<group>"; };
-		BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYAddBuddyViewController.xib; sourceTree = "<group>"; };
 		BA159F451CCDF66600FE34F0 /* BYMyBlackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBlackListViewController.h; sourceTree = "<group>"; };
 		BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBlackListViewController.m; sourceTree = "<group>"; };
 		BA159F481CCDF7CB00FE34F0 /* BYAddBlackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddBlackViewController.h; sourceTree = "<group>"; };
@@ -848,6 +850,8 @@
 		BA68E1C21CC0B4F300A85FCD /* user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user@2x.png"; sourceTree = "<group>"; };
 		BA68E1C31CC0B4F300A85FCD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BA68E1FD1CC0B4FD00A85FCD /* EaseUIResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EaseUIResource.bundle; sourceTree = "<group>"; };
+		BA6C26B21D5464550050940E /* BYApplyReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYApplyReasonViewController.h; sourceTree = "<group>"; };
+		BA6C26B31D5464550050940E /* BYApplyReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYApplyReasonViewController.m; sourceTree = "<group>"; };
 		BA906FF01D3E0F090014C7E6 /* BYResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYResetPasswordViewController.h; sourceTree = "<group>"; };
 		BA906FF11D3E0F090014C7E6 /* BYResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYResetPasswordViewController.m; sourceTree = "<group>"; };
 		BA9942181D4AEE8E00BF9E04 /* searchShopLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchShopLocation.png; sourceTree = "<group>"; };
@@ -957,6 +961,12 @@
 		BADE66701CCE06C000843708 /* BYMyBuddyListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBuddyListTableViewCell.m; sourceTree = "<group>"; };
 		BADE66721CCE080900843708 /* groupPublicHeader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPublicHeader@2x.png"; sourceTree = "<group>"; };
 		BADE66761CCE12CA00843708 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		BAE05F531D58336C00CA2503 /* BYAddApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddApplyViewController.h; sourceTree = "<group>"; };
+		BAE05F541D58336C00CA2503 /* BYAddApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddApplyViewController.m; sourceTree = "<group>"; };
+		BAE05F561D58810900CA2503 /* BYApply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYApply.h; sourceTree = "<group>"; };
+		BAE05F571D58810900CA2503 /* BYApply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYApply.m; sourceTree = "<group>"; };
+		BAE05F591D5883B400CA2503 /* BYApplyListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYApplyListTableViewCell.h; sourceTree = "<group>"; };
+		BAE05F5A1D5883B400CA2503 /* BYApplyListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYApplyListTableViewCell.m; sourceTree = "<group>"; };
 		BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2093,7 +2103,6 @@
 				BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */,
 				BA159F401CCDED0300FE34F0 /* BYAddBuddyViewController.h */,
 				BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */,
-				BA159F421CCDED0300FE34F0 /* BYAddBuddyViewController.xib */,
 				BA159F451CCDF66600FE34F0 /* BYMyBlackListViewController.h */,
 				BA159F461CCDF66600FE34F0 /* BYMyBlackListViewController.m */,
 				BA159F481CCDF7CB00FE34F0 /* BYAddBlackViewController.h */,
@@ -2103,6 +2112,10 @@
 				BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */,
 				BADD96F41CD308F1008CFF3D /* BYAddGroupViewController.h */,
 				BADD96F51CD308F1008CFF3D /* BYAddGroupViewController.m */,
+				BA6C26B21D5464550050940E /* BYApplyReasonViewController.h */,
+				BA6C26B31D5464550050940E /* BYApplyReasonViewController.m */,
+				BAE05F531D58336C00CA2503 /* BYAddApplyViewController.h */,
+				BAE05F541D58336C00CA2503 /* BYAddApplyViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2114,6 +2127,8 @@
 				BAD26DBD1CBF64CC00F355C5 /* BYMessageModel.m */,
 				BA9942221D4B272C00BF9E04 /* BYFriend.h */,
 				BA9942231D4B272C00BF9E04 /* BYFriend.m */,
+				BAE05F561D58810900CA2503 /* BYApply.h */,
+				BAE05F571D58810900CA2503 /* BYApply.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2130,6 +2145,8 @@
 				BAA388F61D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m */,
 				BAA388F81D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.h */,
 				BAA388F91D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m */,
+				BAE05F591D5883B400CA2503 /* BYApplyListTableViewCell.h */,
+				BAE05F5A1D5883B400CA2503 /* BYApplyListTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2667,7 +2684,6 @@
 				BA68E12C1CC0B4C900A85FCD /* MJRefresh.bundle in Resources */,
 				BAE0F3F31CBB9AA4002009F6 /* icon_map_arrow@2x.png in Resources */,
 				BAD26DAE1CBF442E00F355C5 /* xiaoli.png in Resources */,
-				BA159F441CCDED0300FE34F0 /* BYAddBuddyViewController.xib in Resources */,
 				BAE0F40C1CBB9AA5002009F6 /* icon_map_refresh@2x.png in Resources */,
 				BA68E1C61CC0B4F300A85FCD /* back@2x.png in Resources */,
 				BAD26EA11CBF7FA000F355C5 /* chatBar_recordBg.png in Resources */,
@@ -2778,6 +2794,7 @@
 				BA68E14E1CC0B4C900A85FCD /* PSTCollectionViewData.m in Sources */,
 				BA68E1831CC0B4C900A85FCD /* EaseRecordView.m in Sources */,
 				BA68E1321CC0B4C900A85FCD /* MWGridCell.m in Sources */,
+				BAE05F5B1D5883B400CA2503 /* BYApplyListTableViewCell.m in Sources */,
 				BA68E1231CC0B4C800A85FCD /* MJRefreshAutoGifFooter.m in Sources */,
 				BAD26DC31CBF6F0500F355C5 /* BYMyShopBusinessViewController.m in Sources */,
 				BAE0F3CF1CBB9AA4002009F6 /* main.m in Sources */,
@@ -2792,6 +2809,7 @@
 				BA68E1381CC0B4C900A85FCD /* MWZoomingScrollView.m in Sources */,
 				BA68E1191CC0B4C800A85FCD /* EMVoiceConverter.mm in Sources */,
 				BA68E1511CC0B4C900A85FCD /* PSTCollectionViewLayout.m in Sources */,
+				BA6C26B41D5464550050940E /* BYApplyReasonViewController.m in Sources */,
 				BAC5EFBC1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m in Sources */,
 				BA68E17B1CC0B4C900A85FCD /* EaseBubbleView.m in Sources */,
 				BA68E1691CC0B4C900A85FCD /* EaseConversationListViewController.m in Sources */,
@@ -2802,6 +2820,7 @@
 				BA68E15D1CC0B4C900A85FCD /* NSDateFormatter+Category.m in Sources */,
 				BA68E13A1CC0B4C900A85FCD /* EMSDImageCache.m in Sources */,
 				BA68E1111CC0B4C800A85FCD /* EMAudioRecorderUtil.m in Sources */,
+				BAE05F551D58336C00CA2503 /* BYAddApplyViewController.m in Sources */,
 				BA68E1351CC0B4C900A85FCD /* MWPhotoBrowser.m in Sources */,
 				BA68E1201CC0B4C800A85FCD /* MJRefreshComponent.m in Sources */,
 				BADE666E1CCE02CD00843708 /* BYGroupChatViewController.m in Sources */,
@@ -2895,6 +2914,7 @@
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
 				BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */,
+				BAE05F581D58810900CA2503 /* BYApply.m in Sources */,
 				BA68E1281CC0B4C800A85FCD /* MJRefreshBackStateFooter.m in Sources */,
 				BA68E1721CC0B4C900A85FCD /* EaseMessageCell.m in Sources */,
 				BA3218781D46F45400DE990D /* ELCOverlayImageView.m in Sources */,

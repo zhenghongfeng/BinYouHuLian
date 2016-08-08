@@ -18,7 +18,7 @@
     hud.labelText = text;
     // 隐藏时候从父控件中移除
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:1.5];
 }
 
 @end

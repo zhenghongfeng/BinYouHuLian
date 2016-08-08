@@ -15,6 +15,7 @@
 #import "BYMyBlackListViewController.h"
 #import "BYMyGroupListViewController.h"
 #import "BYAboutMeInfoViewController.h"
+#import "BYRegisterViewController.h"
 
 @interface BYMineViewController ()
 
@@ -69,31 +70,39 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIViewController *vc;
-    if (indexPath.row == 0) {
-        vc = [BYSettingViewController new];
+    
+    if ([NSString isValueableString:GetToken]) {
+        UIViewController *vc;
+        if (indexPath.row == 0) {
+            vc = [BYSettingViewController new];
+        }
+        if (indexPath.row == 1) {
+            vc = [BYCaredLocationViewController new];
+        }
+        if (indexPath.row == 2) {
+            vc = [BYMessageListViewController new];
+        }
+        if (indexPath.row == 3) {
+            vc = [BYMyShopBusinessViewController new];
+        }
+        if (indexPath.row == 4) {
+            vc = [BYMyBuddyListViewController new];
+        }
+        if (indexPath.row == 5) {
+            vc = [BYMyBlackListViewController new];
+        }
+        if (indexPath.row == 6) {
+            vc = [BYMyGroupListViewController new];
+        }
+        if (indexPath.row == 7) {
+            vc = [BYAboutMeInfoViewController new];
+        }
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        BYRegisterViewController *vc = [[BYRegisterViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        nav.navigationBar.hidden = YES;
+        [self presentViewController:nav animated:YES completion:nil];
     }
-    if (indexPath.row == 1) {
-        vc = [BYCaredLocationViewController new];
-    }
-    if (indexPath.row == 2) {
-        vc = [BYMessageListViewController new];
-    }
-    if (indexPath.row == 3) {
-        vc = [BYMyShopBusinessViewController new];
-    }
-    if (indexPath.row == 4) {
-        vc = [BYMyBuddyListViewController new];
-    }
-    if (indexPath.row == 5) {
-        vc = [BYMyBlackListViewController new];
-    }
-    if (indexPath.row == 6) {
-        vc = [BYMyGroupListViewController new];
-    }
-    if (indexPath.row == 7) {
-        vc = [BYAboutMeInfoViewController new];
-    }
-    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

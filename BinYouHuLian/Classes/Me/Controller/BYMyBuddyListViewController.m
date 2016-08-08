@@ -12,8 +12,12 @@
 #import "BYChatViewController.h"
 #import "BYFriend.h"
 #import "ChatViewController.h"
+#import "BYAddApplyViewController.h"
 
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
+
+/** array */
+@property (nonatomic, strong) NSArray *array;
 
 @property (nonatomic, strong) NSMutableArray *buddyList;
 @property (nonatomic, strong) UITableView *tableView;
@@ -27,13 +31,20 @@
 
 #pragma mark - getter
 
+- (NSArray *)array
+{
+    if (_array == nil) {
+        _array = @[@"申请与通知", @"群聊", @"聊天室"];
+    }
+    return _array;
+}
+
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.tableFooterView = [UIView new];
     }
     return _tableView;
 }
@@ -93,25 +104,41 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.friends.count;
+    return section == 0 ? self.array.count : self.friends.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *ID = @"cell";
-    BYMyBuddyListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[BYMyBuddyListTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+    if (indexPath.section == 0) {
+        static NSString *ID = @"cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        }
+        cell.textLabel.text = self.array[indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:@"groupPublicHeader"];
+        return cell;
+    } else {
+        static NSString *ID = @"cell";
+        BYMyBuddyListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[BYMyBuddyListTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        }
+        BYFriend *friend = self.friends[indexPath.row];
+        
+        cell.textLabel.text = friend.nickname;
+        cell.detailTextLabel.text = friend.phone;
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+        
+        return cell;
     }
-    BYFriend *friend = self.friends[indexPath.row];
-    
-    cell.textLabel.text = friend.nickname;
-    cell.detailTextLabel.text = friend.phone;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
@@ -119,11 +146,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BYFriend *friend = self.friends[indexPath.row];
-//    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
-    ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
-    vc.myFriend = friend;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.section == 0) {
+        BYAddApplyViewController *vc = [BYAddApplyViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (indexPath.section == 1) {
+        BYFriend *friend = self.friends[indexPath.row];
+        //    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
+        ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
+        vc.myFriend = friend;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
