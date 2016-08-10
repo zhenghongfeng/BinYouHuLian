@@ -42,6 +42,7 @@
         _acceptButton.backgroundColor = [UIColor whiteColor];
         [_acceptButton setTitle:@"已添加" forState:UIControlStateNormal];
         [_acceptButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        _acceptButton.enabled = NO;
     } else {
         _acceptButton.backgroundColor = [UIColor blackColor];
         [_acceptButton setTitle:@"接受" forState:UIControlStateNormal];

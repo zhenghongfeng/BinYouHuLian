@@ -14,6 +14,8 @@
 
 #import "BYFriend.h"
 
+#import "UserCacheManager.h"
+
 //#import "ChatGroupDetailViewController.h"
 //#import "ChatroomDetailViewController.h"
 //#import "UserProfileViewController.h"
@@ -51,7 +53,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = self.myFriend.nickname;
+    if (self.conversation.type == EMConversationTypeChatRoom) {
+        
+    } else {
+        self.navigationItem.title = self.myFriend.nickname;
+    }
+    
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
@@ -154,20 +161,12 @@
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
     model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
-//    UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:model.nickname];
-//    if (profileEntity) {
-//        model.avatarURLPath = profileEntity.imageUrl;
-//        model.nickname = profileEntity.nickname;
-//    }
-    
-    if (model.isSender) {
-        model.avatarURLPath = [@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar];
-        model.nickname = GetNickName;
-    } else {
-        model.avatarURLPath = [@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:self.myFriend.avatar];
-        model.nickname = self.myFriend.nickname;
+    model.nickname = message.ext[kChatUserNick];
+    if ([self.shopOwner isEqualToString:message.ext[kChatUserId]]) {
+        model.nickname = @"店长";
     }
-    model.failImageName = @"imageDownloadFail";
+    model.avatarURLPath = message.ext[kChatUserPic];
+    
     return model;
 }
 

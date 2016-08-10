@@ -10,19 +10,17 @@
  * from Hyphenate Inc.
  */
 
-#define KNOTIFICATIONNAME_DELETEALLMESSAGE @"RemoveAllMessages"
 
-@class BYFriend;
+#import <UIKit/UIKit.h>
 
-@interface ChatViewController : EaseMessageViewController
+@interface UIImageView (HeadImage)
 
-/** <#注释#> */
-@property (nonatomic, strong) NSDictionary *dic;
+- (void)imageWithUsername:(NSString*)username placeholderImage:(UIImage*)placeholderImage;
 
-/** friend */
-@property (nonatomic, strong) BYFriend *myFriend;
+@end
 
-/** shopOwner */
-@property (nonatomic, copy) NSString *shopOwner;
+@interface UILabel (Prase)
+
+- (void)setTextWithUsername:(NSString *)username;
 
 @end

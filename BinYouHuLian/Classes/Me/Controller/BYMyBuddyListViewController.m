@@ -13,6 +13,7 @@
 #import "BYFriend.h"
 #import "ChatViewController.h"
 #import "BYAddApplyViewController.h"
+#import "BYChatRoomViewController.h"
 
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -147,8 +148,15 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        BYAddApplyViewController *vc = [BYAddApplyViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
+        if (indexPath.row == 0) {
+            BYAddApplyViewController *vc = [BYAddApplyViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if (indexPath.row == 2) {
+            BYChatRoomViewController *vc = [BYChatRoomViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
     }
     if (indexPath.section == 1) {
         BYFriend *friend = self.friends[indexPath.row];

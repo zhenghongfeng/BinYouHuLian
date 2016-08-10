@@ -9,6 +9,7 @@
 #import "BYLoginViewController.h"
 #import "BYResetPasswordViewController.h"
 #import "BYLoginUser.h"
+#import "UserCacheManager.h"
 
 @interface BYLoginViewController ()
 
@@ -166,11 +167,18 @@
                     [hud hide:YES];
                     if (!error) {
                         NSLog(@"环信登录成功");
+                        
+                       
+                        
                         // save token and userInfo(phone\nickname\avatar)
                         SaveToken(responseObject[@"access_token"]);
                         SavePhone([responseObject[@"user"] valueForKey:@"phone"]);
                         SaveNickName([responseObject[@"user"] valueForKey:@"nickname"]);
                         SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
+                        
+                        // 保存用户信息
+                        [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
+                        
                         // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
                         

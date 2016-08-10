@@ -13,6 +13,7 @@
 #import "BYChatViewController.h"
 
 #import "BYFriend.h"
+#import "BYRoom.h"
 
 @interface BYShopDetailViewController ()
 
@@ -184,13 +185,74 @@
         [MBProgressHUD showModeText:@"请先登录" view:self.view];
         return;
     }
-    if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
-        [MBProgressHUD showModeText:@"不能与您自己私聊" view:self.view];
-        return;
-    }
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeGroupChat];
-    vc.title = @"wuzong";
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    WeakSelf;
+    NSDictionary *dic = @{
+                          @"user": GetPhone,
+                          @"shopId": self.shop.myId
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/room/detail?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            BYRoom *room = [BYRoom mj_objectWithKeyValues:responseObject[@"room"]];
+            
+            ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
+            chatViewController.shopOwner = room.owner;
+            [weakSelf.navigationController pushViewController:chatViewController animated:NO];
+            
+//            [self requestUserInfoDataWithShopOwner:room];
+            
+        } else {
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
+    }];
+    
+    
+    
+//    if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
+//        [MBProgressHUD showModeText:@"不能与您自己私聊" view:self.view];
+//        return;
+//    }
+//    
+//    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeGroupChat];
+//    vc.title = @"wuzong";
+//    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)requestUserInfoDataWithShopOwner:(BYRoom *)room
+{
+    WeakSelf;
+    NSDictionary *dic = @{
+                          @"friend": room.owner
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friendinfo?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            
+            BYFriend *friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
+            
+            ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
+            chatViewController.myFriend = friend;
+            [weakSelf.navigationController pushViewController:chatViewController animated:NO];
+        } else {
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:weakSelf.view];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
+    }];
 }
 
 @end

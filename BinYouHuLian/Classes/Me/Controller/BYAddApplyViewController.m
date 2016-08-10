@@ -90,6 +90,8 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
 - (void)acceptButtonClick:(UIButton *)button
 {
     BYApply *apply = self.applyList[button.tag];

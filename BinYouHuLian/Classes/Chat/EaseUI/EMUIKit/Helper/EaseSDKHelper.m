@@ -15,6 +15,8 @@
 
 #import "EaseConvertToCommonEmoticonsHelper.h"
 
+#import "UserCacheManager.h"
+
 //@interface EMChatImageOptions : NSObject<IChatImageOptions>
 //
 //@property (assign, nonatomic) CGFloat compressionQuality;
@@ -151,6 +153,20 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 #pragma mark - send message
 
+// 重新消息扩展组织
++(NSMutableDictionary*)reGetMessageExt:(NSDictionary *)messageExt{
+    UserCacheInfo *userInfo = [UserCacheManager getCurrUser];
+    
+    NSMutableDictionary *extDic = [NSMutableDictionary dictionaryWithDictionary:messageExt];
+    [extDic setValue:userInfo.Id forKey:kChatUserId];
+    [extDic setValue:userInfo.AvatarUrl forKey:kChatUserPic];
+    [extDic setValue:userInfo.NickName forKey:kChatUserNick];
+    
+    
+    
+    return extDic;
+}
+
 + (EMMessage *)sendTextMessage:(NSString *)text
                             to:(NSString *)toUser
                    messageType:(EMChatType)messageType
@@ -162,6 +178,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:willSendText];
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:toUser from:from to:toUser body:body ext:messageExt];
+    message.chatType = messageType;
+    message.ext = [self reGetMessageExt:messageExt];
     
     return message;
 }
@@ -176,6 +194,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     EMLocationMessageBody *body = [[EMLocationMessageBody alloc] initWithLatitude:latitude longitude:longitude address:address];
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
+    message.chatType = messageType;
+    message.ext = [self reGetMessageExt:messageExt];
     
     return message;
 }
@@ -188,6 +208,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     EMImageMessageBody *body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image.png"];
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
+    message.chatType = messageType;
+    message.ext = [self reGetMessageExt:messageExt];
     
     return message;
 }
@@ -212,6 +234,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     body.duration = (int)duration;
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
+    message.chatType = messageType;
+    message.ext = [self reGetMessageExt:messageExt];
     
     return message;
 }
@@ -224,6 +248,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     EMVideoMessageBody *body = [[EMVideoMessageBody alloc] initWithLocalPath:[url path] displayName:@"video.mp4"];
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
+    message.chatType = messageType;
+    message.ext = [self reGetMessageExt:messageExt];
     
     return message;
 }

@@ -1,29 +1,27 @@
 //
-//  BYShop.m
+//  BYRoom.m
 //  BinYouHuLian
 //
-//  Created by zhf on 16/4/18.
+//  Created by zhf on 16/8/9.
 //  Copyright © 2016年 郑洪锋. All rights reserved.
 //
 
-#import "BYShop.h"
+#import "BYRoom.h"
 
-@implementation BYShop
+@implementation BYRoom
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         // 替换属性名
-        [BYShop mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+        [BYRoom mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
             return @{
                      @"myDescription": @"description",
-                     @"myLegalPerson": @"legalPerson",
-                     @"myId": @"_id"
+                     @"myId": @"id"
                      };
         }];
     }
     return self;
 }
-
 @end

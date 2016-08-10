@@ -15,7 +15,5 @@
 - (void)didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
 
-- (void)jumpToChatVC;
-
 @end
 

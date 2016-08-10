@@ -11,6 +11,13 @@
 
 #define BYURL_Development @"http://123.56.186.178/api"
 
+// 环信聊天用的昵称和头像（发送聊天消息时，要附带这3个属性）
+#define kChatUserId @"ChatUserId"// 环信账号
+#define kChatUserNick @"ChatUserNick"
+#define kChatUserPic @"ChatUserPic"
+
+#define kCURRENT_USERNAME [[EMClient sharedClient] currentUsername]
+
 // NSUserDefaults本地保存
 #define Get(a) [[NSUserDefaults standardUserDefaults] objectForKey:a]
 #define Save(a,b) [[NSUserDefaults standardUserDefaults] setObject:a forKey:b]; [[NSUserDefaults standardUserDefaults] synchronize]
