@@ -55,7 +55,6 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = @"重置密码";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.textColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
     }
     return _titleLabel;
 }
@@ -67,7 +66,7 @@
         phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
         phoneTextField.placeholder = @"手机号码";
         phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        phoneTextField.tintColor = [UIColor blackColor];
         _phoneTextField = phoneTextField;
     }
     return _phoneTextField;
@@ -79,13 +78,13 @@
         UITextField *verCodeTextField = [[UITextField alloc] init];
         verCodeTextField.borderStyle = UITextBorderStyleRoundedRect;
         verCodeTextField.placeholder = @"验证码";
-        verCodeTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        verCodeTextField.tintColor = [UIColor blackColor];
         verCodeTextField.rightViewMode = UITextFieldViewModeAlways;
         verCodeTextField.rightView = ({
             _verCodeButton = [[UIButton alloc] init];
             _verCodeButton.frame = CGRectMake(0, 0, 140, 40);
             [_verCodeButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-            [_verCodeButton setTitleColor:[UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f] forState:UIControlStateNormal];
+            [_verCodeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             _verCodeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
             [_verCodeButton addTarget:self action:@selector(resetPasswordVerCodeClick) forControlEvents:UIControlEventTouchUpInside];
             _verCodeButton;
@@ -101,8 +100,10 @@
         _passwordTextField = [[UITextField alloc] init];
         _passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _passwordTextField.placeholder = @"新密码(不少于八位)";
-        _passwordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _passwordTextField.tintColor = [UIColor blackColor];
         _passwordTextField.delegate = self;
+        _passwordTextField.secureTextEntry = YES;
+        _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     }
     return _passwordTextField;
 }
@@ -113,8 +114,10 @@
         _affirmPasswordTextField = [[UITextField alloc] init];
         _affirmPasswordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _affirmPasswordTextField.placeholder = @"确认密码(请再次输入以上密码)";
-        _affirmPasswordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _affirmPasswordTextField.tintColor = [UIColor blackColor];
         _affirmPasswordTextField.delegate = self;
+        _affirmPasswordTextField.secureTextEntry = YES;
+        _affirmPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     }
     return _affirmPasswordTextField;
 }
@@ -124,7 +127,7 @@
     if (_okButton == nil) {
         _okButton = [UIButton new];
         [_okButton setTitle:@"完成" forState:UIControlStateNormal];
-        _okButton.backgroundColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _okButton.backgroundColor = [UIColor blackColor];
         _okButton.layer.masksToBounds = YES;
         _okButton.layer.cornerRadius = 5;
         [_okButton addTarget:self action:@selector(okButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -144,8 +147,6 @@
     [self.view addSubview:self.passwordTextField];
     [self.view addSubview:self.affirmPasswordTextField];
     [self.view addSubview:self.okButton];
-    
-    [self setupAutoLayout];
 }
 
 - (void)back
@@ -172,7 +173,6 @@
     _count = 60;
     NSString *str = [NSString stringWithFormat:@"%2zd秒后重新发送", _count];
     [_verCodeButton setTitle:str forState:UIControlStateNormal];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     
     NSDictionary *dic = @{@"phone": self.phoneTextField.text};
     
@@ -181,9 +181,16 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            [_verCodeTextField becomeFirstResponder];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+        } else {
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 
@@ -204,36 +211,23 @@
 - (void)okButtonClick
 {
     if (self.phoneTextField.text.length == 0) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入手机号码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入手机号码" view:self.view];
         return;
     }
     if (self.verCodeTextField.text.length == 0) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入验证码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入验证码" view:self.view];
         return;
     }
     if (self.passwordTextField.text.length < 8) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入大于八位密码";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"请输入大于八位密码" view:self.view];
         return;
     }
     if (![self.affirmPasswordTextField.text isEqualToString:self.passwordTextField.text]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"两次输入密码不一致";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:@"两次输入密码不一致" view:self.view];
         return;
     }
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"重置中...";
     
     NSDictionary *dic = @{@"phone": self.phoneTextField.text,
                           @"password": [NSString md5:self.passwordTextField.text],
@@ -249,19 +243,20 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [hud hide:YES];
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alertController addAction:action];
+            [self presentViewController:alertController animated:YES completion:nil];
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"请输入昵称";
-            [hud hide:YES afterDelay:1];
-            return;
+            [hud hide:YES];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"重置失败";
-        [hud hide:YES afterDelay:1];
+        [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 
@@ -290,10 +285,7 @@
     if (textField == self.affirmPasswordTextField) {
         if (self.affirmPasswordTextField.text.length > 0) {
             if (![self.affirmPasswordTextField.text isEqualToString:self.passwordTextField.text]) {
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"两次输入密码不一致";
-                [hud hide:YES afterDelay:1];
+                [MBProgressHUD showModeText:@"两次输入密码不一致" view:self.view];
                 return;
             }
         }
@@ -308,8 +300,9 @@
 
 #pragma mark - autoLayout
 
-- (void)setupAutoLayout
+- (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     _backButton.sd_layout
     .leftSpaceToView(self.view, 20)
     .topSpaceToView(self.view, 20)
@@ -352,7 +345,5 @@
     .widthIs(130)
     .heightIs(40);
 }
-
-
 
 @end

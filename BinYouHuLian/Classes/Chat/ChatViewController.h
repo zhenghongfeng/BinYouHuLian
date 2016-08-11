@@ -14,6 +14,8 @@
 
 @class BYFriend;
 
+@class BYRoom;
+
 @interface ChatViewController : EaseMessageViewController
 
 /** <#注释#> */
@@ -22,7 +24,7 @@
 /** friend */
 @property (nonatomic, strong) BYFriend *myFriend;
 
-/** shopOwner */
-@property (nonatomic, copy) NSString *shopOwner;
+/** room */
+@property (nonatomic, strong) BYRoom *room;
 
 @end

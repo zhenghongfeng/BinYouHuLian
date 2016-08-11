@@ -39,7 +39,7 @@
 - (void)layoutUI {
     //背景
     _backgroundView = [[UIView alloc] init];
-    _backgroundView.backgroundColor = [UIColor whiteColor];
+    _backgroundView.backgroundColor = [UIColor blackColor];
     //左侧添加图标
     _iconView = [[UIImageView alloc]init];
     

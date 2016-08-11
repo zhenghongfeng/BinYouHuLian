@@ -111,6 +111,7 @@
                                              selector:@selector(didBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    
 }
 
 - (void)setupEmotion

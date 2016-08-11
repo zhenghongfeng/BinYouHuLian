@@ -34,6 +34,10 @@
 #define GetAvatar      Get(@"user_avatar")
 #define SaveAvatar(a)   Save(a,@"user_avatar")
 
+//通知Notification相关的宏
+#define kNotficationSearchShopToHome     @"kNotficationSearchShopToHome" // 搜索店铺，跳到首页
+
+
 
 #define WeakSelf __weak typeof(self) weakSelf = self;
 

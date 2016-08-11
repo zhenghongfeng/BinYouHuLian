@@ -24,6 +24,7 @@ extern NSString *const EaseMessageCellIdentifierSendFile;
     UILabel *_nameLabel;
 }
 
+
 /*!
  @property
  @brief 头像尺寸

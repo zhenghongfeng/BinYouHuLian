@@ -186,6 +186,7 @@
         return;
     }
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     WeakSelf;
     NSDictionary *dic = @{
                           @"user": GetPhone,
@@ -199,32 +200,19 @@
         NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
+            [hud hide:YES];
             BYRoom *room = [BYRoom mj_objectWithKeyValues:responseObject[@"room"]];
-            
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
-            chatViewController.shopOwner = room.owner;
+            chatViewController.room = room;
             [weakSelf.navigationController pushViewController:chatViewController animated:NO];
-            
-//            [self requestUserInfoDataWithShopOwner:room];
-            
         } else {
+            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
         [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
     }];
-    
-    
-    
-//    if ([self.shop.myLegalPerson isEqualToString:GetPhone]) {
-//        [MBProgressHUD showModeText:@"不能与您自己私聊" view:self.view];
-//        return;
-//    }
-//    
-//    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"wuzong" conversationType:EMConversationTypeGroupChat];
-//    vc.title = @"wuzong";
-//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)requestUserInfoDataWithShopOwner:(BYRoom *)room

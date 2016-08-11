@@ -49,7 +49,6 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = @"登录";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.textColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
     }
     return _titleLabel;
 }
@@ -62,7 +61,7 @@
         phoneTextField.placeholder = @"手机号码";
         phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        phoneTextField.tintColor = [UIColor blackColor];
         _phoneTextField = phoneTextField;
     }
     return _phoneTextField;
@@ -75,7 +74,7 @@
         _passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
         _passwordTextField.placeholder = @"密码";
         _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _passwordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _passwordTextField.tintColor = [UIColor blackColor];
         _passwordTextField.secureTextEntry = YES;
     }
     return _passwordTextField;
@@ -86,7 +85,7 @@
     if (_loginButton == nil) {
         _loginButton = [UIButton new];
         [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-        _loginButton.backgroundColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _loginButton.backgroundColor = [UIColor blackColor];
         _loginButton.layer.masksToBounds = YES;
         _loginButton.layer.cornerRadius = 5;
         [_loginButton addTarget:self action:@selector(loginCLick) forControlEvents:UIControlEventTouchUpInside];
@@ -167,9 +166,6 @@
                     [hud hide:YES];
                     if (!error) {
                         NSLog(@"环信登录成功");
-                        
-                       
-                        
                         // save token and userInfo(phone\nickname\avatar)
                         SaveToken(responseObject[@"access_token"]);
                         SavePhone([responseObject[@"user"] valueForKey:@"phone"]);

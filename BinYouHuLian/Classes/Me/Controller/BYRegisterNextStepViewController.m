@@ -7,6 +7,7 @@
 //
 
 #import "BYRegisterNextStepViewController.h"
+#import "UserCacheManager.h"
 
 @interface BYRegisterNextStepViewController () <UITextFieldDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -50,7 +51,6 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = @"注册新账号";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.textColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
     }
     return _titleLabel;
 }
@@ -75,7 +75,7 @@
         _nicknameTextField.borderStyle = UITextBorderStyleRoundedRect;
         _nicknameTextField.placeholder = @"昵称(必填)";
         _nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _nicknameTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _nicknameTextField.tintColor = [UIColor blackColor];
     }
     return _nicknameTextField;
 }
@@ -88,7 +88,7 @@
         _passwordTextField.placeholder = @"密码(不少于八位)";
         _passwordTextField.secureTextEntry = YES;
         _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _passwordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _passwordTextField.tintColor = [UIColor blackColor];
         _passwordTextField.delegate = self;
     }
     return _passwordTextField;
@@ -102,7 +102,7 @@
         _affirmPasswordTextField.placeholder = @"确认密码(请再次输入以上密码)";
         _affirmPasswordTextField.secureTextEntry = YES;
         _affirmPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _affirmPasswordTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _affirmPasswordTextField.tintColor = [UIColor blackColor];
         _affirmPasswordTextField.delegate = self;
     }
     return _affirmPasswordTextField;
@@ -113,7 +113,7 @@
     if (_okButton == nil) {
         _okButton = [UIButton new];
         [_okButton setTitle:@"完成" forState:UIControlStateNormal];
-        _okButton.backgroundColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _okButton.backgroundColor = [UIColor blackColor];
         _okButton.layer.masksToBounds = YES;
         _okButton.layer.cornerRadius = 5;
         [_okButton addTarget:self action:@selector(okButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -132,9 +132,7 @@
     [self.view addSubview:self.nicknameTextField];
     [self.view addSubview:self.passwordTextField];
     [self.view addSubview:self.affirmPasswordTextField];
-    [self.view addSubview:self.okButton];
-    
-    [self setupAutoLayout];
+    [self.view addSubview:self.okButton];    
 }
 
 - (void)backClick
@@ -278,6 +276,10 @@
                         SavePhone([responseObject[@"user"] valueForKey:@"phone"]);
                         SaveNickName([responseObject[@"user"] valueForKey:@"nickname"]);
                         SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
+                        
+                        // 保存用户信息
+                        [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
+                        
                         // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
 //                        EMError *error = nil;
@@ -346,8 +348,9 @@
 
 #pragma mark - autoLayout
 
-- (void)setupAutoLayout
+- (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     _backButton.sd_layout
     .leftSpaceToView(self.view, 20)
     .topSpaceToView(self.view, 20)
@@ -390,7 +393,5 @@
     .widthIs(130)
     .heightIs(40);
 }
-
-
 
 @end

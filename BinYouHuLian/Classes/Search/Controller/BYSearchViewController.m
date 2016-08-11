@@ -164,7 +164,8 @@
         NSString *name = cell.nameLabel.text;
         [self.view endEditing:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:name userInfo:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationSearchShopToHome object:name userInfo:nil];
     }
 }
 

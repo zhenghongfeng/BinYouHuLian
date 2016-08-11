@@ -15,8 +15,6 @@
 #import "BYCreateShopViewController.h"
 #import "BYAnnotation.h"
 #import "BYShopDetailViewController.h"
-#import "BYCalloutAnnotation.h"
-#import "BYCalloutAnnotatonView.h"
 #import "BYShop.h"
 #import "BYLoginUser.h"
 #import "ChatViewController.h"
@@ -31,8 +29,9 @@ static NSString *kGroupName = @"GroupName";
 {
     NSString *_longitude;//用户经度
     NSString *_latitude;//用户纬度
-    BOOL isAppear;//地图是否显示完成
 }
+// 地图是否显示完成
+@property (nonatomic, assign) BOOL isAppear;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -62,6 +61,13 @@ static NSString *kGroupName = @"GroupName";
 
 @implementation BYHomePageViewController
 
+#pragma mark - NSNotificationCenter event
+
+- (void)searchShop:(NSNotification *)notification
+{
+    [self requestSearchShop:notification.object];
+}
+
 #pragma mark - life cycle
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,27 +76,15 @@ static NSString *kGroupName = @"GroupName";
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    isAppear = YES;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.locationManager stopUpdatingLocation];
-}
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchShop:) name:@"location" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchShop:) name:kNotficationSearchShopToHome object:nil];
     
     [self.locationManager startUpdatingLocation];
     
-    isAppear = NO;
+//    _isAppear = NO;
     
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.searchButton];
@@ -101,32 +95,22 @@ static NSString *kGroupName = @"GroupName";
     [self.view addSubview:self.adressLabel];
 }
 
-- (void)searchShop:(NSNotification *)notification
-{
-    NSLog(@"notification = %@", notification.object);
-    [self requestSearchShop:notification.object];
-}
-
-- (void)displayUserLocation:(NSNotification *)notification
-{
-    NSDictionary *dict = notification.userInfo;
-    CLLocationCoordinate2D cl = CLLocationCoordinate2DMake([dict[@"latitude"] floatValue], [dict[@"longitude"] floatValue]);
-    self.mapView.centerCoordinate = cl;
-}
-
 #pragma mark - CLLocationManagerDelegate
-/**
- *  更新到位置之后调用
- *
- *  @param manager   位置管理者
- *  @param locations 位置数组
- */
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     NSLog(@"定位到了");
+    _isAppear = YES;
+    // locations包含的是CLLocation对象
+    //    CLLocationCoordinate2D 2D位置坐标  也就是经纬度
+    //    latitude      纬度
+    //    longitude     经度
+    CLLocation *location = [locations lastObject];
     
-    // 拿到位置，做一些业务逻辑操作
-    // 停止更新
+    NSLog(@"纬度 %f", location.coordinate.latitude);
+    NSLog(@"经度 %f", location.coordinate.longitude);
+    
+    // 停止更新位置——实现一次定位
     [self.locationManager stopUpdatingLocation];
 }
 /**
@@ -141,15 +125,22 @@ static NSString *kGroupName = @"GroupName";
         case kCLAuthorizationStatusNotDetermined:
             NSLog(@"用户还未决定");
             break;
-            
         case kCLAuthorizationStatusRestricted:
             NSLog(@"访问受限");
             break;
-            
         case kCLAuthorizationStatusDenied:
             // 定位是否可用（是否支持定位或者定位是否开启）
             if ([CLLocationManager locationServicesEnabled]) {
                 NSLog(@"定位开启，但被拒");
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请在手机设置-隐私-定位服务中允许访问位置信息" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSURL *url = [NSURL URLWithString:@"prefs:root=info.binyou.binyouhulian"];
+                    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                        [[UIApplication sharedApplication] openURL:url];
+                    }
+                }];
+                [alertController addAction:action];
+                [self presentViewController:alertController animated:YES completion:nil];
             } else {
                 NSLog(@"定位关闭，不可用");
             }
@@ -217,7 +208,6 @@ static NSString *kGroupName = @"GroupName";
         [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
         button;
     });
-    
     //修改大头针视图
     //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
     annotationView.annotation = annotation;
@@ -226,16 +216,6 @@ static NSString *kGroupName = @"GroupName";
 }
 
 #pragma mark - MKMapViewDelegate
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    
-    CLLocationCoordinate2D coord = [userLocation coordinate];
-    
-    NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
-    
-    _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
-    _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
-}
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     _adressLabel.text = @"正在获取你选择的地点...";
@@ -249,28 +229,19 @@ static NSString *kGroupName = @"GroupName";
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     NSLog(@"已经变化");
     
-    if (_longitude != nil && isAppear == YES) {
-        
-        CLLocationCoordinate2D cl =  mapView.centerCoordinate;
-        
-        NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
-        
-        typeof(BYHomePageViewController *)weakSelf = self;
-        
-        CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
-        //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIView animateWithDuration:0.8 animations:^{
-                    self.centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-                    
-                } completion:^(BOOL finished) {
-                    self.centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-                }];
-            });
+    CLLocationCoordinate2D cl =  mapView.centerCoordinate;
+    
+    NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+    
+    WeakSelf;
+    CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.centerImageView.center = weakSelf.view.center;
         });
-    }
+    });
 }
 
 #pragma mark 反地理编码

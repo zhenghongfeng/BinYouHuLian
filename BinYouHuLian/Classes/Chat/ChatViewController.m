@@ -11,9 +11,8 @@
  */
 
 #import "ChatViewController.h"
-
 #import "BYFriend.h"
-
+#import "BYRoom.h"
 #import "UserCacheManager.h"
 
 //#import "ChatGroupDetailViewController.h"
@@ -54,7 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.conversation.type == EMConversationTypeChatRoom) {
-        
+        self.navigationItem.title = self.room.name;
     } else {
         self.navigationItem.title = self.myFriend.nickname;
     }
@@ -162,7 +161,7 @@
     model = [[EaseMessageModel alloc] initWithMessage:message];
     model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
     model.nickname = message.ext[kChatUserNick];
-    if ([self.shopOwner isEqualToString:message.ext[kChatUserId]]) {
+    if ([self.room.owner isEqualToString:message.ext[kChatUserId]]) {
         model.nickname = @"店长";
     }
     model.avatarURLPath = message.ext[kChatUserPic];

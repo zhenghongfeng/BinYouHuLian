@@ -17,9 +17,9 @@
 /** title label */
 @property (nonatomic, strong) UILabel *titleLabel;
 /** phone textField */
-@property (weak, nonatomic) UITextField *phoneTextField;
+@property (nonatomic, strong) UITextField *phoneTextField;
 /** verCode textField */
-@property (weak, nonatomic) UITextField *verCodeTextField;
+@property (nonatomic, strong) UITextField *verCodeTextField;
 /** verCode button */
 @property (nonatomic, strong) UIButton *verCodeButton;
 /** count on the verCode  */
@@ -54,7 +54,6 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = @"注册新账号";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.textColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
     }
     return _titleLabel;
 }
@@ -62,13 +61,12 @@
 - (UITextField *)phoneTextField
 {
     if (_phoneTextField == nil) {
-        UITextField *phoneTextField = [[UITextField alloc] init];
-        phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
-        phoneTextField.placeholder = @"手机号码";
-        phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        phoneTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
-        _phoneTextField = phoneTextField;
+        _phoneTextField = [[UITextField alloc] init];
+        _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
+        _phoneTextField.placeholder = @"手机号码";
+        _phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        _phoneTextField.tintColor = [UIColor blackColor];
     }
     return _phoneTextField;
 }
@@ -76,22 +74,21 @@
 - (UITextField *)verCodeTextField
 {
     if (_verCodeTextField == nil) {
-        UITextField *verCodeTextField = [[UITextField alloc] init];
-        verCodeTextField.borderStyle = UITextBorderStyleRoundedRect;
-        verCodeTextField.placeholder = @"验证码";
-        verCodeTextField.tintColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
-        verCodeTextField.rightViewMode = UITextFieldViewModeAlways;
-        verCodeTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        verCodeTextField.rightView = ({
+        _verCodeTextField = [[UITextField alloc] init];
+        _verCodeTextField.borderStyle = UITextBorderStyleRoundedRect;
+        _verCodeTextField.placeholder = @"验证码";
+        _verCodeTextField.rightViewMode = UITextFieldViewModeAlways;
+        _verCodeTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        _verCodeTextField.tintColor = [UIColor blackColor];
+        _verCodeTextField.rightView = ({
             _verCodeButton = [[UIButton alloc] init];
             _verCodeButton.frame = CGRectMake(0, 0, 140, 40);
             [_verCodeButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-            [_verCodeButton setTitleColor:[UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f] forState:UIControlStateNormal];
+            [_verCodeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             _verCodeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
             [_verCodeButton addTarget:self action:@selector(verCodeClick) forControlEvents:UIControlEventTouchUpInside];
             _verCodeButton;
         });
-        _verCodeTextField = verCodeTextField;
     }
     return _verCodeTextField;
 }
@@ -101,7 +98,7 @@
     if (_nextStepButton == nil) {
         _nextStepButton = [UIButton new];
         [_nextStepButton setTitle:@"下一步" forState:UIControlStateNormal];
-        _nextStepButton.backgroundColor = [UIColor colorWithRed:0.96f green:0.78f blue:0.00f alpha:1.00f];
+        _nextStepButton.backgroundColor = [UIColor blackColor];
         _nextStepButton.layer.masksToBounds = YES;
         _nextStepButton.layer.cornerRadius = 5;
         [_nextStepButton addTarget:self action:@selector(nextStepButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -132,8 +129,6 @@
     [self.view addSubview:self.verCodeTextField];
     [self.view addSubview:self.nextStepButton];
     [self.view addSubview:self.loginButton];
-    
-    [self setupAutoLayout];
 }
 
 - (void)verCodeClick
@@ -168,7 +163,7 @@
             [_verCodeTextField becomeFirstResponder];
             _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
         } else {
-            [MBProgressHUD showModeText:@"获取失败" view:self.view];
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
@@ -233,62 +228,6 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-/**
- *  登录
- */
-- (IBAction)login {
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    if ([_phoneTextField.text isEqualToString:@""]) {
-        hud.labelText = @"请输入账号";
-        hud.mode= MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-        return;
-    }
-    if ([_verCodeTextField.text isEqualToString:@""]) {
-        hud.labelText = @"请输入密码";
-        hud.mode= MBProgressHUDModeText;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-        return;
-    }
-    
-    NSString *username = self.phoneTextField.text;
-    NSString *password = self.verCodeTextField.text;
-    
-    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
-    if (!isAutoLogin) {
-        hud.mode = MBProgressHUDModeIndeterminate;
-        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
-        if (!error) {
-            NSLog(@"登陆成功");
-            // 自动登录：即首次登录成功后，不需要再次调用登录方法，在下次app启动时，SDK会自动为您登录。并且如果您自动登录失败，也可以读取到之前的会话信息。
-            [[EMClient sharedClient].options setIsAutoLogin:YES];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                
-//                // 本地缓存
-//                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:loginStatus];
-                
-                [self.view endEditing:YES];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            });
-            
-        } else {
-            hud.labelText = @"登录失败";
-            hud.mode = MBProgressHUDModeText;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            });
-        }
-    }
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
@@ -297,8 +236,9 @@
 
 #pragma mark - autoLayout
 
-- (void)setupAutoLayout
+- (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     _backButton.sd_layout
     .leftSpaceToView(self.view, 20)
     .topSpaceToView(self.view, 20)

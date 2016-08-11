@@ -270,9 +270,10 @@
 		BAC26BA61D5AC85800F5EA6E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC26B981D5AC85800F5EA6E /* Reachability.m */; };
 		BAC26BA91D5ACB7A00F5EA6E /* UIImageView+HeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC26BA81D5ACB7A00F5EA6E /* UIImageView+HeadImage.m */; };
 		BAC26BAC1D5B0B0700F5EA6E /* ConversationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC26BAB1D5B0B0700F5EA6E /* ConversationListController.m */; };
+		BAC26BAE1D5C493300F5EA6E /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC26BAD1D5C493300F5EA6E /* cancel.png */; };
+		BAC26BB01D5C675000F5EA6E /* myback.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC26BAF1D5C675000F5EA6E /* myback.png */; };
+		BAC26BB21D5C696A00F5EA6E /* addAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC26BB11D5C696A00F5EA6E /* addAvatar.png */; };
 		BAC5EFBC1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */; };
-		BAC5EFBE1D3C716E00E29B55 /* addAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */; };
-		BAC5EFC01D3C790200E29B55 /* myback.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC5EFBF1D3C790200E29B55 /* myback.png */; };
 		BAC5EFC31D3CD94200E29B55 /* BYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */; };
 		BACCA6221D4DFFC20070F8A6 /* BYLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */; };
 		BACCA6251D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */; };
@@ -319,7 +320,6 @@
 		BAD26ECB1CBF95A200F355C5 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26EC91CBF95A200F355C5 /* chatListCellHead.png */; };
 		BAD26ECC1CBF95A200F355C5 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */; };
 		BAD9C0361D38D3860040E1F1 /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9C0351D38D3860040E1F1 /* NSString+Category.m */; };
-		BAD9C0391D38DDFB0040E1F1 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = BAD9C0381D38DDFB0040E1F1 /* cancel.png */; };
 		BADD96F31CD2FF63008CFF3D /* BYMyGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */; };
 		BADD96F61CD308F1008CFF3D /* BYAddGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADD96F51CD308F1008CFF3D /* BYAddGroupViewController.m */; };
 		BADE666E1CCE02CD00843708 /* BYGroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE666D1CCE02CD00843708 /* BYGroupChatViewController.m */; };
@@ -950,10 +950,11 @@
 		BAC26BA81D5ACB7A00F5EA6E /* UIImageView+HeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HeadImage.m"; sourceTree = "<group>"; };
 		BAC26BAA1D5B0B0600F5EA6E /* ConversationListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListController.h; sourceTree = "<group>"; };
 		BAC26BAB1D5B0B0700F5EA6E /* ConversationListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListController.m; sourceTree = "<group>"; };
+		BAC26BAD1D5C493300F5EA6E /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
+		BAC26BAF1D5C675000F5EA6E /* myback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myback.png; sourceTree = "<group>"; };
+		BAC26BB11D5C696A00F5EA6E /* addAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAvatar.png; sourceTree = "<group>"; };
 		BAC5EFBA1D3C6FA200E29B55 /* BYRegisterNextStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYRegisterNextStepViewController.h; sourceTree = "<group>"; };
 		BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYRegisterNextStepViewController.m; sourceTree = "<group>"; };
-		BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAvatar.png; sourceTree = "<group>"; };
-		BAC5EFBF1D3C790200E29B55 /* myback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myback.png; sourceTree = "<group>"; };
 		BAC5EFC11D3CD94200E29B55 /* BYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginViewController.h; sourceTree = "<group>"; };
 		BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLoginViewController.m; sourceTree = "<group>"; };
 		BACCA6201D4DFFC20070F8A6 /* BYLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginUser.h; sourceTree = "<group>"; };
@@ -1009,7 +1010,6 @@
 		BAD26ECA1CBF95A200F355C5 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
 		BAD9C0341D38D3860040E1F1 /* NSString+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
 		BAD9C0351D38D3860040E1F1 /* NSString+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
-		BAD9C0381D38DDFB0040E1F1 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		BADD96F11CD2FF63008CFF3D /* BYMyGroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyGroupListViewController.h; sourceTree = "<group>"; };
 		BADD96F21CD2FF63008CFF3D /* BYMyGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyGroupListViewController.m; sourceTree = "<group>"; };
 		BADD96F41CD308F1008CFF3D /* BYAddGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddGroupViewController.h; sourceTree = "<group>"; };
@@ -2342,13 +2342,13 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BAC26BB11D5C696A00F5EA6E /* addAvatar.png */,
+				BAC26BAF1D5C675000F5EA6E /* myback.png */,
+				BAC26BAD1D5C493300F5EA6E /* cancel.png */,
 				BA9942181D4AEE8E00BF9E04 /* searchShopLocation.png */,
 				BA9942191D4AEE8E00BF9E04 /* searchResult.png */,
 				BA59B2C51D47190F003007CE /* addImage.png */,
 				BA14B3671D3F5F1A0030CD61 /* addPhoto.png */,
-				BAC5EFBF1D3C790200E29B55 /* myback.png */,
-				BAC5EFBD1D3C716E00E29B55 /* addAvatar.png */,
-				BAD9C0381D38DDFB0040E1F1 /* cancel.png */,
 				BADE66761CCE12CA00843708 /* delete.png */,
 				BADE66721CCE080900843708 /* groupPublicHeader@2x.png */,
 				BA04BE871CC88AE4000270EB /* map_point_on.png */,
@@ -2715,6 +2715,7 @@
 				BAE0F3EF1CBB9AA4002009F6 /* icon_homepage_map_selected.png in Resources */,
 				BAE0F4131CBB9AA5002009F6 /* map_icon_296@2x.png in Resources */,
 				BA68E1E11CC0B4F300A85FCD /* faceDelete@2x.png in Resources */,
+				BAC26BAE1D5C493300F5EA6E /* cancel.png in Resources */,
 				BA68E1CD1CC0B4F300A85FCD /* chatBar_colorMore_camera@2x.png in Resources */,
 				BA68E1D91CC0B4F300A85FCD /* chatBar_keyboard@2x.png in Resources */,
 				BAE0F3FA1CBB9AA5002009F6 /* icon_map_cateid_4.png in Resources */,
@@ -2744,7 +2745,6 @@
 				BA68E1F21CC0B4F300A85FCD /* VoiceSearchFeedback011@2x.png in Resources */,
 				BAE0F41B1CBB9AA5002009F6 /* map_icon_304@2x.png in Resources */,
 				BA68E1F41CC0B4F300A85FCD /* VoiceSearchFeedback013@2x.png in Resources */,
-				BAC5EFC01D3C790200E29B55 /* myback.png in Resources */,
 				BA68E1F81CC0B4F300A85FCD /* VoiceSearchFeedback017@2x.png in Resources */,
 				BAE0F3D21CBB9AA4002009F6 /* arrow_merchant_detail_map_highlighted@2x.png in Resources */,
 				BA68E1EF1CC0B4F300A85FCD /* VoiceSearchFeedback008@2x.png in Resources */,
@@ -2757,7 +2757,6 @@
 				BAD26E8D1CBF7F7700F355C5 /* chatBar_keyboard.png in Resources */,
 				BA68E1D21CC0B4F300A85FCD /* chatBar_colorMore_photoSelected@2x.png in Resources */,
 				BAE0F3D01CBB9AA4002009F6 /* ac_back@2x.png in Resources */,
-				BAD9C0391D38DDFB0040E1F1 /* cancel.png in Resources */,
 				BAD26E9E1CBF7F9800F355C5 /* chatBar_record@2x.png in Resources */,
 				BA68E1DC1CC0B4F300A85FCD /* chatBar_moreSelected@2x.png in Resources */,
 				BA68E1DA1CC0B4F300A85FCD /* chatBar_keyboardSelected@2x.png in Resources */,
@@ -2777,7 +2776,6 @@
 				BAE0F3F81CBB9AA5002009F6 /* icon_map_cateid_22.png in Resources */,
 				BA9E3DAF1CBCF88F00E71119 /* BYCreateShopEditTableViewCell.xib in Resources */,
 				BAD26EBF1CBF86B100F355C5 /* anon_chat_bottom_photo_press@3x.png in Resources */,
-				BAC5EFBE1D3C716E00E29B55 /* addAvatar.png in Resources */,
 				BA68E1FB1CC0B4F300A85FCD /* VoiceSearchFeedback020@2x.png in Resources */,
 				BA68E1E41CC0B4F300A85FCD /* group@2x.png in Resources */,
 				BAE0F4241CBB9AA5002009F6 /* mapTabButtonSelected@2x.png in Resources */,
@@ -2795,6 +2793,7 @@
 				BAD26E9A1CBF7F9100F355C5 /* chatBar_moreSelected@2x.png in Resources */,
 				BA68E1D61CC0B4F300A85FCD /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				BAE0F4221CBB9AA5002009F6 /* mapTabButton@2x.png in Resources */,
+				BAC26BB21D5C696A00F5EA6E /* addAvatar.png in Resources */,
 				BAD26EB11CBF866D00F355C5 /* anon_chat_bottom_more_press@3x.png in Resources */,
 				BAE0F40E1CBB9AA5002009F6 /* icon_map_tabList@2x.png in Resources */,
 				BAE0F40D1CBB9AA5002009F6 /* icon_map_tabList.png in Resources */,
@@ -2845,6 +2844,7 @@
 				BAD26E921CBF7F8200F355C5 /* chatBar_keyboardSelected@2x.png in Resources */,
 				BA32187C1D46F45400DE990D /* Overlay.png in Resources */,
 				BA68E1DE1CC0B4F300A85FCD /* chatBar_recordBg@2x.png in Resources */,
+				BAC26BB01D5C675000F5EA6E /* myback.png in Resources */,
 				BAE0F3EE1CBB9AA4002009F6 /* icon_homepage_map_old.png in Resources */,
 				BA68E1CE1CC0B4F300A85FCD /* chatBar_colorMore_cameraSelected@2x.png in Resources */,
 				BA68E1E21CC0B4F300A85FCD /* messageToolbarBg@2x.png in Resources */,
