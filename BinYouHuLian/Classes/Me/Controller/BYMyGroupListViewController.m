@@ -9,7 +9,6 @@
 #import "BYMyGroupListViewController.h"
 #import "BYAddBuddyViewController.h"
 #import "BYMyBuddyListTableViewCell.h"
-#import "BYChatViewController.h"
 #import "BYAddGroupViewController.h"
 
 @interface BYMyGroupListViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -28,6 +27,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     self.title = @"群组列表";
@@ -91,10 +91,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:self.myGroups[indexPath.row] conversationType:EMConversationTypeChat];
-    vc.title = self.myGroups[indexPath.row];
-    
-    [self.navigationController pushViewController:vc animated:YES];
+   
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

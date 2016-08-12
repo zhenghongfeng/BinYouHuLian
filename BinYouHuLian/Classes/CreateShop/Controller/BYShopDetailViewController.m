@@ -10,7 +10,7 @@
 #import "BYShopIntroTableViewCell.h"
 #import <UITableView+SDAutoTableViewCellHeight.h>
 #import <SDCycleScrollView.h>
-#import "BYChatViewController.h"
+#import "ChatViewController.h"
 
 #import "BYFriend.h"
 #import "BYRoom.h"

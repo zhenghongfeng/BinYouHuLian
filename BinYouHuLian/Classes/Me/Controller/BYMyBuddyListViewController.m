@@ -9,7 +9,6 @@
 #import "BYMyBuddyListViewController.h"
 #import "BYAddBuddyViewController.h"
 #import "BYMyBuddyListTableViewCell.h"
-#import "BYChatViewController.h"
 #import "BYFriend.h"
 #import "ChatViewController.h"
 #import "BYAddApplyViewController.h"
@@ -17,13 +16,9 @@
 
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
 
-/** array */
 @property (nonatomic, strong) NSArray *array;
-
 @property (nonatomic, strong) NSMutableArray *buddyList;
 @property (nonatomic, strong) UITableView *tableView;
-
-/** friends */
 @property (nonatomic, strong) NSMutableArray *friends;
 
 @end
@@ -35,7 +30,7 @@
 - (NSArray *)array
 {
     if (_array == nil) {
-        _array = @[@"申请与通知", @"群聊", @"聊天室"];
+        _array = @[@"好友申请", @"聊天室"];
     }
     return _array;
 }
@@ -160,7 +155,6 @@
     }
     if (indexPath.section == 1) {
         BYFriend *friend = self.friends[indexPath.row];
-        //    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
         ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
         vc.myFriend = friend;
         [self.navigationController pushViewController:vc animated:YES];

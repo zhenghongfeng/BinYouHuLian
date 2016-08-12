@@ -74,6 +74,7 @@ static NSString *kGroupName = @"GroupName";
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    _isAppear = YES;
 }
 
 - (void)viewDidLoad {
@@ -84,7 +85,7 @@ static NSString *kGroupName = @"GroupName";
     
     [self.locationManager startUpdatingLocation];
     
-//    _isAppear = NO;
+    _isAppear = NO;
     
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.searchButton];
@@ -100,7 +101,7 @@ static NSString *kGroupName = @"GroupName";
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     NSLog(@"定位到了");
-    _isAppear = YES;
+    
     // locations包含的是CLLocation对象
     //    CLLocationCoordinate2D 2D位置坐标  也就是经纬度
     //    latitude      纬度
@@ -160,6 +161,7 @@ static NSString *kGroupName = @"GroupName";
 }
 
 #pragma mark - MKMapViewDelegate
+
 /**
  *  每次添加大头针都会调用此方法  可以自定义大头针的样式
  */
@@ -217,6 +219,13 @@ static NSString *kGroupName = @"GroupName";
 
 #pragma mark - MKMapViewDelegate
 
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+    CLLocationCoordinate2D coord = [userLocation coordinate];
+    NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
+    _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
+    _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
+}
+
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     _adressLabel.text = @"正在获取你选择的地点...";
     NSLog(@"将要变化");
@@ -228,20 +237,21 @@ static NSString *kGroupName = @"GroupName";
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     NSLog(@"已经变化");
-    
-    CLLocationCoordinate2D cl =  mapView.centerCoordinate;
-    
-    NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
-    
-    WeakSelf;
-    CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.centerImageView.center = weakSelf.view.center;
+    if (_latitude != nil && _isAppear == YES) {
+        CLLocationCoordinate2D cl =  mapView.centerCoordinate;
+        
+        NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+        
+        WeakSelf;
+        CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.centerImageView.center = weakSelf.view.center;
+            });
         });
-    });
+    }
 }
 
 #pragma mark 反地理编码
@@ -346,9 +356,9 @@ static double hometransformLon(double x, double y)
 
 - (CLLocationCoordinate2D)homegcj2wgs:(CLLocationCoordinate2D)coordinate
 {
-//    if ([self homeoutOfChina:coordinate]) {
-//        return coordinate;
-//    }
+    if ([self homeoutOfChina:coordinate]) {
+        return coordinate;
+    }
     CLLocationCoordinate2D c2 = [self homewgs2gcj:coordinate];
     return CLLocationCoordinate2DMake(2 * coordinate.latitude - c2.latitude, 2 * coordinate.longitude - c2.longitude);
 }
@@ -358,9 +368,9 @@ static double hometransformLon(double x, double y)
 {
     const double a = 6378245.0;
     const double ee = 0.00669342162296594323;
-//    if ([self homeoutOfChina:coordinate]) {
-//        return coordinate;
-//    }
+    if ([self homeoutOfChina:coordinate]) {
+        return coordinate;
+    }
     double wgLat = coordinate.latitude;
     double wgLon = coordinate.longitude;
     double dLat = hometransformLat(wgLon - 105.0, wgLat - 35.0);

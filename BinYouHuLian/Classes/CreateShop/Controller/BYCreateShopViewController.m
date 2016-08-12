@@ -7,7 +7,6 @@
 //
 
 #import "BYCreateShopViewController.h"
-#import "BYCreateShopAddHeaderTableViewCell.h"
 #import "BYCreateShopEditTableViewCell.h"
 #import <AVFoundation/AVFoundation.h>
 #import "BYPickerView.h"
@@ -97,7 +96,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         _tableView.dataSource = self;
         _tableView.delegate = self;
         // 注册cell
-        [_tableView registerClass:[BYCreateShopAddHeaderTableViewCell class] forCellReuseIdentifier:BYCreateShopAddHeaderCellID];
                 
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BYCreateShopEditTableViewCell class]) bundle:nil] forCellReuseIdentifier:BYCreateShopEditCellID];
     }
@@ -147,7 +145,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"创建店铺";
+    self.navigationItem.title = @"创建店铺";
     
     self.array1 = [NSMutableArray array];
     self.selectImageArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -156,8 +154,12 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     
     [self.view addSubview:self.tableView];
     
+    [self requestData];
+}
+
+- (void)requestData
+{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
     [manager POST:[BYURL_Development stringByAppendingString:@"/shop/cates?"] parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -168,22 +170,15 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [hud hide:YES];
-            
             [responseObject[@"list"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [self.categoryTitles addObject:obj[@"name"]];
             }];
-            
         } else {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"请输入昵称";
-            [hud hide:YES afterDelay:1];
-            return;
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"重置失败";
-        [hud hide:YES afterDelay:1];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
 
@@ -202,9 +197,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-//        BYCreateShopAddHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BYCreateShopAddHeaderCellID];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [cell.addPhotoButton addTarget:self action:@selector(addHeadClick) forControlEvents:UIControlEventTouchUpInside];
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.tag = cellTag;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -214,7 +206,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
             // 新增病例情况 创建图片按钮
             [self createImageButtonWithTag:i array:self.array1 cell:cell];
         }
-        
         return cell;
     } else {
         if (indexPath.row == 0) {
@@ -505,13 +496,11 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
+        [hud hide:YES];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [hud hide:YES];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

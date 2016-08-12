@@ -9,6 +9,8 @@
 #ifndef BYDefine_h
 #define BYDefine_h
 
+#define BYBaseURL @"http://123.56.186.178/"
+
 #define BYURL_Development @"http://123.56.186.178/api"
 
 // 环信聊天用的昵称和头像（发送聊天消息时，要附带这3个属性）

@@ -9,7 +9,6 @@
 #import "BYMyShopBusinessViewController.h"
 #import "BYMessageTableViewCell.h"
 #import "BYMessageModel.h"
-#import "BYChatViewController.h"
 
 static NSString *const messageCellID = @"MessageCell";
 
@@ -117,9 +116,7 @@ static NSString *const messageCellID = @"MessageCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BYChatViewController *vc = [[BYChatViewController alloc] initWithConversationChatter:@"18612129273" conversationType:EMConversationTypeChat]; // 单聊会话类型
-    vc.title = @"18612129273";
-    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 @end

@@ -23,7 +23,7 @@
                         <constraint firstAttribute="height" constant="30" id="HNv-R3-C9Q"/>
                     </constraints>
                     <state key="normal" title="取消">
-                        <color key="titleColor" red="1" green="0.84347005100543071" blue="0.16702505655562827" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="back" destination="-1" eventType="touchUpInside" id="18P-E9-p42"/>
@@ -31,6 +31,7 @@
                 </button>
                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="请输入卖家关键字" translatesAutoresizingMaskIntoConstraints="NO" id="dfs-Qn-9Lh">
                     <rect key="frame" x="0.0" y="20" width="207" height="30"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="V22-A2-T11"/>

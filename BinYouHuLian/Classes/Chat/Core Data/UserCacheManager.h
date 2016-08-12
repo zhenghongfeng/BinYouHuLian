@@ -49,5 +49,6 @@
  */
 +(UserCacheInfo*)getCurrUser;
 
+
 @end
 

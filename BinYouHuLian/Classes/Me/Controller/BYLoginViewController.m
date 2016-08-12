@@ -10,6 +10,7 @@
 #import "BYResetPasswordViewController.h"
 #import "BYLoginUser.h"
 #import "UserCacheManager.h"
+#import "BYNetAPIManager.h"
 
 @interface BYLoginViewController ()
 
@@ -145,19 +146,18 @@
         [MBProgressHUD showModeText:@"请输入密码" view:self.view];
         return;
     }
+    [self.view endEditing:YES];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *phone = self.phoneTextField.text;
     NSString *password = [NSString md5:self.passwordTextField.text];
     NSDictionary *parameters = @{
-                          @"phone": phone,
-                          @"password": password
-                          };
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = [BYURL_Development stringByAppendingString:@"/user/login?"];
-    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+                             @"phone": phone,
+                             @"password": password
+                             };
+    [[BYNetAPIManager sharedManager] requestLoginWithParameters:parameters progress:^(NSProgress *downloadProgress) {
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@", responseObject);
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"====== %@", responseObject);
         if ([responseObject[@"code"] integerValue] == 1) {
             // async login EM
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -175,17 +175,13 @@
                         // 保存用户信息
                         [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
                         
-                        // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
-                        
                         [[EMClient sharedClient].pushOptions setDisplayStyle:EMPushDisplayStyleMessageSummary];
                         [[EMClient sharedClient].pushOptions setNickname:GetNickName];
-                        [[EMClient sharedClient] updatePushOptionsToServer];
                         
-                        // dismissVC
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                     } else {
-                        [MBProgressHUD showModeText:@"登录异常" view:self.view];
+                        [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
                     }
                 });
             });
@@ -193,7 +189,7 @@
             [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
