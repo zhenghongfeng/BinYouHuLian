@@ -86,6 +86,7 @@
 // cell点击
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) { // 换头像
         [self modifyAvatar];
     }
@@ -137,15 +138,6 @@
     [picker dismissViewControllerAnimated:YES completion:^{}];
     //选取裁剪后的图片
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    /* 此处info 有六个值
-     * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
-     * UIImagePickerControllerOriginalImage;  // a UIImage 原始图片
-     * UIImagePickerControllerEditedImage;    // a UIImage 裁剪后图片
-     * UIImagePickerControllerCropRect;       // an NSValue (CGRect)
-     * UIImagePickerControllerMediaURL;       // an NSURL
-     * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
-     * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
-     */
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
@@ -161,6 +153,7 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             SaveAvatar(responseObject[@"avatar"]);
+            [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             BYAboutMeInfoHeadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];

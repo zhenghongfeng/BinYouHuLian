@@ -10,12 +10,19 @@
 
 @protocol BYSelectPlaceViewControllerDelegate <NSObject>
 
-- (void)selectedLocation:(NSString *)location longitude:(NSString *)longitude latitude:(NSString *)latitude;
+- (void)selectedLocation:(NSString *)location longitude:(double)longitude latitude:(double)latitude;
 
 @end
 
 @interface BYSelectPlaceViewController : UIViewController
 
 @property (nonatomic, weak) id<BYSelectPlaceViewControllerDelegate> delegate;
+
+/** longitude */
+@property (nonatomic, assign) double fromCreateShoplongitude;
+/** latitude */
+@property (nonatomic, assign) double fromCreateShoplatitude;
+
+@property (nonatomic, assign) BOOL tag;
 
 @end

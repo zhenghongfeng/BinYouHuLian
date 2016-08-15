@@ -8,27 +8,17 @@
 
 #import "BYLoginViewController.h"
 #import "BYResetPasswordViewController.h"
-#import "BYLoginUser.h"
 #import "UserCacheManager.h"
-#import "BYNetAPIManager.h"
 
 @interface BYLoginViewController ()
 
-/** back button */
 @property (nonatomic, strong) UIButton *backButton;
-/** title label */
 @property (nonatomic, strong) UILabel *titleLabel;
-/** phone textField */
 @property (nonatomic, strong) UITextField *phoneTextField;
-/** password textField */
 @property (nonatomic, strong) UITextField *passwordTextField;
-/** login button */
 @property (nonatomic, strong) UIButton *loginButton;
-/** register button */
 @property (nonatomic, strong) UIButton *registerButton;
-/** forget password button */
 @property (nonatomic, strong) UIButton *forgetPasswordButton;
-
 
 @end
 

@@ -16,11 +16,9 @@
 #import "BYAnnotation.h"
 #import "BYShopDetailViewController.h"
 #import "BYShop.h"
-#import "BYLoginUser.h"
 #import "ChatViewController.h"
 #import "BYFriend.h"
 
-static const CGFloat kDefaultPlaySoundInterval = 3.0;
 static NSString *kMessageType = @"MessageType";
 static NSString *kConversationChatter = @"ConversationChatter";
 static NSString *kGroupName = @"GroupName";
@@ -101,11 +99,6 @@ static NSString *kGroupName = @"GroupName";
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     NSLog(@"定位到了");
-    
-    // locations包含的是CLLocation对象
-    //    CLLocationCoordinate2D 2D位置坐标  也就是经纬度
-    //    latitude      纬度
-    //    longitude     经度
     CLLocation *location = [locations lastObject];
     
     NSLog(@"纬度 %f", location.coordinate.latitude);
@@ -163,12 +156,14 @@ static NSString *kGroupName = @"GroupName";
 #pragma mark - MKMapViewDelegate
 
 /**
- *  每次添加大头针都会调用此方法  可以自定义大头针的样式
+ *  每次添加标注都会调用此方法  可以自定义标注的样式
  */
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     // 对用户当前的位置的大头针特殊处理，直接使用系统提供的大头针
     if ([annotation isKindOfClass:[BYAnnotation class]] == NO) {
+        NSLog(@"current coordinate = %f", annotation.coordinate.latitude);
+        NSLog(@"current coordinate = %f", annotation.coordinate.longitude);
         return nil;
     }
     /*
@@ -212,8 +207,11 @@ static NSString *kGroupName = @"GroupName";
     });
     //修改大头针视图
     //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
-    annotationView.annotation = annotation;
+    annotationView.annotation = (BYAnnotation *)annotation;
+    annotationView.annotation.coordinate = annotation.coordinate;
     annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
+    NSLog(@"coordinate = %f", annotationView.annotation.coordinate.latitude);
+    NSLog(@"coordinate = %f", annotationView.annotation.coordinate.longitude);
     return annotationView;
 }
 
@@ -224,6 +222,7 @@ static NSString *kGroupName = @"GroupName";
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
@@ -237,6 +236,10 @@ static NSString *kGroupName = @"GroupName";
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     NSLog(@"已经变化");
+    
+    NSLog(@"%f---%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
+
+    
     if (_latitude != nil && _isAppear == YES) {
         CLLocationCoordinate2D cl =  mapView.centerCoordinate;
         
@@ -463,7 +466,6 @@ static double hometransformLon(double x, double y)
             {
                 if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
                     
-                    
                     ChatViewController *chatingVC = (ChatViewController *)self.navigationController.topViewController;
                     // 不同的对话者 需要更换界面
                     if (![chatingVC.myFriend.phone isEqualToString:self.friend.phone]) {
@@ -639,7 +641,7 @@ static double hometransformLon(double x, double y)
         
         CLLocationCoordinate2D coord2D = _mapView.centerCoordinate;
         // 显示区域精度
-        MKCoordinateSpan span = {0.1, 0.1};
+        MKCoordinateSpan span = {0.000001, 0.000001};
         // 设置显示区域
         MKCoordinateRegion region = {coord2D, span};
         // 给地图设置显示区域
@@ -711,6 +713,7 @@ static double hometransformLon(double x, double y)
     button.layer.cornerRadius = 5;
     return button;
 }
+
 #pragma mark - autoLayout
 
 - (void)viewDidLayoutSubviews

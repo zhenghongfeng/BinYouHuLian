@@ -7,6 +7,7 @@
 //
 
 #import "BYModifyNickNameViewController.h"
+#import "UserCacheManager.h"
 
 @interface BYModifyNickNameViewController () <UITextFieldDelegate>
 
@@ -61,6 +62,7 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             SaveNickName(_nickNameTextField.text);
+            [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [hud hide:YES];

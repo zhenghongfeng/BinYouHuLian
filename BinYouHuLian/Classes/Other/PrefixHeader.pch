@@ -39,7 +39,9 @@
 #import "UIView+BYCategory.h"
 
 
-#import "BYLoginUser.h"
+#import "BYNetAPIManager.h"
+
+
 
 #endif
 

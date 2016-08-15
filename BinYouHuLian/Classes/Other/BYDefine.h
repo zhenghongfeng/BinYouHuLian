@@ -9,6 +9,10 @@
 #ifndef BYDefine_h
 #define BYDefine_h
 
+//#define BYURL_Development @"http://192.168.4.45/api" // 陈州的ip
+
+#warning ---- 上线之前需要更改发送验证码接口的istest 为 0 ！
+
 #define BYBaseURL @"http://123.56.186.178/"
 
 #define BYURL_Development @"http://123.56.186.178/api"
@@ -51,7 +55,6 @@
 //屏幕宽、高
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-
 
 #define kMainColor [UIColor colorWithRed:1.00f green:0.85f blue:0.16f alpha:1.00f]
 

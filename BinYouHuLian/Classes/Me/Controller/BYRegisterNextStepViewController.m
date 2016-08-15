@@ -268,7 +268,6 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [hud hide:YES];
                     if (!error) {
                         NSLog(@"环信登录成功");
                         // save token and userInfo(phone\nickname\avatar)
@@ -291,16 +290,20 @@
                         
                         // dismissVC
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                        [hud hide:YES];
                     } else {
+                        [hud hide:YES];
                         [MBProgressHUD showModeText:@"登录异常" view:self.view];
                     }
                 });
             });
         } else {
+            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }

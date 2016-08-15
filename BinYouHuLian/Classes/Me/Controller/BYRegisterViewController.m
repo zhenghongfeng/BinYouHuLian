@@ -12,23 +12,15 @@
 #import "BYLoginViewController.h"
 
 @interface BYRegisterViewController ()
-/** back button */
+
 @property (nonatomic, strong) UIButton *backButton;
-/** title label */
 @property (nonatomic, strong) UILabel *titleLabel;
-/** phone textField */
 @property (nonatomic, strong) UITextField *phoneTextField;
-/** verCode textField */
 @property (nonatomic, strong) UITextField *verCodeTextField;
-/** verCode button */
 @property (nonatomic, strong) UIButton *verCodeButton;
-/** count on the verCode  */
 @property (nonatomic, assign) NSInteger count;
-/** timer */
 @property (nonatomic, strong) NSTimer *timer;
-/** nextStep button */
 @property (nonatomic, strong) UIButton *nextStepButton;
-/** login button */
 @property (nonatomic, strong) UIButton *loginButton;
 
 
@@ -151,7 +143,9 @@
     NSString *str = [NSString stringWithFormat:@"%2zd秒后重新发送", _count];
     [_verCodeButton setTitle:str forState:UIControlStateNormal];
     
-    NSDictionary *dic = @{@"phone": self.phoneTextField.text};
+    NSDictionary *dic = @{@"phone": self.phoneTextField.text,
+                          @"istest": @"1"
+                          };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:[BYURL_Development stringByAppendingString:@"/sms/send?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -274,6 +268,11 @@
     .bottomSpaceToView(self.view, 20)
     .widthIs(100)
     .heightIs(40);
+}
+
+- (void)dealloc
+{
+    [_timer invalidate];
 }
 
 @end

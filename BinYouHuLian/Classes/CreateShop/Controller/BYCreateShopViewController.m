@@ -50,6 +50,8 @@ static NSInteger const uploadImageMaxNumber = 3;
 
 @property (nonatomic, strong) NSMutableArray *selectImageArray;
 
+@property (nonatomic, assign) BOOL isSelectVC;
+
 @end
 
 @implementation BYCreateShopViewController
@@ -166,10 +168,10 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
-        
+        [hud hide:YES];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [hud hide:YES];
+            
             [responseObject[@"list"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [self.categoryTitles addObject:obj[@"name"]];
             }];
@@ -178,6 +180,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }
@@ -282,6 +285,11 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
         if (indexPath.row == 3) {
             BYSelectPlaceViewController *vc = [[BYSelectPlaceViewController alloc] init];
             vc.delegate = self;
+            if (self.isSelectVC) {
+                vc.tag = YES;
+                vc.fromCreateShoplatitude = [self.latitude doubleValue];
+                vc.fromCreateShoplongitude = [self.longitude doubleValue];
+            }
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
@@ -296,15 +304,17 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
 #pragma mark - BYSelectPlaceViewControllerDelegate
 
-- (void)selectedLocation:(NSString *)location longitude:(NSString *)longitude latitude:(NSString *)latitude
+- (void)selectedLocation:(NSString *)location longitude:(double)longitude latitude:(double)latitude
 {
-    NSLog(@"location = %@, longitude = %@, latitude = %@", location, longitude, latitude);
+    NSLog(@"location = %@, longitude = %f, latitude = %f", location, longitude, latitude);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:3 inSection:1];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.text = location;
     self.location = location;
-    self.longitude = longitude;
-    self.latitude = latitude;
+    self.longitude = [NSString stringWithFormat:@"%f", longitude];
+    self.latitude = [NSString stringWithFormat:@"%f", latitude];
+    
+    self.isSelectVC = YES;
 }
 
 - (void)addHeadClick

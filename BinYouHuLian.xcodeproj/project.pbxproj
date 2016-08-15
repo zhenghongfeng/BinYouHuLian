@@ -274,7 +274,6 @@
 		BAC26BB21D5C696A00F5EA6E /* addAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC26BB11D5C696A00F5EA6E /* addAvatar.png */; };
 		BAC5EFBC1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */; };
 		BAC5EFC31D3CD94200E29B55 /* BYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */; };
-		BACCA6221D4DFFC20070F8A6 /* BYLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */; };
 		BACCA6251D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */; };
 		BAD26DA01CBF37D100F355C5 /* BYCaredLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD26D9F1CBF37D100F355C5 /* BYCaredLocationViewController.m */; };
 		BAD26DA31CBF40E500F355C5 /* BYMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD26DA21CBF40E500F355C5 /* BYMessageListViewController.m */; };
@@ -954,8 +953,6 @@
 		BAC5EFBB1D3C6FA200E29B55 /* BYRegisterNextStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYRegisterNextStepViewController.m; sourceTree = "<group>"; };
 		BAC5EFC11D3CD94200E29B55 /* BYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginViewController.h; sourceTree = "<group>"; };
 		BAC5EFC21D3CD94200E29B55 /* BYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLoginViewController.m; sourceTree = "<group>"; };
-		BACCA6201D4DFFC20070F8A6 /* BYLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLoginUser.h; sourceTree = "<group>"; };
-		BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLoginUser.m; sourceTree = "<group>"; };
 		BACCA6231D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+BYEaseMob.h"; sourceTree = "<group>"; };
 		BACCA6241D4E1FD10070F8A6 /* AppDelegate+BYEaseMob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+BYEaseMob.m"; sourceTree = "<group>"; };
 		BAD26D9E1CBF37D100F355C5 /* BYCaredLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCaredLocationViewController.h; sourceTree = "<group>"; };
@@ -2088,8 +2085,6 @@
 		BACCA61F1D4DFF7A0070F8A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BACCA6201D4DFFC20070F8A6 /* BYLoginUser.h */,
-				BACCA6211D4DFFC20070F8A6 /* BYLoginUser.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3026,7 +3021,6 @@
 				BAC26BA41D5AC85800F5EA6E /* MKNetworkEngine.m in Sources */,
 				BA68E1161CC0B4C800A85FCD /* EMCDDeviceManagerBase.m in Sources */,
 				BA68E1561CC0B4C900A85FCD /* PSTGridLayoutSection.m in Sources */,
-				BACCA6221D4DFFC20070F8A6 /* BYLoginUser.m in Sources */,
 				BA68E12A1CC0B4C800A85FCD /* MJRefreshNormalHeader.m in Sources */,
 				BA68E1661CC0B4C900A85FCD /* EaseEmotionEscape.m in Sources */,
 				BA04BE5E1CC4E0E8000270EB /* BYShopDetailViewController.m in Sources */,

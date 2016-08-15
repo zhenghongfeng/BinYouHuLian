@@ -39,9 +39,9 @@
 @property (nonatomic, strong) UILabel *adressLabel;
 
 /** 经度 */
-@property (nonatomic, copy) NSString *longitude;
+@property (nonatomic, assign) double longitude;
 /** 纬度 */
-@property (nonatomic, copy) NSString *latitude;
+@property (nonatomic, assign) double latitude;
 
 @end
 
@@ -76,7 +76,7 @@
          CLLocationAccuracy kCLLocationAccuracyThreeKilometers; // 3000m
          */
         // 精确度越高，越耗电，定位时间越长
-        //        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         
         //请求定位服务
         //        if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
@@ -109,10 +109,15 @@
         _mapView.userTrackingMode = MKUserTrackingModeFollow;//是否跟踪
         // 禁止地图旋转
         _mapView.rotateEnabled = NO;
-        
-        CLLocationCoordinate2D coord2D = _mapView.centerCoordinate;
+        _mapView.showsCompass = YES;
+        CLLocationCoordinate2D coord2D;
+        if (self.tag) {
+            coord2D = CLLocationCoordinate2DMake(self.fromCreateShoplatitude, self.fromCreateShoplongitude);
+        } else {
+            coord2D = _mapView.centerCoordinate;
+        }
         // 显示区域精度
-        MKCoordinateSpan span = {0.1, 0.1};
+        MKCoordinateSpan span = {0.000001, 0.000001};
         // 设置显示区域
         MKCoordinateRegion region = {coord2D, span};
         // 给地图设置显示区域
@@ -174,14 +179,6 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
-    //        //    //只要加上这段代码他就会出现一个图片
-    //        CLLocationCoordinate2D coords = _mapView.userLocation.location.coordinate;
-    //        //地图的缩放比例
-    //        MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
-    //        //构造地图显示范围
-    //        MKCoordinateRegion region = MKCoordinateRegionMake(coords, span);
-    //        [_mapView setRegion:region animated:YES];
     isAppear = YES;
     _centerImageView.hidden = NO;
 }
@@ -255,32 +252,30 @@
     [_geocoder cancelGeocode];
 }
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-    if (_userLongitude != nil && isAppear == YES) {
-        CLLocationCoordinate2D cl =  mapView.centerCoordinate;
-        NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
-        typeof(BYSelectPlaceViewController *)weakSelf = self;
-        
-        CLLocationCoordinate2D earthCL = [self gcj2wgs:cl ];
-        
-        //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIView animateWithDuration:0.8 animations:^{
-                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-                } completion:^(BOOL finished) {
-                    _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-                }];
-            });
+    CLLocationCoordinate2D cl =  mapView.centerCoordinate;
+    NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+    typeof(BYSelectPlaceViewController *)weakSelf = self;
+    
+    CLLocationCoordinate2D earthCL = [self gcj2wgs:cl ];
+    
+    //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.8 animations:^{
+                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+            } completion:^(BOOL finished) {
+                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+            }];
         });
-    }
+    });
 }
 #pragma mark 反地理编码
 - (void)reverseGeocode1:(double)_lat longitude:(double)_long
 {
     NSLog(@"转换后:%f,%f",_lat,_long);
-    _latitude = [NSString stringWithFormat:@"%f", _lat];
-    _longitude = [NSString stringWithFormat:@"%f", _long];
+    _latitude = _lat;
+    _longitude = _long;
     
     if (_geocoder == nil) {
         _geocoder = [[CLGeocoder alloc] init];

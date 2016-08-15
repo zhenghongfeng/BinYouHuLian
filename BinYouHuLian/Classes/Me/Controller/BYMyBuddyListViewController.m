@@ -147,7 +147,7 @@
             BYAddApplyViewController *vc = [BYAddApplyViewController new];
             [self.navigationController pushViewController:vc animated:YES];
         }
-        if (indexPath.row == 2) {
+        if (indexPath.row == 1) {
             BYChatRoomViewController *vc = [BYChatRoomViewController new];
             [self.navigationController pushViewController:vc animated:YES];
         }
