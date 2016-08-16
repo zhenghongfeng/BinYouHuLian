@@ -54,9 +54,9 @@
     if (self.shop.picshow1) {
         UIView *header = [UIView new];
         
-        NSString *str1 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow1];
-        NSString *str2 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow2];
-        NSString *str3 = [@"http://123.56.186.178" stringByAppendingString:self.shop.picshow3];
+        NSString *str1 = [BYBaseURL stringByAppendingString:self.shop.picshow1];
+        NSString *str2 = [BYBaseURL stringByAppendingString:self.shop.picshow2];
+        NSString *str3 = [BYBaseURL stringByAppendingString:self.shop.picshow3];
         
         SDCycleScrollView *scrollView = [SDCycleScrollView new];
         scrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
@@ -76,7 +76,7 @@
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
 
-    UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 30)];
+    UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 40)];
     privateChatbtn.backgroundColor = [UIColor blackColor];
     privateChatbtn.layer.masksToBounds = YES;
     privateChatbtn.layer.cornerRadius = 5;
@@ -84,7 +84,7 @@
     [privateChatbtn addTarget:self action:@selector(chatClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:privateChatbtn];
     
-    UIButton *groupChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width * 0.5 + 10, 10, self.view.width * 0.5 - 20, 30)];
+    UIButton *groupChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width * 0.5 + 10, 10, self.view.width * 0.5 - 20, 40)];
     groupChatbtn.backgroundColor = [UIColor blackColor];
     groupChatbtn.layer.masksToBounds = YES;
     groupChatbtn.layer.cornerRadius = 5;

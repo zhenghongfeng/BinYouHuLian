@@ -12,7 +12,9 @@
 
 @interface BYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) UISearchBar *searchBar;
+
+@property (nonatomic, strong) UIButton *backButton;
 
 @property (nonatomic, strong) NSMutableArray *searchHistoryDatas;
 
@@ -22,15 +24,37 @@
 
 @property (nonatomic, strong) NSMutableArray *searchData;
 
-/** shops */
 @property (nonatomic, strong) NSMutableArray *shops;
 
-/** keys */
 @property (nonatomic, strong) NSMutableArray *keys;
 
 @end
 
 @implementation BYSearchViewController
+
+- (UISearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc] init];
+        _searchBar.delegate = self;
+        _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+        _searchBar.tintColor = [UIColor blackColor];
+        _searchBar.placeholder = @"请输入店铺关键字";
+        [self.view addSubview:_searchBar];
+    }
+    return _searchBar;
+}
+
+- (UIButton *)backButton
+{
+    if (!_backButton) {
+        _backButton = [[UIButton alloc] init];
+        [_backButton setTitle:@"取消" forState:UIControlStateNormal];
+        [_backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backButton;
+}
 
 - (UITableView *)searchTableView
 {
@@ -76,7 +100,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self.searchBar becomeFirstResponder];
+    [self.view addSubview:self.backButton];
     
     self.searchHistoryDatas = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
     self.searchData = [NSMutableArray array];
@@ -256,13 +283,31 @@
     }];
 }
 
-- (IBAction)back {
+- (void)back {
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - auto layout
 
-
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    _backButton.sd_layout
+    .topSpaceToView(self.view, 30)
+    .rightSpaceToView(self.view, 10)
+    .widthIs(40)
+    .heightIs(30);
+    
+    self.searchBar.sd_layout
+    .topSpaceToView(self.view, 30)
+    .leftSpaceToView(self.view, 10)
+    .rightSpaceToView(_backButton, 0)
+    .heightIs(30);
+    
+    
+}
 
 
 

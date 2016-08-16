@@ -238,7 +238,6 @@ static NSString *kGroupName = @"GroupName";
     NSLog(@"已经变化");
     
     NSLog(@"%f---%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
-
     
     if (_latitude != nil && _isAppear == YES) {
         CLLocationCoordinate2D cl =  mapView.centerCoordinate;
@@ -256,6 +255,8 @@ static NSString *kGroupName = @"GroupName";
         });
     }
 }
+
+
 
 #pragma mark 反地理编码
 - (void)homereverseGeocode1:(double)_lat longitude:(double)_long
@@ -618,11 +619,13 @@ static double hometransformLon(double x, double y)
 - (CLLocationManager *)locationManager
 {
     if (_locationManager == nil) {
-        _locationManager = [CLLocationManager new];
+        _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
             [_locationManager requestWhenInUseAuthorization];
         }
+        
     }
     return _locationManager;
 }
@@ -641,7 +644,7 @@ static double hometransformLon(double x, double y)
         
         CLLocationCoordinate2D coord2D = _mapView.centerCoordinate;
         // 显示区域精度
-        MKCoordinateSpan span = {0.000001, 0.000001};
+        MKCoordinateSpan span = {0.01, 0.01};
         // 设置显示区域
         MKCoordinateRegion region = {coord2D, span};
         // 给地图设置显示区域

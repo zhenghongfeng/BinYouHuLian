@@ -144,7 +144,7 @@
     [_verCodeButton setTitle:str forState:UIControlStateNormal];
     
     NSDictionary *dic = @{@"phone": self.phoneTextField.text,
-                          @"istest": @"1"
+                          @"istest": @"0"
                           };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

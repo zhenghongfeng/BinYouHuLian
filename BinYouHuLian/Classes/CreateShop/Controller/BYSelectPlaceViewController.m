@@ -117,7 +117,7 @@
             coord2D = _mapView.centerCoordinate;
         }
         // 显示区域精度
-        MKCoordinateSpan span = {0.000001, 0.000001};
+        MKCoordinateSpan span = {0.01, 0.01};
         // 设置显示区域
         MKCoordinateRegion region = {coord2D, span};
         // 给地图设置显示区域
@@ -362,10 +362,14 @@ static double transformLon(double x, double y)
 
 - (void)okBtnClick
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
-        [self.delegate selectedLocation:_adressLabel.text longitude:_longitude latitude:_latitude];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    WeakSelf;
+    [_geocoder geocodeAddressString:_adressLabel.text completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *pl = [placemarks firstObject];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
+            [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    }];
 }
 
 - (void)locateBtnClick

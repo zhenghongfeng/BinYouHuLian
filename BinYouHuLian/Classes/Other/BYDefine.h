@@ -13,7 +13,7 @@
 
 #warning ---- 上线之前需要更改发送验证码接口的istest 为 0 ！
 
-#define BYBaseURL @"http://123.56.186.178/"
+#define BYBaseURL @"http://123.56.186.178"
 
 #define BYURL_Development @"http://123.56.186.178/api"
 

@@ -7,6 +7,7 @@
 //
 
 #import "BYApplyReasonViewController.h"
+#import "BYMyBuddyListViewController.h"
 
 @interface BYApplyReasonViewController () <UITextViewDelegate>
 
@@ -93,6 +94,14 @@
             [_sendButton setTitle:@"已发送" forState:UIControlStateNormal];
             _sendButton.enabled = NO;
             [MBProgressHUD showModeText:@"发送成功" view:self.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                for (UIViewController *controller in self.navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[BYMyBuddyListViewController class]]) {
+                        BYMyBuddyListViewController *vc = (BYMyBuddyListViewController *)controller;
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            });
         } else {
             [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];

@@ -434,7 +434,6 @@
 		BAE0F42B1CBB9AA5002009F6 /* mapTabRightButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3BD1CBB9AA4002009F6 /* mapTabRightButtonSelected.png */; };
 		BAE0F42C1CBB9AA5002009F6 /* mapTabRightButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3BE1CBB9AA4002009F6 /* mapTabRightButtonSelected@2x.png */; };
 		BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3C21CBB9AA4002009F6 /* BYSearchViewController.m */; };
-		BAE0F42E1CBB9AA5002009F6 /* BYSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3C31CBB9AA4002009F6 /* BYSearchViewController.xib */; };
 		BAE0F4301CBB9AD5002009F6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F42F1CBB9AD5002009F6 /* Info.plist */; };
 		BAFABDCE1CC0906400B43773 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */; };
 		BAFABDCF1CC0907600B43773 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */; };
@@ -1139,7 +1138,6 @@
 		BAE0F3BE1CBB9AA4002009F6 /* mapTabRightButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapTabRightButtonSelected@2x.png"; sourceTree = "<group>"; };
 		BAE0F3C11CBB9AA4002009F6 /* BYSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYSearchViewController.h; sourceTree = "<group>"; };
 		BAE0F3C21CBB9AA4002009F6 /* BYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSearchViewController.m; sourceTree = "<group>"; };
-		BAE0F3C31CBB9AA4002009F6 /* BYSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYSearchViewController.xib; sourceTree = "<group>"; };
 		BAE0F42F1CBB9AD5002009F6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAFABDD31CC0911400B43773 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		E9312517A69122E6D29C1D3C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -2508,7 +2506,6 @@
 			children = (
 				BAE0F3C11CBB9AA4002009F6 /* BYSearchViewController.h */,
 				BAE0F3C21CBB9AA4002009F6 /* BYSearchViewController.m */,
-				BAE0F3C31CBB9AA4002009F6 /* BYSearchViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2775,7 +2772,6 @@
 				BAE0F4241CBB9AA5002009F6 /* mapTabButtonSelected@2x.png in Resources */,
 				BAE0F41F1CBB9AA5002009F6 /* map_icon_308@2x.png in Resources */,
 				BAD26EBA1CBF86B100F355C5 /* anon_chat_bottom_Camera_nor@3x.png in Resources */,
-				BAE0F42E1CBB9AA5002009F6 /* BYSearchViewController.xib in Resources */,
 				BA9E3D921CBCA10100E71119 /* add_header@3x.png in Resources */,
 				BA68E1C51CC0B4F300A85FCD /* in.caf in Resources */,
 				BAD26E851CBF7F6100F355C5 /* chatBar_face.png in Resources */,

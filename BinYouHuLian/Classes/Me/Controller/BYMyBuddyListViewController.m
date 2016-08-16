@@ -86,6 +86,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     self.navigationItem.title = @"好友列表";

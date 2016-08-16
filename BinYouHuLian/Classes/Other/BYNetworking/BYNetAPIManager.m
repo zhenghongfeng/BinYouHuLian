@@ -28,7 +28,7 @@
                          success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
                          failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
-    NSString *path = [BYBaseURL stringByAppendingString:@"api/user/login?"];
+    NSString *path = [BYBaseURL stringByAppendingString:@"/api/user/login?"];
     [BYNetAPIClient postRequestPath:path parameters:parameters progress:downloadProgress success:success failure:failure];
 }
 

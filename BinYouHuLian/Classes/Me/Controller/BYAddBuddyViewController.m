@@ -22,6 +22,9 @@
 /** friend */
 @property (nonatomic, strong) BYFriend *friend;
 
+/** isfriend */
+@property (nonatomic, assign) BOOL isfriend;
+
 @end
 
 @implementation BYAddBuddyViewController
@@ -36,6 +39,8 @@
         _searchBar.searchBarStyle = UISearchBarStyleMinimal;
         _searchBar.placeholder = @"请输入对方的手机号";
         _searchBar.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        _searchBar.tintColor = [UIColor blackColor];
+        [self.view addSubview:_searchBar];
     }
     return _searchBar;
 }
@@ -57,7 +62,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"添加朋友";
     
-    [self.view addSubview:self.searchBar];
+    [self.searchBar becomeFirstResponder];
 }
 
 #pragma mark - UISearchDelegate
@@ -74,7 +79,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"userinfo == %@", responseObject);
-        
+        self.isfriend = [responseObject[@"isfriend"] boolValue];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
@@ -106,10 +111,16 @@
     cell.detailTextLabel.text = self.friend.phone;
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:self.friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
     
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 54, 0, 44, 44)];
-    [addButton setTitle:@"添加" forState:UIControlStateNormal];
+    UIButton *addButton = [[UIButton alloc] init];
     [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isfriend) {
+        [addButton setTitle:@"已添加" forState:UIControlStateNormal];
+        addButton.frame = CGRectMake(kScreenWidth - 70, 0, 60, 44);
+    } else {
+        [addButton setTitle:@"添加" forState:UIControlStateNormal];
+        addButton.frame = CGRectMake(kScreenWidth - 54, 0, 44, 44);
+        [addButton addTarget:self action:@selector(addButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    }
     [cell.contentView addSubview:addButton];
     
     return cell;
