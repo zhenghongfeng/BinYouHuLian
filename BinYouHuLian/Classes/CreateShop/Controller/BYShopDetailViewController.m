@@ -54,9 +54,9 @@
     if (self.shop.picshow1) {
         UIView *header = [UIView new];
         
-        NSString *str1 = [BYBaseURL stringByAppendingString:self.shop.picshow1];
-        NSString *str2 = [BYBaseURL stringByAppendingString:self.shop.picshow2];
-        NSString *str3 = [BYBaseURL stringByAppendingString:self.shop.picshow3];
+        NSString *str1 = [BYImageURL stringByAppendingString:self.shop.picshow1];
+        NSString *str2 = [BYImageURL stringByAppendingString:self.shop.picshow2];
+        NSString *str3 = [BYImageURL stringByAppendingString:self.shop.picshow3];
         
         SDCycleScrollView *scrollView = [SDCycleScrollView new];
         scrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
@@ -204,6 +204,7 @@
             BYRoom *room = [BYRoom mj_objectWithKeyValues:responseObject[@"room"]];
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
             chatViewController.room = room;
+            chatViewController.navigationItem.title = room.name;
             [weakSelf.navigationController pushViewController:chatViewController animated:NO];
         } else {
             [hud hide:YES];
@@ -233,6 +234,7 @@
             
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
             chatViewController.myFriend = friend;
+            chatViewController.navigationItem.title = friend.nickname;
             [weakSelf.navigationController pushViewController:chatViewController animated:NO];
         } else {
             [MBProgressHUD showModeText:responseObject[@"msg"] view:weakSelf.view];

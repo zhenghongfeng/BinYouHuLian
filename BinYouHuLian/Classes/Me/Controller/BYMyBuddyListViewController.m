@@ -158,6 +158,7 @@
         BYFriend *friend = self.friends[indexPath.row];
         ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
         vc.myFriend = friend;
+        vc.navigationItem.title = friend.nickname;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

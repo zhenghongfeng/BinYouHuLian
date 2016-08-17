@@ -394,17 +394,17 @@ static double transformLon(double x, double y)
     .widthIs(20)
     .heightIs(30);
     
-    [self.locateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo(BYHomePageLocationButtonToLeftMargin);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageLocationButtonW - BYHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(BYHomePageLocationButtonW, BYHomePageLocationButtonW));
-    }];
+    self.locateBtn.sd_layout
+    .leftSpaceToView(self.view, BYMargin)
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonH)
+    .heightIs(BYHomeButtonH);
     
-    [self.okButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).mas_equalTo((kScreenWidth - BYHomePageMineButtonW)  * 0.5);
-        make.top.equalTo(self.view).mas_equalTo(@(kScreenHeight - BYHomePageMineButtonH - BYHomePageLocationButtonToBottomMargin));
-        make.size.mas_equalTo(CGSizeMake(BYHomePageMineButtonW, BYHomePageMineButtonH));
-    }];
+    self.okButton.sd_layout
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .centerXEqualToView(self.view)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
 }
 
 - (void)dealloc

@@ -65,7 +65,7 @@
     if (conversationModel) {
         EMConversation *conversation = conversationModel.conversation;
         ChatViewController *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-        chatController.title = conversationModel.title;
+        chatController.navigationItem.title = conversationModel.title;
         [self.navigationController pushViewController:chatController animated:YES];
         //    NOTIFY_POST(kSetupUnreadMessageCount);
         [self.tableView reloadData];

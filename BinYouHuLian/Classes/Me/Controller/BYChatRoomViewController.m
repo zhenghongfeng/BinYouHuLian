@@ -41,32 +41,6 @@
     
     [self requestRoomsListData];
     
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    NSDictionary *dic = @{
-//                          @"name": @"刘德华的聊天室",
-//                          @"description": @"华仔的店铺",
-//                          @"maxusers": @"300",
-//                          @"owner": GetPhone
-//                          };
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
-//    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/room/create?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-//        
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"responseObject = %@", responseObject);
-//        NSInteger code = [responseObject[@"code"] integerValue];
-//        if (code == 1) {
-//            [hud hide:YES];
-//        } else {
-//            [hud hide:YES];
-//            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
-//        }
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error = %@", error.localizedDescription);
-//        [hud hide:YES];
-//        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
-//    }];
-    
 }
 
 - (void)requestRoomsListData
@@ -122,6 +96,7 @@
 {
     BYRoom *room = self.rooms[indexPath.row];
     ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
+    vc.navigationItem.title = room.name;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

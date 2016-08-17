@@ -26,7 +26,6 @@
 #import <AFNetworking.h>
 #import <IQKeyboardManager.h>
 #import <MBProgressHUD.h>
-#import <Masonry.h>
 #import <UIView+SDAutoLayout.h>
 
 #import <MJExtension.h>

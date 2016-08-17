@@ -8,7 +8,6 @@
 
 #import "UserCacheManager.h"
 #import "FMDB.h"
-#import "MKNetworkKit.h"
 
 #define DBNAME @"user_cache_data.db"
 
@@ -73,16 +72,16 @@
     
     NSString *userid = [userinfo objectForKey:kChatUserId];
     if ([db executeUpdate:@"DELETE FROM userinfo where userid = ?", userid]) {
-        DLog(@"删除成功");
+        NSLog(@"删除成功");
     }else{
-        DLog(@"删除失败");
+        NSLog(@"删除失败");
     }
     NSString *username = [userinfo objectForKey:kChatUserNick];
     NSString *userimage = [userinfo objectForKey:kChatUserPic];
     if ([db executeUpdate:@"INSERT INTO userinfo (userid, username, userimage) VALUES (?, ?, ?)", userid,username,userimage]) {
-        DLog(@"插入成功");
+        NSLog(@"插入成功");
     }else{
-        DLog(@"插入失败");
+        NSLog(@"插入失败");
     }
     
     FMResultSet *rs = [db executeQuery:@"SELECT userid, username, userimage FROM userinfo where userid = ?",userid];
@@ -90,7 +89,7 @@
         NSString *userid = [rs stringForColumn:@"userid"];
         NSString *username = [rs stringForColumn:@"username"];
         NSString *userimage = [rs stringForColumn:@"userimage"];
-        DLog(@"查询一个 %@ %@ %@",userid,username,userimage);
+        NSLog(@"查询一个 %@ %@ %@",userid,username,userimage);
     }
     
     rs = [db executeQuery:@"SELECT userid, username, userimage FROM userinfo"];
@@ -98,7 +97,7 @@
         NSString *userid = [rs stringForColumn:@"userid"];
         NSString *username = [rs stringForColumn:@"username"];
         NSString *userimage = [rs stringForColumn:@"userimage"];
-        DLog(@"查询所有 %@ %@ %@",userid,username,userimage);
+        NSLog(@"查询所有 %@ %@ %@",userid,username,userimage);
     }
     
     [rs close];
@@ -120,7 +119,7 @@
             userInfo.Id = [rs stringForColumn:@"userid"];
             userInfo.NickName = [rs stringForColumn:@"username"];
             userInfo.AvatarUrl = [rs stringForColumn:@"userimage"];
-            DLog(@"查询一个 %@",userInfo);
+            NSLog(@"查询一个 %@",userInfo);
             return userInfo;
         }else{
             return nil;

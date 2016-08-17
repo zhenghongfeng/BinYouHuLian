@@ -40,23 +40,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.conversation.type == EMConversationTypeGroupChat) {
-        if ([[self.conversation.ext objectForKey:@"subject"] length])
-        {
-            self.title = [self.conversation.ext objectForKey:@"subject"];
-        }
-    }
+//    if (self.conversation.type == EMConversationTypeGroupChat) {
+//        if ([[self.conversation.ext objectForKey:@"subject"] length])
+//        {
+//            self.title = [self.conversation.ext objectForKey:@"subject"];
+//        }
+//    }
     self.navigationController.navigationBarHidden = NO;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.conversation.type == EMConversationTypeChatRoom) {
-        self.navigationItem.title = self.room.name;
-    } else {
-        self.navigationItem.title = self.myFriend.nickname;
-    }
     
     self.showRefreshHeader = YES;
     self.delegate = self;

@@ -81,10 +81,6 @@ static NSString *kGroupName = @"GroupName";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchShop:) name:kNotficationSearchShopToHome object:nil];
     
-    [self.locationManager startUpdatingLocation];
-    
-    _isAppear = NO;
-    
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.searchButton];
     [self.view addSubview:self.locateButton];
@@ -92,27 +88,17 @@ static NSString *kGroupName = @"GroupName";
     [self.view addSubview:self.createShopButton];
     [self.view addSubview:self.centerImageView];
     [self.view addSubview:self.adressLabel];
+    
+    [self.locationManager startUpdatingLocation];
 }
 
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
-    NSLog(@"定位到了");
-    CLLocation *location = [locations lastObject];
-    
-    NSLog(@"纬度 %f", location.coordinate.latitude);
-    NSLog(@"经度 %f", location.coordinate.longitude);
-    
-    // 停止更新位置——实现一次定位
     [self.locationManager stopUpdatingLocation];
 }
-/**
- *  授权状态发生改变时调用
- *
- *  @param manager 位置管理者
- *  @param status  状态
- */
+
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     switch (status) {
@@ -139,15 +125,12 @@ static NSString *kGroupName = @"GroupName";
                 NSLog(@"定位关闭，不可用");
             }
             break;
-            
         case kCLAuthorizationStatusAuthorizedAlways:
             NSLog(@"获取前后台定位授权");
             break;
-            
         case kCLAuthorizationStatusAuthorizedWhenInUse:
             NSLog(@"获取后台定位授权");
             break;
-            
         default:
             break;
     }
@@ -162,8 +145,6 @@ static NSString *kGroupName = @"GroupName";
 {
     // 对用户当前的位置的大头针特殊处理，直接使用系统提供的大头针
     if ([annotation isKindOfClass:[BYAnnotation class]] == NO) {
-        NSLog(@"current coordinate = %f", annotation.coordinate.latitude);
-        NSLog(@"current coordinate = %f", annotation.coordinate.longitude);
         return nil;
     }
     /*
@@ -210,8 +191,6 @@ static NSString *kGroupName = @"GroupName";
     annotationView.annotation = (BYAnnotation *)annotation;
     annotationView.annotation.coordinate = annotation.coordinate;
     annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
-    NSLog(@"coordinate = %f", annotationView.annotation.coordinate.latitude);
-    NSLog(@"coordinate = %f", annotationView.annotation.coordinate.longitude);
     return annotationView;
 }
 
@@ -219,19 +198,13 @@ static NSString *kGroupName = @"GroupName";
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
-    NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _longitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _latitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
-    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     _adressLabel.text = @"正在获取你选择的地点...";
     NSLog(@"将要变化");
-    //    if (_geocoder == nil) {
-    //        _geocoder = [[CLGeocoder alloc] init];
-    //    }
-    //    [_geocoder cancelGeocode];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
@@ -256,19 +229,14 @@ static NSString *kGroupName = @"GroupName";
     }
 }
 
-
-
 #pragma mark 反地理编码
 - (void)homereverseGeocode1:(double)_lat longitude:(double)_long
 {
     [self requestSearchShop:@""];
     
-    if (_geocoder == nil) {
-        _geocoder = [[CLGeocoder alloc] init];
-    }
     //注意初使化location参数 double转换，这里犯过错， 此外一般会用 全局_currLocation，在定位后得到
     CLLocation* location = [[CLLocation alloc] initWithLatitude:_lat longitude:_long];
-    [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
+    [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
         CLPlacemark* placemark = [placemarks firstObject];
         //                        NSLog(@"详细信息:%@", placemark.addressDictionary);
         if(placemark.addressDictionary == nil){
@@ -416,6 +384,7 @@ static double hometransformLon(double x, double y)
     vc.leftTopLongitude = leftTopCoornation.longitude;
     vc.rightBottomLatitude = rightBottomcoornation.latitude;
     vc.rightBottomLongitude = rightBottomcoornation.longitude;
+    vc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -625,7 +594,6 @@ static double hometransformLon(double x, double y)
         if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
             [_locationManager requestWhenInUseAuthorization];
         }
-        
     }
     return _locationManager;
 }
@@ -692,6 +660,14 @@ static double hometransformLon(double x, double y)
         _centerImageView.image = [UIImage imageNamed:@"map_point_on"];
     }
     return _centerImageView;
+}
+
+- (CLGeocoder *)geocoder
+{
+    if (_geocoder == nil) {
+        _geocoder = [[CLGeocoder alloc] init];
+    }
+    return _geocoder;
 }
 
 - (UILabel *)adressLabel

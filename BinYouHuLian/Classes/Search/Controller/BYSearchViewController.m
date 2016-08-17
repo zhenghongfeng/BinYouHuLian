@@ -305,8 +305,6 @@
     .leftSpaceToView(self.view, 10)
     .rightSpaceToView(_backButton, 0)
     .heightIs(30);
-    
-    
 }
 
 

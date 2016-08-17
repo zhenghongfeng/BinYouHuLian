@@ -12,8 +12,6 @@
 #import "BYMessageListViewController.h"
 #import "BYMyShopBusinessViewController.h"
 #import "BYMyBuddyListViewController.h"
-#import "BYMyBlackListViewController.h"
-#import "BYMyGroupListViewController.h"
 #import "BYAboutMeInfoViewController.h"
 #import "BYRegisterViewController.h"
 #import "ConversationListController.h"
@@ -40,8 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"我";
-    self.itemTitles = @[@"设置", @"位置", @"留言", @"我的店业务", @"我的好友", @"我的黑名单", @"我的群组", @"关于我", @"会话列表"];
+    self.navigationItem.title = @"我";
+    self.itemTitles = @[@"会话列表", @"我的好友", @"留言", @"我的店业务", @"位置", @"关于我", @"设置"];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -75,10 +73,10 @@
     if ([NSString isValueableString:GetToken]) {
         UIViewController *vc;
         if (indexPath.row == 0) {
-            vc = [BYSettingViewController new];
+            vc = [ConversationListController new];
         }
         if (indexPath.row == 1) {
-            vc = [BYCaredLocationViewController new];
+            vc = [BYMyBuddyListViewController new];
         }
         if (indexPath.row == 2) {
             vc = [BYMessageListViewController new];
@@ -87,19 +85,13 @@
             vc = [BYMyShopBusinessViewController new];
         }
         if (indexPath.row == 4) {
-            vc = [BYMyBuddyListViewController new];
+            vc = [BYCaredLocationViewController new];
         }
         if (indexPath.row == 5) {
-            vc = [BYMyBlackListViewController new];
-        }
-        if (indexPath.row == 6) {
-            vc = [BYMyGroupListViewController new];
-        }
-        if (indexPath.row == 7) {
             vc = [BYAboutMeInfoViewController new];
         }
-        if (indexPath.row == 8) {
-            vc = [ConversationListController new];
+        if (indexPath.row == 6) {
+            vc = [BYSettingViewController new];
         }
         [self.navigationController pushViewController:vc animated:YES];
     } else {

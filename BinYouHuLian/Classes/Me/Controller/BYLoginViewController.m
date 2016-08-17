@@ -163,7 +163,7 @@
                         SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
                         
                         // 保存用户信息
-                        [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
+                        [UserCacheManager saveInfo:GetPhone imgUrl:[BYImageURL stringByAppendingString:GetAvatar] nickName:GetNickName];
                         
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
                         [[EMClient sharedClient].pushOptions setDisplayStyle:EMPushDisplayStyleMessageSummary];
