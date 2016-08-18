@@ -18,18 +18,14 @@
     BOOL isAppear;//地图是否显示完成
 }
 
-/** 返回 */
-@property (nonatomic, strong) UIButton *backBtn;
+@property (nonatomic, strong) UIButton *backButton;
 
 @property (nonatomic, strong) MKMapView *mapView;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
-@property (nonatomic, strong) CLLocation *location;
-/** 回到当前位置按钮 */
 @property (nonatomic, strong) UIButton *locateBtn;
 
-/** ok按钮 */
 @property (nonatomic, strong) UIButton *okButton;
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
@@ -38,26 +34,28 @@
 
 @property (nonatomic, strong) UILabel *adressLabel;
 
-/** 经度 */
 @property (nonatomic, assign) double longitude;
-/** 纬度 */
+
 @property (nonatomic, assign) double latitude;
+
+@property (nonatomic, strong) CLPlacemark* placemark;
+
 
 @end
 
 @implementation BYSelectPlaceViewController
 
-- (UIButton *)backBtn
+- (UIButton *)backButton
 {
-    if (_backBtn == nil) {
-        _backBtn = [UIButton new];
-        [_backBtn setTitle:@"返回" forState:UIControlStateNormal];
-        _backBtn.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-        [_backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _backBtn.layer.masksToBounds = YES;
-        _backBtn.layer.cornerRadius = 5;
+    if (_backButton == nil) {
+        _backButton = [UIButton new];
+        [_backButton setTitle:@"返回" forState:UIControlStateNormal];
+        _backButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [_backButton addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        _backButton.layer.masksToBounds = YES;
+        _backButton.layer.cornerRadius = 5;
     }
-    return _backBtn;
+    return _backButton;
 }
 
 - (CLLocationManager *)locationManager
@@ -101,7 +99,8 @@
 - (MKMapView *)mapView
 {
     if (!_mapView) {
-        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+//        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64)];
         _mapView.delegate = self;
         // 显示当前位置
         _mapView.showsUserLocation = YES;
@@ -109,7 +108,6 @@
         _mapView.userTrackingMode = MKUserTrackingModeFollow;//是否跟踪
         // 禁止地图旋转
         _mapView.rotateEnabled = NO;
-        _mapView.showsCompass = YES;
         CLLocationCoordinate2D coord2D;
         if (self.tag) {
             coord2D = CLLocationCoordinate2DMake(self.fromCreateShoplatitude, self.fromCreateShoplongitude);
@@ -138,8 +136,9 @@
 - (UILabel *)adressLabel
 {
     if (_adressLabel == nil) {
-        _adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 50 - 10 - 40, kScreenWidth, 40)];
+        _adressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight - 50 - 40, kScreenWidth, 50)];
         _adressLabel.textAlignment = NSTextAlignmentCenter;
+        _adressLabel.numberOfLines = 0;
     }
     return _adressLabel;
 }
@@ -178,18 +177,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
     isAppear = YES;
-    _centerImageView.hidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    
+    self.navigationItem.title = @"选位置";
+    
     isAppear = NO;
     [self.locationManager startUpdatingLocation];
     [self.view addSubview:self.mapView];
-    [self.view addSubview:self.backBtn];
+    [self.view addSubview:self.backButton];
     [self.view addSubview:self.centerImageView];
     [self.view addSubview:self.adressLabel];
 }
@@ -203,14 +205,6 @@
 }
 
 #pragma mark - MKMapViewDelegate
-/**
- *  每次添加大头针都会调用此方法  可以设置大头针的样式
- *
- *  @param mapView    地图
- *  @param annotation 标记
- *
- *  @return 标记视图
- */
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     // 判断大头针位置是否在原点,如果是则不加大头针
@@ -263,9 +257,9 @@
         [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.8 animations:^{
-                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+//                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
             } completion:^(BOOL finished) {
-                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+//                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
             }];
         });
     });
@@ -284,12 +278,17 @@
     CLLocation* location = [[CLLocation alloc] initWithLatitude:_lat longitude:_long];
     [_geocoder reverseGeocodeLocation:location
                     completionHandler:^(NSArray* placemarks, NSError* error) {
-                        CLPlacemark* placemark = [placemarks firstObject];
-//                        NSLog(@"详细信息:%@", placemark.addressDictionary);
-                        if(placemark.addressDictionary == nil){
-                            _adressLabel.text = @"地图君没有识别此地。。。";
-                        }else {
-                            _adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
+                        _placemark = [placemarks firstObject];
+                        NSLog(@"详细信息:%@", _placemark.addressDictionary);
+                        if(_placemark.addressDictionary == nil){
+                            _adressLabel.text = @"地图没有识别到此地";
+                        } else {
+//                            NSString *addStr = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] objectAtIndex:0];
+//                            NSString *countyStr = [placemark.addressDictionary objectForKey:@"Country"];
+//                            NSString *cityStr = [placemark.addressDictionary objectForKey:@"City"];
+//                             NSString *streetStr = [placemark.addressDictionary objectForKey:@"Street"];
+                            
+                            _adressLabel.text = [NSString stringWithFormat:@"%@", _placemark.name];
                         }
                     }];
 }
@@ -355,7 +354,7 @@ static double transformLon(double x, double y)
 
 #pragma mark - custom event
 
-- (void)backBtnClick
+- (void)backButtonClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -363,7 +362,13 @@ static double transformLon(double x, double y)
 - (void)okBtnClick
 {
     WeakSelf;
-    [_geocoder geocodeAddressString:_adressLabel.text completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+//    NSString *formattedAddressLines = [[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"] objectAtIndex:0];
+    NSString *city = [_placemark.addressDictionary objectForKey:@"City"];
+    NSString *street = [_placemark.addressDictionary objectForKey:@"Street"];
+    NSString *name = [_placemark.addressDictionary objectForKey:@"Name"];
+    NSString *address = [NSString stringWithFormat:@"%@%@%@", city, street, name];
+    
+    [_geocoder geocodeAddressString:address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         CLPlacemark *pl = [placemarks firstObject];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
             [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
@@ -383,14 +388,20 @@ static double transformLon(double x, double y)
 {
     [super viewDidLayoutSubviews];
     
-    self.backBtn.sd_layout.leftSpaceToView(self.view, BYMargin)
+    self.backButton.sd_layout.leftSpaceToView(self.view, BYMargin)
     .topSpaceToView(self.view, BYMargin * 2)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
     
+//    self.centerImageView.sd_layout
+//    .centerXIs(self.view.centerX)
+//    .centerYIs(self.view.centerY)
+//    .widthIs(20)
+//    .heightIs(30);
+    
     self.centerImageView.sd_layout
     .centerXIs(self.view.centerX)
-    .centerYIs(self.view.centerY)
+    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
     .widthIs(20)
     .heightIs(30);
     
@@ -405,11 +416,6 @@ static double transformLon(double x, double y)
     .centerXEqualToView(self.view)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

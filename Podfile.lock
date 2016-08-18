@@ -37,7 +37,7 @@ DEPENDENCIES:
   - SDAutoLayout (= 2.1.7)
   - SDCycleScrollView (= 1.65)
   - SDWebImage (= 3.8.1)
-  - YTKKeyValueStore
+  - YTKKeyValueStore (= 0.1.2)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67

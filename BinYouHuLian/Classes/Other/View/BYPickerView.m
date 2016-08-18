@@ -187,7 +187,7 @@
 #pragma mark piackView 数据源方法
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     
-    NSInteger component;
+    NSInteger component = 0;
     if (_isLevelArray) {
         component=_plistArray.count;
     } else if (_isLevelString){

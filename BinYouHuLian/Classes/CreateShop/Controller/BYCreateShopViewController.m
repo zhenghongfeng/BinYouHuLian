@@ -289,6 +289,8 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
                 vc.tag = YES;
                 vc.fromCreateShoplatitude = [self.latitude doubleValue];
                 vc.fromCreateShoplongitude = [self.longitude doubleValue];
+                NSLog(@"fromCreateShoplatitude = %f", vc.fromCreateShoplatitude);
+                NSLog(@"fromCreateShoplongitude = %f", vc.fromCreateShoplongitude);
             }
             [self.navigationController pushViewController:vc animated:YES];
         }

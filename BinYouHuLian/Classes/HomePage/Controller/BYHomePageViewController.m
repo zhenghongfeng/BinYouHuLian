@@ -213,6 +213,9 @@ static NSString *kGroupName = @"GroupName";
     NSLog(@"%f---%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     
     if (_latitude != nil && _isAppear == YES) {
+        
+        [self requestSearchShop:@""];
+        
         CLLocationCoordinate2D cl =  mapView.centerCoordinate;
         
         NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
@@ -223,7 +226,7 @@ static NSString *kGroupName = @"GroupName";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.centerImageView.center = weakSelf.view.center;
+//                self.centerImageView.center = weakSelf.view.center;
             });
         });
     }
@@ -232,17 +235,16 @@ static NSString *kGroupName = @"GroupName";
 #pragma mark 反地理编码
 - (void)homereverseGeocode1:(double)_lat longitude:(double)_long
 {
-    [self requestSearchShop:@""];
-    
     //注意初使化location参数 double转换，这里犯过错， 此外一般会用 全局_currLocation，在定位后得到
     CLLocation* location = [[CLLocation alloc] initWithLatitude:_lat longitude:_long];
     [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
         CLPlacemark* placemark = [placemarks firstObject];
         //                        NSLog(@"详细信息:%@", placemark.addressDictionary);
         if(placemark.addressDictionary == nil){
-            self.adressLabel.text = @"地图没有识别此地";
+            self.adressLabel.text = @"地图没有识别到此地";
         } else {
-            self.adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
+//            self.adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
+            self.adressLabel.text = placemark.name;
         }
     }];
 }
@@ -251,10 +253,8 @@ static NSString *kGroupName = @"GroupName";
 {
     //UIKit坐标点转化 ——>  经纬度
     CLLocationCoordinate2D leftTopCoornation = [_mapView convertPoint:CGPointMake(0, 0) toCoordinateFromView:_mapView];
-    NSLog(@"leftTopCoornation = %f, %f", leftTopCoornation.latitude, leftTopCoornation.longitude);
     
     CLLocationCoordinate2D rightBottomcoornation = [_mapView convertPoint:CGPointMake(kScreenWidth, kScreenHeight) toCoordinateFromView:_mapView];
-    NSLog(@"rightBottomcoornation = %f, %f", rightBottomcoornation.latitude, rightBottomcoornation.longitude);
     
     NSDictionary *dic = @{
                           @"lowerlong": @(leftTopCoornation.longitude),
@@ -727,6 +727,11 @@ static double hometransformLon(double x, double y)
     .centerYIs(self.view.centerY)
     .widthIs(20)
     .heightIs(30);
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotficationSearchShopToHome object:nil];
 }
 
 @end

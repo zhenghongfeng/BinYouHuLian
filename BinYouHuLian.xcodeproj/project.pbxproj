@@ -413,7 +413,6 @@
 		BAE0F42B1CBB9AA5002009F6 /* mapTabRightButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3BD1CBB9AA4002009F6 /* mapTabRightButtonSelected.png */; };
 		BAE0F42C1CBB9AA5002009F6 /* mapTabRightButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F3BE1CBB9AA4002009F6 /* mapTabRightButtonSelected@2x.png */; };
 		BAE0F42D1CBB9AA5002009F6 /* BYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0F3C21CBB9AA4002009F6 /* BYSearchViewController.m */; };
-		BAE0F4301CBB9AD5002009F6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAE0F42F1CBB9AD5002009F6 /* Info.plist */; };
 		BAFABDCE1CC0906400B43773 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3171CBB6CCC002009F6 /* CoreMedia.framework */; };
 		BAFABDCF1CC0907600B43773 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3191CBB6CDD002009F6 /* AudioToolbox.framework */; };
 		BAFABDD01CC0908300B43773 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31B1CBB6CEB002009F6 /* AVFoundation.framework */; };
@@ -2591,7 +2590,6 @@
 				BAD26EB01CBF866D00F355C5 /* anon_chat_bottom_emotion_press@3x.png in Resources */,
 				BA68E1E81CC0B4F300A85FCD /* VoiceSearchFeedback001@2x.png in Resources */,
 				BAE0F3FE1CBB9AA5002009F6 /* icon_map_cateid_default.png in Resources */,
-				BAE0F4301CBB9AD5002009F6 /* Info.plist in Resources */,
 				BAE0F3EB1CBB9AA4002009F6 /* icon_food_homepage_map.png in Resources */,
 				BAE0F3E41CBB9AA4002009F6 /* btn_htl_map_prepay_big@2x.png in Resources */,
 				BAD26E951CBF7F8900F355C5 /* chatBar_more.png in Resources */,
@@ -3106,6 +3104,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -3150,6 +3149,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

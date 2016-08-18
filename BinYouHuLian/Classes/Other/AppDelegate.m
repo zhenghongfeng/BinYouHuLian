@@ -209,7 +209,7 @@
     }
     
     //保存最后一次响铃时间
-    lastPlaySoundDate = [NSDate date];
+//    lastPlaySoundDate = [NSDate date];
     
     // 收到消息时，播放音频
     [[EMCDDeviceManager sharedInstance] playNewMessageSound];
