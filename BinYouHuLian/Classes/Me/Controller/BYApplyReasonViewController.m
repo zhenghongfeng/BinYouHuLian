@@ -30,6 +30,7 @@
         _textView.layer.cornerRadius = 5;
         _textView.layer.borderWidth = 0.5;
         _textView.layer.borderColor = [UIColor grayColor].CGColor;
+        _textView.tintColor = [UIColor blackColor];
         _textView.contentMode = UIViewContentModeTopLeft;
     }
     return _textView;

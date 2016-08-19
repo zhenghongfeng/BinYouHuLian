@@ -69,6 +69,8 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     WeakSelf;
     NSDictionary *dic = @{
                           @"friend": searchBar.text
@@ -79,6 +81,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"userinfo == %@", responseObject);
+        [hud hide:YES];
         self.isfriend = [responseObject[@"isfriend"] boolValue];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
@@ -93,6 +96,7 @@
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
+        [hud hide:YES];
         [MBProgressHUD showModeText:error.localizedDescription view:weakSelf.view];
     }];
 }
@@ -109,7 +113,7 @@
     BYMyBuddyListTableViewCell *cell = [[BYMyBuddyListTableViewCell alloc] init];
     cell.textLabel.text = self.friend.nickname;
     cell.detailTextLabel.text = self.friend.phone;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:self.friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:self.friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
     
     UIButton *addButton = [[UIButton alloc] init];
     [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

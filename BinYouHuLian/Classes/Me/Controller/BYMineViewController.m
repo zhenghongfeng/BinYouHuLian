@@ -16,13 +16,29 @@
 #import "BYRegisterViewController.h"
 #import "ConversationListController.h"
 
-@interface BYMineViewController ()
+@interface BYMineViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) NSArray *itemTitles;
 
 @end
 
 @implementation BYMineViewController
+
+#pragma mark - getter
+
+- (UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+    }
+    return _tableView;
+}
+
+#pragma mark - life cycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -39,9 +55,11 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"我";
-    self.itemTitles = @[@"会话列表", @"我的好友", @"留言", @"我的店业务", @"位置", @"关于我", @"设置"];
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.itemTitles = @[@"会话列表", @"我的好友", @"关于我", @"设置", @"留言", @"我的店业务", @"位置"];
+
+    self.itemTitles = @[@"会话列表", @"我的好友", @"关于我", @"设置"];
+                        
+    [self.view addSubview:self.tableView];
 }
 
 
@@ -66,6 +84,11 @@
 
 #pragma mark - Table view delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -79,20 +102,20 @@
             vc = [BYMyBuddyListViewController new];
         }
         if (indexPath.row == 2) {
-            vc = [BYMessageListViewController new];
-        }
-        if (indexPath.row == 3) {
-            vc = [BYMyShopBusinessViewController new];
-        }
-        if (indexPath.row == 4) {
-            vc = [BYCaredLocationViewController new];
-        }
-        if (indexPath.row == 5) {
             vc = [BYAboutMeInfoViewController new];
         }
-        if (indexPath.row == 6) {
+        if (indexPath.row == 3) {
             vc = [BYSettingViewController new];
         }
+//        if (indexPath.row == 4) {
+//            vc = [BYMessageListViewController new];
+//        }
+//        if (indexPath.row == 5) {
+//            vc = [BYMyShopBusinessViewController new];
+//        }
+//        if (indexPath.row == 6) {
+//            vc = [BYCaredLocationViewController new];
+//        }
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         BYRegisterViewController *vc = [[BYRegisterViewController alloc] init];

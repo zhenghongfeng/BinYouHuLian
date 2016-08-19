@@ -35,7 +35,7 @@
 - (void)setApply:(BYApply *)apply
 {
     _apply = apply;
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:apply.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:apply.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
     self.textLabel.text = apply.nickname;
     self.detailTextLabel.text = apply.reason;
     if (apply.applyStatus) {

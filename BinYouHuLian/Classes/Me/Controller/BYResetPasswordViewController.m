@@ -229,7 +229,9 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSDictionary *dic = @{@"phone": self.phoneTextField.text,
+    NSDictionary *dic = @{
+                          @"istest": BYVcode,
+                          @"phone": self.phoneTextField.text,
                           @"password": [NSString md5:self.passwordTextField.text],
                           @"vcode": self.verCodeTextField.text
                           };

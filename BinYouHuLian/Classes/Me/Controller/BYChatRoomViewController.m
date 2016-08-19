@@ -92,6 +92,11 @@
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BYRoom *room = self.rooms[indexPath.row];

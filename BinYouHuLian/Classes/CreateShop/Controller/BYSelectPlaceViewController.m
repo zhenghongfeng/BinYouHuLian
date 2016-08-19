@@ -182,13 +182,11 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [super viewDidLoad];
     
     self.navigationItem.title = @"选位置";
     
-    isAppear = NO;
     [self.locationManager startUpdatingLocation];
     [self.view addSubview:self.mapView];
     [self.view addSubview:self.backButton];

@@ -97,6 +97,8 @@
     return filePatch;
 }
 
+#pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -179,7 +181,7 @@
         if (indexPath.section == 0) {
             [self.view endEditing:YES];
             [self dismissViewControllerAnimated:YES completion:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:name userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationSearchShopToHome object:name userInfo:nil];
         }
         if (indexPath.section == 1) {
             [_tableView removeFromSuperview];

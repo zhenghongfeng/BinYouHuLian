@@ -7,8 +7,6 @@
 //
 
 #import "BYHomePageViewController.h"
-#import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "BYRegisterViewController.h"
 #import "BYMineViewController.h"
 #import "BYSearchViewController.h"
@@ -193,8 +191,6 @@ static NSString *kGroupName = @"GroupName";
     annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
     return annotationView;
 }
-
-#pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
@@ -384,7 +380,7 @@ static double hometransformLon(double x, double y)
     vc.leftTopLongitude = leftTopCoornation.longitude;
     vc.rightBottomLatitude = rightBottomcoornation.latitude;
     vc.rightBottomLongitude = rightBottomcoornation.longitude;
-    vc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

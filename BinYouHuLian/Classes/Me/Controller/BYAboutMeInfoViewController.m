@@ -23,10 +23,9 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     }
     return _tableView;
 }
@@ -58,7 +57,7 @@
     if (indexPath.row == 0) {
         BYAboutMeInfoHeadTableViewCell *cell = [[BYAboutMeInfoHeadTableViewCell alloc] init];
         cell.textLabel.text = @"头像";
-        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
+        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -73,6 +72,12 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
 // 设置cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -149,15 +154,20 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
+        
         [hud hide:YES];
+        
         NSInteger code = [responseObject[@"code"] integerValue];
+        
         if (code == 1) {
+            
             SaveAvatar(responseObject[@"avatar"]);
-            [UserCacheManager saveInfo:GetPhone imgUrl:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar] nickName:GetNickName];
+            
+            [UserCacheManager saveInfo:GetPhone imgUrl:[BYImageURL stringByAppendingString:GetAvatar] nickName:GetNickName];
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             BYAboutMeInfoHeadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
             [self.tableView reloadData];
             
             [MBProgressHUD showModeText:@"头像修改成功" view:self.view];

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BYMineViewController : UITableViewController
+@interface BYMineViewController : UIViewController
 
 @end

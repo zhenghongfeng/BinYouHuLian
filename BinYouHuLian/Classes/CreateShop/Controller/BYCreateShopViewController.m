@@ -263,9 +263,18 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    return indexPath.section == 0 ? 150 : 44;
     return indexPath.section == 0 ? 10 + ((addButtonHeight + 10) * (self.array1.count / 4) + addButtonHeight + 10) : 44;
 }
 
@@ -289,8 +298,6 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
                 vc.tag = YES;
                 vc.fromCreateShoplatitude = [self.latitude doubleValue];
                 vc.fromCreateShoplongitude = [self.longitude doubleValue];
-                NSLog(@"fromCreateShoplatitude = %f", vc.fromCreateShoplatitude);
-                NSLog(@"fromCreateShoplongitude = %f", vc.fromCreateShoplongitude);
             }
             [self.navigationController pushViewController:vc animated:YES];
         }

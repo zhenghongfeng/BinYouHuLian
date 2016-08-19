@@ -17,7 +17,6 @@
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *array;
-@property (nonatomic, strong) NSMutableArray *buddyList;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *friends;
 
@@ -132,13 +131,23 @@
         
         cell.textLabel.text = friend.nickname;
         cell.detailTextLabel.text = friend.phone;
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[@"http://123.56.186.178/api/download/img?path=" stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
         
         return cell;
     }
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -170,7 +179,11 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellEditingStyleDelete;
+    if (indexPath.section == 1) {
+        return UITableViewCellEditingStyleDelete;
+    } else {
+        return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,14 +193,27 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 删除好友
-    EMError *error = [[EMClient sharedClient].contactManager deleteContact:self.buddyList[indexPath.row]];
-    if (!error) {
-        NSLog(@"删除成功");
-    }
-    
-    [self.buddyList removeObjectAtIndex:indexPath.row];
-    [self.tableView reloadData];
+    NSDictionary *dic = @{
+                          @"username": GetPhone,
+                          @"friendName": [self.friends[indexPath.row] phone]
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/delfriend?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            [self.friends removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+        } else {
+            [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
 }
 
 #pragma mark - 跳到添加好友界面
