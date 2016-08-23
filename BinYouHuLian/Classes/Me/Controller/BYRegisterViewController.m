@@ -139,6 +139,8 @@
         [hud hide:YES afterDelay:1];
         return;
     }
+    [_verCodeTextField becomeFirstResponder];
+    
     _count = 60;
     NSString *str = [NSString stringWithFormat:@"%2zd秒后重新发送", _count];
     [_verCodeButton setTitle:str forState:UIControlStateNormal];
@@ -154,7 +156,7 @@
         NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [_verCodeTextField becomeFirstResponder];
+            
             _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
         } else {
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];

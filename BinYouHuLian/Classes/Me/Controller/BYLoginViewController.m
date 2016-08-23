@@ -47,13 +47,12 @@
 - (UITextField *)phoneTextField
 {
     if (_phoneTextField == nil) {
-        UITextField *phoneTextField = [[UITextField alloc] init];
-        phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
-        phoneTextField.placeholder = @"手机号码";
-        phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        phoneTextField.tintColor = [UIColor blackColor];
-        _phoneTextField = phoneTextField;
+        _phoneTextField = [[UITextField alloc] init];
+        _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
+        _phoneTextField.placeholder = @"手机号码";
+        _phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        _phoneTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _phoneTextField.tintColor = [UIColor blackColor];
     }
     return _phoneTextField;
 }
@@ -105,6 +104,7 @@
     }
     return _forgetPasswordButton;
 }
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -170,6 +170,9 @@
                         [[EMClient sharedClient].pushOptions setNickname:GetNickName];
                         
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                        
+                        [self requestTokenRecord];
+                        
                     } else {
                         [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
                     }
@@ -181,6 +184,28 @@
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
+}
+
+- (void)requestTokenRecord
+{
+    NSDictionary *dic = @{
+                          @"phone": self.phoneTextField.text,
+                          @"deviceId": [[UIDevice currentDevice] identifierForVendor].UUIDString,
+                          @"osVersion": [[UIDevice currentDevice] systemVersion],
+                          @"appVersion": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                          @"deviceName": [[UIDevice currentDevice] model]
+                          };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/device/record?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }

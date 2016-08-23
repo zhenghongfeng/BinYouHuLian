@@ -41,6 +41,12 @@
 - (void)removeEmptyConversationsFromDB
 {
     NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+    
+    if (conversations.count == 0) {
+        [MBProgressHUD showModeText:@"暂无会话记录" view:self.view];
+        return;
+    }
+    
     NSMutableArray *needRemoveConversations;
     for (EMConversation *conversation in conversations) {
         if (!conversation.latestMessage || (conversation.type == EMConversationTypeChatRoom)) {

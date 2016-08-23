@@ -11,7 +11,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "BYPickerView.h"
 #import "BYSelectPlaceViewController.h"
-#import "BYCreateShopSuccessViewController.h"
 #import "ELCImagePickerController.h"
 #import "BYLookBigImageViewController.h"
 
@@ -138,11 +137,11 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
 
 #pragma mark - life cycle
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

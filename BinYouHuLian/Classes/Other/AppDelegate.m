@@ -107,6 +107,7 @@
 - (void)didAutoLoginWithError:(EMError *)aError
 {
     NSLog(@"aError = %@", aError.errorDescription);
+    
 }
 
 

@@ -281,9 +281,6 @@
                         
                         // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];
-//                        EMError *error = nil;
-//                        EMPushOptions *pushOptions = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-//                        pushOptions.displayStyle = EMPushDisplayStyleMessageSummary;
                         [[EMClient sharedClient].pushOptions setDisplayStyle:EMPushDisplayStyleMessageSummary];
                         [[EMClient sharedClient].pushOptions setNickname:GetNickName];
                         [[EMClient sharedClient] updatePushOptionsToServer];
@@ -291,6 +288,8 @@
                         // dismissVC
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                         [hud hide:YES];
+                        
+                        [self requestTokenRecord];
                     } else {
                         [hud hide:YES];
                         [MBProgressHUD showModeText:@"登录异常" view:self.view];
@@ -304,6 +303,28 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@", error.localizedDescription);
         [hud hide:YES];
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
+}
+
+- (void)requestTokenRecord
+{
+    NSDictionary *dic = @{
+                          @"phone": self.phone,
+                          @"deviceId": [[UIDevice currentDevice] identifierForVendor].UUIDString,
+                          @"osVersion": [[UIDevice currentDevice] systemVersion],
+                          @"appVersion": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                          @"deviceName": [[UIDevice currentDevice] model]
+                          };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/device/record?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
         [MBProgressHUD showModeText:error.localizedDescription view:self.view];
     }];
 }

@@ -14,6 +14,7 @@
 
 #import "BYFriend.h"
 #import "BYRoom.h"
+#import "BYRegisterViewController.h"
 
 @interface BYShopDetailViewController ()
 
@@ -37,17 +38,17 @@
     [self setupTabelView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    self.navigationController.navigationBarHidden = YES;
+//}
 
 - (void)setupTabelView
 {
@@ -198,16 +199,15 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@", responseObject);
+        [hud hide:YES];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
-            [hud hide:YES];
             BYRoom *room = [BYRoom mj_objectWithKeyValues:responseObject[@"room"]];
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:room.myId conversationType:EMConversationTypeChatRoom];
             chatViewController.room = room;
             chatViewController.navigationItem.title = room.name;
             [weakSelf.navigationController pushViewController:chatViewController animated:NO];
         } else {
-            [hud hide:YES];
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

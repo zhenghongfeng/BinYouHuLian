@@ -69,7 +69,7 @@ static NSString *kGroupName = @"GroupName";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
     _isAppear = YES;
 }
 
@@ -77,17 +77,73 @@ static NSString *kGroupName = @"GroupName";
     
     [super viewDidLoad];
     
+    self.navigationItem.title = @"宾友";
+    self.annotations = @[].mutableCopy;
+    self.shops = @[].mutableCopy;
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:({
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        [button setImage:[UIImage imageNamed:@"home_search"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        button;
+    })];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:({
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [button setImage:[UIImage imageNamed:@"home_me"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(mineBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        button;
+    })];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchShop:) name:kNotficationSearchShopToHome object:nil];
     
     [self.view addSubview:self.mapView];
-    [self.view addSubview:self.searchButton];
+//    [self.view addSubview:self.searchButton];
     [self.view addSubview:self.locateButton];
     [self.view addSubview:self.mineButton];
-    [self.view addSubview:self.createShopButton];
+//    [self.view addSubview:self.createShopButton];
     [self.view addSubview:self.centerImageView];
     [self.view addSubview:self.adressLabel];
     
     [self.locationManager startUpdatingLocation];
+    
+    if ([NSString isValueableString:GetToken]) {
+        [self  judgeToken];
+    }
+}
+
+- (void)judgeToken
+{
+    NSDictionary *dic = @{
+                          @"friend": GetPhone
+                          };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/friendinfo?"] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"userinfo == %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1000) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您的账号被另一台设备挤掉线" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                BYRegisterViewController *vc = [[BYRegisterViewController alloc] init];
+                vc.isPopToHome = YES;
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+                nav.navigationBar.hidden = YES;
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
+                SaveToken(nil);
+                SavePhone(nil);
+                SaveNickName(nil);
+                SaveAvatar(nil);
+            }];
+            [alert addAction:action];
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@", error.localizedDescription);
+    }];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -179,7 +235,7 @@ static NSString *kGroupName = @"GroupName";
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
         button.tag = [(BYAnnotation *)annotation tag];
         [button setTitle:@"查看详情" forState:UIControlStateNormal];
-        [button setTitleColor:kMainColor forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithRed:0.07f green:0.80f blue:0.43f alpha:1.00f] forState:UIControlStateNormal];
         button.titleLabel.numberOfLines = 2;
         [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
         button;
@@ -229,17 +285,15 @@ static NSString *kGroupName = @"GroupName";
 }
 
 #pragma mark 反地理编码
-- (void)homereverseGeocode1:(double)_lat longitude:(double)_long
+- (void)homereverseGeocode1:(double)latitude longitude:(double)longitude
 {
-    //注意初使化location参数 double转换，这里犯过错， 此外一般会用 全局_currLocation，在定位后得到
-    CLLocation* location = [[CLLocation alloc] initWithLatitude:_lat longitude:_long];
+    CLLocation* location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    
     [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
-        CLPlacemark* placemark = [placemarks firstObject];
-        //                        NSLog(@"详细信息:%@", placemark.addressDictionary);
+        CLPlacemark *placemark = [placemarks firstObject];
         if(placemark.addressDictionary == nil){
             self.adressLabel.text = @"地图没有识别到此地";
         } else {
-//            self.adressLabel.text = [NSString stringWithFormat:@"%@",placemark.addressDictionary[@"Name"]];
             self.adressLabel.text = placemark.name;
         }
     }];
@@ -380,7 +434,7 @@ static double hometransformLon(double x, double y)
     vc.leftTopLongitude = leftTopCoornation.longitude;
     vc.rightBottomLatitude = rightBottomcoornation.latitude;
     vc.rightBottomLongitude = rightBottomcoornation.longitude;
-    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -597,10 +651,11 @@ static double hometransformLon(double x, double y)
 - (MKMapView *)mapView
 {
     if (_mapView == nil) {
-        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+//        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64)];
         _mapView.delegate = self;
         _mapView.showsUserLocation = YES;
-        _mapView.showsScale = YES;
+//        _mapView.showsScale = YES;
         // 跟踪用户
         _mapView.userTrackingMode = MKUserTrackingModeFollow;
         // 禁止地图旋转
@@ -628,7 +683,8 @@ static double hometransformLon(double x, double y)
 - (UIButton *)mineButton
 {
     if (_mineButton == nil) {
-        _mineButton = [self createButtonWithTitle:@"我的" image:nil action:@selector(mineBtnClick) alpha:0.6];
+//        _mineButton = [self createButtonWithTitle:@"我的" image:nil action:@selector(mineBtnClick) alpha:0.6];
+        _mineButton = [self createButtonWithTitle:@"开店" image:nil action:@selector(createShopBtnClick) alpha:0.6];
     }
     return _mineButton;
 }
@@ -718,9 +774,15 @@ static double hometransformLon(double x, double y)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
     
+//    self.centerImageView.sd_layout
+//    .centerXIs(self.view.centerX)
+//    .centerYIs(self.view.centerY)
+//    .widthIs(20)
+//    .heightIs(30);
+    
     self.centerImageView.sd_layout
     .centerXIs(self.view.centerX)
-    .centerYIs(self.view.centerY)
+    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
     .widthIs(20)
     .heightIs(30);
 }

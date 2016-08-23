@@ -203,36 +203,12 @@
 }
 
 #pragma mark - MKMapViewDelegate
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    // 判断大头针位置是否在原点,如果是则不加大头针
-    if([annotation isKindOfClass:[mapView.userLocation class]])
-        return nil;
-    static NSString *annotationName = @"annotation";
-    MKPinAnnotationView *anView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationName];
-    if(anView == nil)
-    {
-        anView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationName];
-    }
-    anView.animatesDrop = YES;
-    // 显示详细信息
-    anView.canShowCallout = YES;
-//    anView.leftCalloutAccessoryView   可以设置左视图
-//    anView.rightCalloutAccessoryView   可以设置右视图
-    return anView;
-}
 
-#pragma mark mapViewDelegate
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D coord = [userLocation coordinate];
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _userLongitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _userLatitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
-}
-
-- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
-{
-    NSLog(@"定位失败：%@",error);
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{

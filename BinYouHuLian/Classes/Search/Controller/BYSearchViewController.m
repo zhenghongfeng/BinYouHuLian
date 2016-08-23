@@ -9,6 +9,17 @@
 #import "BYSearchViewController.h"
 #import "BYSearchListTableViewCell.h"
 #import "BYShop.h"
+#import <YTKKeyValueStore.h>
+
+static NSString *const placeholder = @"请输入店铺关键字";
+static NSString *const backButtonTitle = @"取消";
+static NSString *const tableHeaderTitle = @"   搜索历史";
+static NSString *const clearRecord = @"清除搜索历史";
+static NSString *const DBName = @"search.db";
+static NSString *const tableName = @"search_table";
+static NSString *const notLoginUser = @"notLoginUser";
+
+
 
 @interface BYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -32,15 +43,17 @@
 
 @implementation BYSearchViewController
 
+#pragma mark - getter
+
 - (UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] init];
+        _searchBar = [UISearchBar new];
         _searchBar.delegate = self;
         _searchBar.searchBarStyle = UISearchBarStyleMinimal;
         _searchBar.tintColor = [UIColor blackColor];
-        _searchBar.placeholder = @"请输入店铺关键字";
-        [self.view addSubview:_searchBar];
+        _searchBar.placeholder = placeholder;
+        [_searchBar becomeFirstResponder];
     }
     return _searchBar;
 }
@@ -48,8 +61,8 @@
 - (UIButton *)backButton
 {
     if (!_backButton) {
-        _backButton = [[UIButton alloc] init];
-        [_backButton setTitle:@"取消" forState:UIControlStateNormal];
+        _backButton = [UIButton new];
+        [_backButton setTitle:backButtonTitle forState:UIControlStateNormal];
         [_backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -72,29 +85,13 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, kScreenWidth, kScreenHeight - 60) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
-        label.text = @"   搜索历史";
-        _tableView.tableHeaderView = label;
+        _tableView.tableHeaderView = ({
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, BYTableViewCellH)];
+            label.text = tableHeaderTitle;
+            label;
+        });
     }
     return _tableView;
-}
-
-- (void)deleteBtnClick
-{
-    [_tableView removeFromSuperview];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
-}
-
-- (NSString *)plistPath
-{
-    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [pathArray objectAtIndex:0];
-    
-    // 拼接文件的完整路径
-    NSString *filePatch = [path stringByAppendingPathComponent:@"searchRecord.plist"];
-    return filePatch;
 }
 
 #pragma mark - life cycle
@@ -104,15 +101,25 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.searchBar becomeFirstResponder];
-    [self.view addSubview:self.backButton];
-    
-    self.searchHistoryDatas = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
+    self.searchHistoryDatas = [NSMutableArray array];
     self.searchData = [NSMutableArray array];
     
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:DBName];
+    [store createTableWithName:tableName];
+    
+    NSString *objectID;
+    if (GetPhone) {
+        objectID = GetPhone;
+    } else {
+        objectID = notLoginUser;
+    }
+    self.searchHistoryDatas = [store getObjectById:objectID fromTable:tableName];
     if (self.searchHistoryDatas) {
         [self.view addSubview:self.tableView];
     }
+    
+    [self.view addSubview:self.searchBar];
+    [self.view addSubview:self.backButton];
 }
 
 #pragma mark - UITableViewDataSource
@@ -133,9 +140,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    static NSString *ID = @"cell";
     if (tableView == _tableView) {
-        static NSString *ID = @"cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
@@ -143,13 +149,11 @@
         if (indexPath.section == 0) {
             cell.textLabel.text = self.searchHistoryDatas[indexPath.row];
         } else {
-            cell.textLabel.text = @"清除搜索历史";
+            cell.textLabel.text = clearRecord;
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            cell.textLabel.textColor = kMainColor;
         }
         return cell;
     } else {
-        static NSString *ID = @"cell";
         BYSearchListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (!cell) {
             cell = [[BYSearchListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
@@ -185,7 +189,14 @@
         }
         if (indexPath.section == 1) {
             [_tableView removeFromSuperview];
-            [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
+            NSString *objectID;
+            if (GetPhone) {
+                objectID = GetPhone;
+            } else {
+                objectID = notLoginUser;
+            }
+            YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"search.db"];
+            [store deleteObjectById:objectID fromTable:tableName];
             [MBProgressHUD showModeText:@"已清空历史记录" view:self.view];
         }
     } else {
@@ -203,7 +214,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     if (searchBar.text.length == 0) {
-        [MBProgressHUD showModeText:@"请输入关键字" view:self.view];
+        [MBProgressHUD showModeText:placeholder view:self.view];
         return;
     }
     [self requestShopsDataWithSearchText:searchBar.text isSearchButtonClicked:YES];
@@ -248,26 +259,31 @@
                     [MBProgressHUD showModeText:@"未搜索到相关店铺" view:self.view];
                     return ;
                 } else {
-                    // 读取沙盒中pilst数据
-                    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[self plistPath]];
                     
+                    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:self.searchHistoryDatas];
                     NSMutableArray *arr = [NSMutableArray array];
                     
-                    // 判断是否为nil
+                    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:DBName];
+                    [store createTableWithName:tableName];
+                    
+                    NSString *objectID;
+                    if (GetPhone) {
+                        objectID = GetPhone;
+                    } else {
+                        objectID = notLoginUser;
+                    }
+                    
                     if (array) {
                         [array insertObject:searchText atIndex:0];
-                        [array writeToFile:[self plistPath] atomically:YES];
+                        [store putObject:array withId:objectID intoTable:tableName];
                     } else {
                         [arr addObject:searchText];
-                        [arr writeToFile:[self plistPath] atomically:YES];
+                        [store putObject:arr withId:objectID intoTable:tableName];
                     }
-                    //  沙盒路径
-                    NSLog(@"%@", NSHomeDirectory());
-                    
                     
                     [self.view endEditing:YES];
                     [self dismissViewControllerAnimated:YES completion:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"location" object:searchText userInfo:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationSearchShopToHome object:searchText userInfo:nil];
                 }
             } else {
                 if (self.searchData.count == 0) {
@@ -302,7 +318,7 @@
     .widthIs(40)
     .heightIs(30);
     
-    self.searchBar.sd_layout
+    _searchBar.sd_layout
     .topSpaceToView(self.view, 30)
     .leftSpaceToView(self.view, 10)
     .rightSpaceToView(_backButton, 0)

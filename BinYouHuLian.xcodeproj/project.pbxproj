@@ -23,6 +23,8 @@
 		BA04BE8B1CC88AE4000270EB /* map_point_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE881CC88AE4000270EB /* map_point_on@2x.png */; };
 		BA04BE8C1CC88AE4000270EB /* map_point_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA04BE891CC88AE4000270EB /* map_point_on@3x.png */; };
 		BA0857961CB60E4F00D4454C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA0857951CB60E4F00D4454C /* Assets.xcassets */; };
+		BA0ECA151D6AAEBD00D01F4D /* home_search.png in Resources */ = {isa = PBXBuildFile; fileRef = BA0ECA141D6AAEBD00D01F4D /* home_search.png */; };
+		BA0ECA171D6AAFF900D01F4D /* home_me.png in Resources */ = {isa = PBXBuildFile; fileRef = BA0ECA161D6AAFF900D01F4D /* home_me.png */; };
 		BA14B3661D3F30FC0030CD61 /* UIView+BYCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA14B3651D3F30FC0030CD61 /* UIView+BYCategory.m */; };
 		BA159F3F1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F3E1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m */; };
 		BA159F431CCDED0300FE34F0 /* BYAddBuddyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA159F411CCDED0300FE34F0 /* BYAddBuddyViewController.m */; };
@@ -241,8 +243,6 @@
 		BA9E3DB91CBE0A0000E71119 /* BYPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DB81CBE0A0000E71119 /* BYPickerView.m */; };
 		BA9E3DBC1CBE116500E71119 /* BYSelectPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */; };
 		BA9E3DBF1CBE200B00E71119 /* BYSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DBE1CBE200B00E71119 /* BYSettingViewController.m */; };
-		BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */; };
-		BA9E3DC71CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */; };
 		BA9E3DCB1CBE42EC00E71119 /* red_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */; };
 		BAA388F41D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388F31D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m */; };
 		BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA388F61D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m */; };
@@ -449,6 +449,8 @@
 		BA04BE891CC88AE4000270EB /* map_point_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_point_on@3x.png"; sourceTree = "<group>"; };
 		BA0857861CB60E4F00D4454C /* BinYouHuLian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinYouHuLian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0857951CB60E4F00D4454C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BA0ECA141D6AAEBD00D01F4D /* home_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_search.png; sourceTree = "<group>"; };
+		BA0ECA161D6AAFF900D01F4D /* home_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_me.png; sourceTree = "<group>"; };
 		BA14B3641D3F30FC0030CD61 /* UIView+BYCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BYCategory.h"; sourceTree = "<group>"; };
 		BA14B3651D3F30FC0030CD61 /* UIView+BYCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BYCategory.m"; sourceTree = "<group>"; };
 		BA159F3D1CCDE92A00FE34F0 /* BYMyBuddyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBuddyListViewController.h; sourceTree = "<group>"; };
@@ -869,9 +871,6 @@
 		BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSelectPlaceViewController.m; sourceTree = "<group>"; };
 		BA9E3DBD1CBE200B00E71119 /* BYSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYSettingViewController.h; sourceTree = "<group>"; };
 		BA9E3DBE1CBE200B00E71119 /* BYSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSettingViewController.m; sourceTree = "<group>"; };
-		BA9E3DC31CBE3BB100E71119 /* BYCreateShopSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYCreateShopSuccessViewController.h; sourceTree = "<group>"; };
-		BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYCreateShopSuccessViewController.m; sourceTree = "<group>"; };
-		BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BYCreateShopSuccessViewController.xib; sourceTree = "<group>"; };
 		BA9E3DCA1CBE42EC00E71119 /* red_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_check@3x.png"; sourceTree = "<group>"; };
 		BAA388F21D4F24E300C6FEB4 /* BYAboutMeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAboutMeInfoViewController.h; sourceTree = "<group>"; };
 		BAA388F31D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAboutMeInfoViewController.m; sourceTree = "<group>"; };
@@ -1992,9 +1991,6 @@
 				BAE0F3451CBB9AA4002009F6 /* BYCreateShopViewController.m */,
 				BA9E3DBA1CBE116500E71119 /* BYSelectPlaceViewController.h */,
 				BA9E3DBB1CBE116500E71119 /* BYSelectPlaceViewController.m */,
-				BA9E3DC31CBE3BB100E71119 /* BYCreateShopSuccessViewController.h */,
-				BA9E3DC41CBE3BB100E71119 /* BYCreateShopSuccessViewController.m */,
-				BA9E3DC61CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib */,
 				BA04BE5C1CC4E0E8000270EB /* BYShopDetailViewController.h */,
 				BA04BE5D1CC4E0E8000270EB /* BYShopDetailViewController.m */,
 				BA59B2BF1D4702E3003007CE /* BYLookBigImageViewController.h */,
@@ -2205,6 +2201,8 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BA0ECA161D6AAFF900D01F4D /* home_me.png */,
+				BA0ECA141D6AAEBD00D01F4D /* home_search.png */,
 				BA1731851D5D608200D31B4F /* addImage.png */,
 				BAC26BB11D5C696A00F5EA6E /* addAvatar.png */,
 				BAC26BAF1D5C675000F5EA6E /* myback.png */,
@@ -2567,7 +2565,6 @@
 				BAE0F4171CBB9AA5002009F6 /* map_icon_300@2x.png in Resources */,
 				BAD26E8E1CBF7F7700F355C5 /* chatBar_keyboard@2x.png in Resources */,
 				BAD26E861CBF7F6100F355C5 /* chatBar_face@2x.png in Resources */,
-				BA9E3DC71CBE3BC400E71119 /* BYCreateShopSuccessViewController.xib in Resources */,
 				BAE0F3EF1CBB9AA4002009F6 /* icon_homepage_map_selected.png in Resources */,
 				BAE0F4131CBB9AA5002009F6 /* map_icon_296@2x.png in Resources */,
 				BA68E1E11CC0B4F300A85FCD /* faceDelete@2x.png in Resources */,
@@ -2640,6 +2637,7 @@
 				BAD26E851CBF7F6100F355C5 /* chatBar_face.png in Resources */,
 				BA68E1E91CC0B4F300A85FCD /* VoiceSearchFeedback002@2x.png in Resources */,
 				BA32187A1D46F45400DE990D /* ELCAssetPicker.xib in Resources */,
+				BA0ECA171D6AAFF900D01F4D /* home_me.png in Resources */,
 				BAE0F40A1CBB9AA5002009F6 /* icon_map_poi_big@2x.png in Resources */,
 				BAE0F3EA1CBB9AA4002009F6 /* icon_error_merchant_detail_map@2x.png in Resources */,
 				BAD26E9A1CBF7F9100F355C5 /* chatBar_moreSelected@2x.png in Resources */,
@@ -2704,6 +2702,7 @@
 				BAE0F42C1CBB9AA5002009F6 /* mapTabRightButtonSelected@2x.png in Resources */,
 				BAE0F3E51CBB9AA4002009F6 /* btn_htl_map_prepay_big_selected@2x.png in Resources */,
 				BAE0F4271CBB9AA5002009F6 /* mapTabLeftButtonSelected.png in Resources */,
+				BA0ECA151D6AAEBD00D01F4D /* home_search.png in Resources */,
 				BA68E1CB1CC0B4F300A85FCD /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				BAE0F3EC1CBB9AA4002009F6 /* icon_food_homepage_map_selected.png in Resources */,
 				BAE0F3D31CBB9AA4002009F6 /* arrow_merchant_detail_map_normal@2x.png in Resources */,
@@ -2900,7 +2899,6 @@
 				BA68E1391CC0B4C900A85FCD /* DACircularProgressView.m in Sources */,
 				BA48B0611D48642600145F98 /* MBProgressHUD+BYCategory.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
-				BA9E3DC51CBE3BB100E71119 /* BYCreateShopSuccessViewController.m in Sources */,
 				BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */,
 				BAE05F581D58810900CA2503 /* BYApply.m in Sources */,
 				BA68E1281CC0B4C800A85FCD /* MJRefreshBackStateFooter.m in Sources */,

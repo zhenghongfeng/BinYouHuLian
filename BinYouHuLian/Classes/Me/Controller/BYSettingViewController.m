@@ -119,7 +119,6 @@
                         SavePhone(nil);
                         SaveNickName(nil);
                         SaveAvatar(nil);
-                        [[NSFileManager defaultManager] removeItemAtPath:[self plistPath] error:nil];
                     }
                 } else {
                     [hud hide:YES];
@@ -137,16 +136,6 @@
         [alert addAction:logoutAction];
         [self presentViewController:alert animated:YES completion:nil];
     }
-}
-
-- (NSString *)plistPath
-{
-    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [pathArray objectAtIndex:0];
-    
-    // 拼接文件的完整路径
-    NSString *filePatch = [path stringByAppendingPathComponent:@"searchRecord.plist"];
-    return filePatch;
 }
 
 @end
