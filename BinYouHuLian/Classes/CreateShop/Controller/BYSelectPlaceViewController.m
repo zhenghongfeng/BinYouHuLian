@@ -9,7 +9,6 @@
 #import "BYSelectPlaceViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "BYGPSLocation.h"
 
 @interface BYSelectPlaceViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 {
@@ -84,13 +83,13 @@
         //            [self.locationManager requestWhenInUseAuthorization];
         //        }
         // 系统适配
-        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
             
             // 前后台定位授权
             //            [self.locationManager requestAlwaysAuthorization];
             
             // 前台定位授权
-            [self.locationManager requestWhenInUseAuthorization];
+            [_locationManager requestWhenInUseAuthorization];
         }
     }
     return _locationManager;
@@ -337,18 +336,26 @@ static double transformLon(double x, double y)
 {
     WeakSelf;
 //    NSString *formattedAddressLines = [[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"] objectAtIndex:0];
-    NSString *city = [_placemark.addressDictionary objectForKey:@"City"];
-    NSString *street = [_placemark.addressDictionary objectForKey:@"Street"];
-    NSString *name = [_placemark.addressDictionary objectForKey:@"Name"];
-    NSString *address = [NSString stringWithFormat:@"%@%@%@", city, street, name];
+//    NSString *city = [_placemark.addressDictionary objectForKey:@"City"];
+//    NSString *street = [_placemark.addressDictionary objectForKey:@"Street"];
+//    NSString *name = [_placemark.addressDictionary objectForKey:@"Name"];
+//    NSString *address = [NSString stringWithFormat:@"%@%@", formattedAddressLines, name];
     
-    [_geocoder geocodeAddressString:address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    [_geocoder geocodeAddressDictionary:_placemark.addressDictionary completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         CLPlacemark *pl = [placemarks firstObject];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
             [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }
     }];
+    
+//    [_geocoder geocodeAddressString:address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+//        CLPlacemark *pl = [placemarks firstObject];
+//        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
+//            [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//    }];
 }
 
 - (void)locateBtnClick
@@ -366,12 +373,6 @@ static double transformLon(double x, double y)
     .topSpaceToView(self.view, BYMargin * 2)
     .widthIs(BYHomeButtonW)
     .heightIs(BYHomeButtonH);
-    
-//    self.centerImageView.sd_layout
-//    .centerXIs(self.view.centerX)
-//    .centerYIs(self.view.centerY)
-//    .widthIs(20)
-//    .heightIs(30);
     
     self.centerImageView.sd_layout
     .centerXIs(self.view.centerX)

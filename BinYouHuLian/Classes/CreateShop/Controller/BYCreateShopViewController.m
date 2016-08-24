@@ -474,6 +474,15 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     BYCreateShopEditTableViewCell *cell1 = [self.tableView cellForRowAtIndexPath:indexPath1];
     self.shopDescription = cell1.textField.text;
     
+    if (![NSString isValueableString:self.shopDescription]) {
+        [MBProgressHUD showModeText:@"请输入店铺简介" view:self.view];
+        return;
+    }
+    if (![NSString isValueableString:self.location]) {
+        [MBProgressHUD showModeText:@"请选位置" view:self.view];
+        return;
+    }
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     NSDictionary *dic = @{

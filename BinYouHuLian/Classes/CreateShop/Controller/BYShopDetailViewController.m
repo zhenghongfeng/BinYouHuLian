@@ -38,30 +38,27 @@
     [self setupTabelView];
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = NO;
-//}
-//
-//- (void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
-//}
-
 - (void)setupTabelView
 {
     if (self.shop.picshow1) {
-        UIView *header = [UIView new];
         
-        NSString *str1 = [BYImageURL stringByAppendingString:self.shop.picshow1];
-        NSString *str2 = [BYImageURL stringByAppendingString:self.shop.picshow2];
-        NSString *str3 = [BYImageURL stringByAppendingString:self.shop.picshow3];
+        UIView *header = [UIView new];
         
         SDCycleScrollView *scrollView = [SDCycleScrollView new];
         scrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
-        scrollView.imageURLStringsGroup = @[str1, str2, str3];
+
+        NSString *str1 = [BYImageURL stringByAppendingString:self.shop.picshow1];
+        scrollView.imageURLStringsGroup = @[str1];
+        
+        if (self.shop.picshow2) {
+            NSString *str2 = [BYImageURL stringByAppendingString:self.shop.picshow2];
+            scrollView.imageURLStringsGroup = @[str1, str2];
+            if (self.shop.picshow3) {
+                NSString *str3 = [BYImageURL stringByAppendingString:self.shop.picshow3];
+                scrollView.imageURLStringsGroup = @[str1, str2, str3];
+            }
+        }
+        
         [header addSubview:scrollView];
         
         scrollView.sd_layout
