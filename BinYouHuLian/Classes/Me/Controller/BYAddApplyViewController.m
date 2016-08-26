@@ -58,6 +58,10 @@
         if (code == 1) {
             [hud hide:YES];
             self.applyList = [BYApply mj_objectArrayWithKeyValuesArray:responseObject[@"applyList"]];
+            if (self.applyList.count == 0) {
+                [MBProgressHUD showModeText:@"暂无好友申请" view:self.view];
+                return ;
+            }
             [self.tableView reloadData];
         } else {
             [hud hide:YES];

@@ -318,7 +318,7 @@ static NSString *kGroupName = @"GroupName";
     [manager POST:[BYURL_Development stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@", responseObject);
+//        NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [_mapView removeAnnotations:_mapView.annotations];

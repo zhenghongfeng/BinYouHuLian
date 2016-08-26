@@ -69,6 +69,10 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    if ([searchBar.text isEqualToString:GetPhone]) {
+        [MBProgressHUD showModeText:@"您不能添加自己" view:self.view];
+        return;
+    }
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     WeakSelf;

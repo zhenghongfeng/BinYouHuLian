@@ -167,6 +167,7 @@
             weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:weakSelf.friend.phone conversationType:EMConversationTypeChat];
             chatViewController.myFriend = weakSelf.friend;
+            chatViewController.navigationItem.title = @"店长";
             [weakSelf.navigationController pushViewController:chatViewController animated:YES];
         } else {
             [MBProgressHUD showModeText:responseObject[@"msg"] view:self.view];
