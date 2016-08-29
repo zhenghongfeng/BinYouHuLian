@@ -15,7 +15,9 @@
 #import "IMessageModel.h"
 #import "EMMessage.h"
 
+
 @interface EaseMessageModel : NSObject<IMessageModel>
+
 
 //缓存数据模型对应的cell的高度，只需要计算一次并赋值，以后就无需计算了
 @property (nonatomic) CGFloat cellHeight;
@@ -97,5 +99,6 @@
 @property (strong, nonatomic) NSString *thumbnailFileURLPath;
 
 - (instancetype)initWithMessage:(EMMessage *)message;
+
 
 @end

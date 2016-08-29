@@ -33,6 +33,8 @@
 		BA1D12D11D50878200C8CD93 /* libHyphenateFullSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1D12CD1D50878200C8CD93 /* libHyphenateFullSDK.a */; };
 		BA1F00FE1D599E7B00408EC1 /* BYChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F00FD1D599E7B00408EC1 /* BYChatRoomViewController.m */; };
 		BA1F01011D59A1C500408EC1 /* BYRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F01001D59A1C500408EC1 /* BYRoom.m */; };
+		BA44F8691D73FD1E0036E4B2 /* BYMySafeDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BA44F8681D73FD1E0036E4B2 /* BYMySafeDictionary.m */; };
+		BA44F86C1D74036C0036E4B2 /* UIViewController+BYTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = BA44F86B1D74036C0036E4B2 /* UIViewController+BYTracking.m */; };
 		BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */; };
 		BA59B2C41D470380003007CE /* BYLookBigPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C31D470380003007CE /* BYLookBigPictureView.m */; };
 		BA5BDBF81D6E86FE00BB6147 /* Refreshing-0_110x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA5BDBEE1D6E86FE00BB6147 /* Refreshing-0_110x90_@2x.png */; };
@@ -511,6 +513,10 @@
 		BA1F00FD1D599E7B00408EC1 /* BYChatRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYChatRoomViewController.m; sourceTree = "<group>"; };
 		BA1F00FF1D59A1C500408EC1 /* BYRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYRoom.h; sourceTree = "<group>"; };
 		BA1F01001D59A1C500408EC1 /* BYRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYRoom.m; sourceTree = "<group>"; };
+		BA44F8671D73FD1E0036E4B2 /* BYMySafeDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMySafeDictionary.h; sourceTree = "<group>"; };
+		BA44F8681D73FD1E0036E4B2 /* BYMySafeDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMySafeDictionary.m; sourceTree = "<group>"; };
+		BA44F86A1D74036C0036E4B2 /* UIViewController+BYTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BYTracking.h"; sourceTree = "<group>"; };
+		BA44F86B1D74036C0036E4B2 /* UIViewController+BYTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BYTracking.m"; sourceTree = "<group>"; };
 		BA59B2BF1D4702E3003007CE /* BYLookBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigImageViewController.h; sourceTree = "<group>"; };
 		BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYLookBigImageViewController.m; sourceTree = "<group>"; };
 		BA59B2C21D470380003007CE /* BYLookBigPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYLookBigPictureView.h; sourceTree = "<group>"; };
@@ -1258,6 +1264,17 @@
 			path = 3rdparty;
 			sourceTree = "<group>";
 		};
+		BA44F8661D73FCE30036E4B2 /* Method Swizzling */ = {
+			isa = PBXGroup;
+			children = (
+				BA44F86A1D74036C0036E4B2 /* UIViewController+BYTracking.h */,
+				BA44F86B1D74036C0036E4B2 /* UIViewController+BYTracking.m */,
+				BA44F8671D73FD1E0036E4B2 /* BYMySafeDictionary.h */,
+				BA44F8681D73FD1E0036E4B2 /* BYMySafeDictionary.m */,
+			);
+			path = "Method Swizzling";
+			sourceTree = "<group>";
+		};
 		BA68DFEB1CC0B4C800A85FCD /* EaseUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1907,6 +1924,7 @@
 		BA6BA1E01D6D400D003B3E3E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				BA44F8661D73FCE30036E4B2 /* Method Swizzling */,
 				BA6BA2171D6D400D003B3E3E /* Tools */,
 				BA6BA1FB1D6D400D003B3E3E /* Lib */,
 				BA6BA1ED1D6D400D003B3E3E /* Category */,
@@ -2945,6 +2963,7 @@
 				BA68E1171CC0B4C800A85FCD /* amrFileCodec.mm in Sources */,
 				BA68E1741CC0B4C900A85FCD /* EaseBubbleView+File.m in Sources */,
 				BA68E1391CC0B4C900A85FCD /* DACircularProgressView.m in Sources */,
+				BA44F86C1D74036C0036E4B2 /* UIViewController+BYTracking.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA6BA2461D6D4252003B3E3E /* AppDelegate+BYEaseMob.m in Sources */,
 				BAA388F71D4F2A5D00C6FEB4 /* BYAboutMeInfoHeadTableViewCell.m in Sources */,
@@ -2959,6 +2978,7 @@
 				BA68E1371CC0B4C900A85FCD /* MWTapDetectingView.m in Sources */,
 				BA68E12E1CC0B4C900A85FCD /* UIScrollView+MJExtension.m in Sources */,
 				BA68E1771CC0B4C900A85FCD /* EaseBubbleView+Location.m in Sources */,
+				BA44F8691D73FD1E0036E4B2 /* BYMySafeDictionary.m in Sources */,
 				BA68E1671CC0B4C900A85FCD /* EaseEmotionManager.m in Sources */,
 				BA6BA2201D6D400D003B3E3E /* MBProgressHUD+BYCategory.m in Sources */,
 				BA6BA2471D6D4252003B3E3E /* AppDelegate.m in Sources */,

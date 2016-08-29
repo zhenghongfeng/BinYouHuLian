@@ -153,16 +153,35 @@
                            modelForMessage:(EMMessage *)message
 {
     id<IMessageModel> model = nil;
+    
     model = [[EaseMessageModel alloc] initWithMessage:message];
     model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
     model.nickname = message.ext[kChatUserNick];
     if ([self.room.owner isEqualToString:message.ext[kChatUserId]]) {
         model.nickname = @"店长";
+        
     }
     model.avatarURLPath = message.ext[kChatUserPic];
     
     return model;
 }
+
+//- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel
+//{
+//    //样例为如果消息是文本消息显示用户自定义cell
+//    if (messageModel.bodyType == EMMessageBodyTypeText) {
+//        NSString *CellIdentifier = [CustomMessageCell cellIdentifierWithModel:messageModel];
+//        //CustomMessageCell为用户自定义cell,继承了EaseBaseMessageCell
+//        CustomMessageCell *cell = (CustomMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell == nil) {
+//            cell = [[CustomMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        }
+//        cell.model = messageModel;
+//        return cell;
+//    }
+//    return nil;
+//}
 
 - (NSArray*)emotionFormessageViewController:(EaseMessageViewController *)viewController
 {

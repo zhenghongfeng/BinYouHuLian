@@ -16,6 +16,7 @@
 #import "BYShop.h"
 #import "ChatViewController.h"
 #import "BYFriend.h"
+#import "BYMySafeDictionary.h"
 
 static NSString *kMessageType = @"MessageType";
 static NSString *kConversationChatter = @"ConversationChatter";

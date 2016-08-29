@@ -203,14 +203,14 @@
 
 #pragma mark - MKMapViewDelegate
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     CLLocationCoordinate2D coord = [userLocation coordinate];
     NSLog(@"mapView纬度:%f,经度:%f",coord.latitude,coord.longitude);
     _userLongitude = [NSString stringWithFormat:@"%f" ,coord.longitude];
     _userLatitude = [NSString stringWithFormat:@"%f" ,coord.latitude];
 }
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     _adressLabel.text = @"正在获取你选择的地点...";
     NSLog(@"将要变化");
     if (_geocoder == nil) {
@@ -335,27 +335,10 @@ static double transformLon(double x, double y)
 - (void)okBtnClick
 {
     WeakSelf;
-//    NSString *formattedAddressLines = [[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"] objectAtIndex:0];
-//    NSString *city = [_placemark.addressDictionary objectForKey:@"City"];
-//    NSString *street = [_placemark.addressDictionary objectForKey:@"Street"];
-//    NSString *name = [_placemark.addressDictionary objectForKey:@"Name"];
-//    NSString *address = [NSString stringWithFormat:@"%@%@", formattedAddressLines, name];
-    
-    [_geocoder geocodeAddressDictionary:_placemark.addressDictionary completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        CLPlacemark *pl = [placemarks firstObject];
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
-            [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    }];
-    
-//    [_geocoder geocodeAddressString:address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-//        CLPlacemark *pl = [placemarks firstObject];
-//        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
-//            [weakSelf.delegate selectedLocation:_adressLabel.text longitude:pl.location.coordinate.longitude latitude:pl.location.coordinate.latitude];
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        }
-//    }];
+    if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(selectedLocation:longitude:latitude:)]) {
+        [weakSelf.delegate selectedLocation:_adressLabel.text longitude:_placemark.location.coordinate.longitude latitude:_placemark.location.coordinate.latitude];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)locateBtnClick
