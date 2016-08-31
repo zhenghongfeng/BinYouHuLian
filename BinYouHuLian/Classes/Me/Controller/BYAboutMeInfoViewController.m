@@ -142,12 +142,12 @@
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
     //选取裁剪后的图片
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
     [manager POST:[BYURL_Development stringByAppendingString:@"/user/avatar?"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSData *data = UIImageJPEGRepresentation(image, 1.0);//将UIImage转为NSData，1.0表示不压缩图片质量。
+        NSData *data = UIImageJPEGRepresentation(image, 0.7);//将UIImage转为NSData，1.0表示不压缩图片质量。
         [formData appendPartWithFileData:data name:@"avatar" fileName:@"test.jpg" mimeType:@"image/jpeg"];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {

@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSArray *itemTitles;
 
+@property (nonatomic, strong) UIView *redDotView;
+
 @end
 
 @implementation BYMineViewController
@@ -38,13 +40,26 @@
     return _tableView;
 }
 
+- (UIView *)redDotView
+{
+    if (_redDotView == nil) {
+        _redDotView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth - 30, 20, 5, 5)];
+        _redDotView.backgroundColor = [UIColor redColor];
+        _redDotView.layer.masksToBounds = YES;
+        _redDotView.layer.cornerRadius = 2.5;
+        _redDotView.hidden = YES;
+    }
+    return _redDotView;
+}
+
+
 #pragma mark - life cycle
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = NO;
-//}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestRedDot];
+}
 //
 //- (void)viewWillDisappear:(BOOL)animated
 //{
@@ -59,8 +74,35 @@
 //    self.itemTitles = @[@"会话列表", @"我的好友", @"关于我", @"设置", @"留言", @"我的店业务", @"位置"];
 
     self.itemTitles = @[@"会话列表", @"我的好友", @"关于我", @"设置"];
-                        
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestRedDot) name:kNotficationApplyRedDot object:nil];
+    
     [self.view addSubview:self.tableView];
+    
+    
+}
+
+- (void)requestRedDot
+{
+    NSDictionary *dic = @{@"username": GetPhone};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/apply/list/count?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            if ([responseObject[@"applyListCount"] integerValue]) {
+                self.redDotView.hidden = NO;
+            } else {
+                self.redDotView.hidden = YES;
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
 }
 
 
@@ -79,6 +121,9 @@
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = self.itemTitles[indexPath.row];
+    if (indexPath.row == 1) {
+        [cell.contentView addSubview:self.redDotView];
+    }
     
     return cell;
 }
@@ -125,4 +170,10 @@
         [self presentViewController:nav animated:YES completion:nil];
     }
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

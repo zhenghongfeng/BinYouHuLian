@@ -54,6 +54,11 @@ static NSString *kGroupName = @"GroupName";
 
 @property (nonatomic, strong) BYFriend *friend;
 
+@property (nonatomic, strong) UIView *redDotView;
+
+@property (nonatomic, strong) UIButton *rightBarButton;
+
+
 @end
 
 @implementation BYHomePageViewController
@@ -65,6 +70,12 @@ static NSString *kGroupName = @"GroupName";
     [self requestSearchShop:notification.object];
 }
 
+- (void)redDot
+{
+//    self.redDotView.hidden = NO;
+    [self.rightBarButton setImage:[UIImage imageNamed:@"applyRedDot"] forState:UIControlStateNormal];
+}
+
 #pragma mark - life cycle
 
 - (void)viewWillAppear:(BOOL)animated
@@ -72,15 +83,46 @@ static NSString *kGroupName = @"GroupName";
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
     _isAppear = YES;
+    
+    // red dot
+    [self requestRedDot];
+}
+
+- (UIView *)redDotView
+{
+    if (_redDotView == nil) {
+        _redDotView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth - 20, 30, 5, 5)];
+        _redDotView.backgroundColor = [UIColor redColor];
+        _redDotView.layer.masksToBounds = YES;
+        _redDotView.layer.cornerRadius = 2.5;
+        _redDotView.hidden = YES;
+    }
+    return _redDotView;
+}
+
+- (UIButton *)rightBarButton
+{
+    if (_rightBarButton == nil) {
+        _rightBarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+//        [_rightBarButton setImage:[UIImage imageNamed:@"home_me"] forState:UIControlStateNormal];
+
+        [_rightBarButton setImage:[UIImage imageNamed:@"applyNoRedDot"] forState:UIControlStateNormal];
+        [_rightBarButton addTarget:self action:@selector(mineBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _rightBarButton;
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
+//    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.navigationItem.title = @"宾友";
     self.annotations = @[].mutableCopy;
     self.shops = @[].mutableCopy;
+    
+//    [self.navigationController.navigationBar addSubview:self.redDotView];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:({
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
@@ -89,14 +131,12 @@ static NSString *kGroupName = @"GroupName";
         button;
     })];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:({
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-        [button setImage:[UIImage imageNamed:@"home_me"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(mineBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        button;
-    })];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBarButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchShop:) name:kNotficationSearchShopToHome object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestRedDot) name:kNotficationApplyRedDot object:nil];
+    
     
     [self.view addSubview:self.mapView];
 //    [self.view addSubview:self.searchButton];
@@ -111,6 +151,29 @@ static NSString *kGroupName = @"GroupName";
     if ([NSString isValueableString:GetToken]) {
         [self  judgeToken];
     }
+}
+
+- (void)requestRedDot
+{
+    NSDictionary *dic = @{@"username": GetPhone};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/apply/list/count?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            if ([responseObject[@"applyListCount"] integerValue]) {
+                [_rightBarButton setImage:[UIImage imageNamed:@"applyRedDot"] forState:UIControlStateNormal];
+            } else {
+                [_rightBarButton setImage:[UIImage imageNamed:@"applyNoRedDot"] forState:UIControlStateNormal];
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
 }
 
 - (void)judgeToken
@@ -790,6 +853,7 @@ static double hometransformLon(double x, double y)
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotficationSearchShopToHome object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotficationApplyRedDot object:nil];
 }
 
 @end

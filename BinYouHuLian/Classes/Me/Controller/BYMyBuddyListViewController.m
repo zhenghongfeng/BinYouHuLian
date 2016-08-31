@@ -25,6 +25,7 @@
 /** dataArray */
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
+@property (nonatomic, strong) UIView *redDotView;
 
 @end
 
@@ -35,7 +36,7 @@
 - (NSArray *)array
 {
     if (_array == nil) {
-        _array = @[@"好友申请", @"聊天室"];
+        _array = @[@"好友申请", @"聊天室", @"黑名单"];
     }
     return _array;
 }
@@ -54,11 +55,50 @@
     return _tableView;
 }
 
+- (UIView *)redDotView
+{
+    if (_redDotView == nil) {
+        _redDotView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth - 30, 20, 5, 5)];
+        _redDotView.backgroundColor = [UIColor redColor];
+        _redDotView.layer.masksToBounds = YES;
+        _redDotView.layer.cornerRadius = 2.5;
+        _redDotView.hidden = YES;
+    }
+    return _redDotView;
+}
+
+
+#pragma mark - life cycle
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self requestData];
+    [self requestRedDot];
+}
+
+- (void)requestRedDot
+{
+    NSDictionary *dic = @{@"username": GetPhone};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:GetToken forHTTPHeaderField:@"Authorization"];
+    [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/apply/list/count?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@", responseObject);
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            if ([responseObject[@"applyListCount"] integerValue]) {
+                self.redDotView.hidden = NO;
+            } else {
+                self.redDotView.hidden = YES;
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD showModeText:error.localizedDescription view:self.view];
+    }];
 }
 
 - (void)requestData
@@ -173,6 +213,8 @@
     
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestRedDot) name:kNotficationApplyRedDot object:nil];
+    
     _titleArray = [NSMutableArray array];
     _dataArray = [NSMutableArray array];
     
@@ -217,8 +259,12 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = self.array[indexPath.row];
         cell.imageView.image = [UIImage imageNamed:@"groupPublicHeader"];
+        if (indexPath.row == 0) {
+            [cell.contentView addSubview:self.redDotView];
+        }
         return cell;
     } else {
         static NSString *ID = @"cell";
@@ -354,7 +400,10 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 

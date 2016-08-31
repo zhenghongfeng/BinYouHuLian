@@ -367,14 +367,20 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     
     UIAlertAction* fromPhotoAction = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault                                                                 handler:^(UIAlertAction * _Nonnull action) {
         
-        ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-        elcPicker.maximumImagesCount = uploadImageMaxNumber - self.array1.count;
-        elcPicker.returnsOriginalImage = YES;
-        elcPicker.returnsImage = YES;
-        elcPicker.onOrder = YES;
-        elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image
-        elcPicker.imagePickerDelegate = self;
-        [self presentViewController:elcPicker animated:YES completion:nil];
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+        
+//        ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+//        elcPicker.maximumImagesCount = uploadImageMaxNumber - self.array1.count;
+//        elcPicker.returnsOriginalImage = YES;
+//        elcPicker.returnsImage = YES;
+//        elcPicker.onOrder = YES;
+//        elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image
+//        elcPicker.imagePickerDelegate = self;
+//        [self presentViewController:elcPicker animated:YES completion:nil];
     }];
     
     [alertController addAction:fromCameraAction];
@@ -409,32 +415,32 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-#pragma mark - ELCImagePickerControllerDelegate
-- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-    self.selectImageArray = [[NSMutableArray alloc] initWithCapacity:0];
-    UITableViewCell *cell = [self.tableView viewWithTag:cellTag];
-    for (NSDictionary *dict in info)
-    {
-        // 获取图片
-        UIImage *image = [dict objectForKey:UIImagePickerControllerOriginalImage];
-        
-        // 选取的图片数组
-        [self.selectImageArray addObject:image];
-    }
-    [self.array1 addObjectsFromArray:self.selectImageArray];
-    self.addBtn.frame = CGRectMake(20 + (addButtonHeight + 15) * (self.array1.count % 4), 10 + (addButtonHeight + 10) * (self.array1.count / 4), addButtonHeight, addButtonHeight);
-    for (int i = 0; i < self.array1.count; i++) {
-        [self createImageButtonWithTag:i array:self.array1 cell:cell];
-    }
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-}
+//#pragma mark - ELCImagePickerControllerDelegate
+//- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
+//- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    self.selectImageArray = [[NSMutableArray alloc] initWithCapacity:0];
+//    UITableViewCell *cell = [self.tableView viewWithTag:cellTag];
+//    for (NSDictionary *dict in info)
+//    {
+//        // 获取图片
+//        UIImage *image = [dict objectForKey:UIImagePickerControllerOriginalImage];
+//        
+//        // 选取的图片数组
+//        [self.selectImageArray addObject:image];
+//    }
+//    [self.array1 addObjectsFromArray:self.selectImageArray];
+//    self.addBtn.frame = CGRectMake(20 + (addButtonHeight + 15) * (self.array1.count % 4), 10 + (addButtonHeight + 10) * (self.array1.count / 4), addButtonHeight, addButtonHeight);
+//    for (int i = 0; i < self.array1.count; i++) {
+//        [self createImageButtonWithTag:i array:self.array1 cell:cell];
+//    }
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+//}
 
 #pragma mark - BYPickerViewDelegate
 
@@ -511,7 +517,7 @@ static NSString * const BYCreateShopEditCellID = @"CreateShopEditCell";
          // 取出图片
          UIImage *image = [self.array1 objectAtIndex:i];
          // 转成二进制
-         NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+         NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
          // 上传的参数名
          NSString * Name = [NSString stringWithFormat:@"image %ld", i];
          // 上传fileName

@@ -432,6 +432,9 @@
 		BAFABDD11CC090A400B43773 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F31F1CBB6CFC002009F6 /* ImageIO.framework */; };
 		BAFABDD21CC090B100B43773 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0F3211CBB6D07002009F6 /* SystemConfiguration.framework */; };
 		BAFABDD41CC0911400B43773 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFABDD31CC0911400B43773 /* libiconv.tbd */; };
+		BAFF66A21D75216700FCBC8B /* BYMYCar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFF66A11D75216700FCBC8B /* BYMYCar.m */; };
+		BAFF67241D76BA5F00FCBC8B /* applyNoRedDot.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFF67221D76BA5F00FCBC8B /* applyNoRedDot.png */; };
+		BAFF67251D76BA5F00FCBC8B /* applyRedDot.png in Resources */ = {isa = PBXBuildFile; fileRef = BAFF67231D76BA5F00FCBC8B /* applyRedDot.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1104,6 +1107,10 @@
 		BAE0F3C21CBB9AA4002009F6 /* BYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSearchViewController.m; sourceTree = "<group>"; };
 		BAE0F42F1CBB9AD5002009F6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAFABDD31CC0911400B43773 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		BAFF66A01D75216700FCBC8B /* BYMYCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMYCar.h; sourceTree = "<group>"; };
+		BAFF66A11D75216700FCBC8B /* BYMYCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMYCar.m; sourceTree = "<group>"; };
+		BAFF67221D76BA5F00FCBC8B /* applyNoRedDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applyNoRedDot.png; sourceTree = "<group>"; };
+		BAFF67231D76BA5F00FCBC8B /* applyRedDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applyRedDot.png; sourceTree = "<group>"; };
 		E9312517A69122E6D29C1D3C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2009,6 +2016,8 @@
 		BA6BA2151D6D400D003B3E3E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BAFF66A01D75216700FCBC8B /* BYMYCar.h */,
+				BAFF66A11D75216700FCBC8B /* BYMYCar.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2249,6 +2258,8 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BAFF67221D76BA5F00FCBC8B /* applyNoRedDot.png */,
+				BAFF67231D76BA5F00FCBC8B /* applyRedDot.png */,
 				BA5BDD531D6FEB0E00BB6147 /* addFriend.png */,
 				BA5BDBEE1D6E86FE00BB6147 /* Refreshing-0_110x90_@2x.png */,
 				BA5BDBEF1D6E86FE00BB6147 /* Refreshing-0_110x90_@3x.png */,
@@ -2581,6 +2592,7 @@
 				BAE0F3E11CBB9AA4002009F6 /* btn_htl_map_normal_big_selected@2x.png in Resources */,
 				BA68E1CC1CC0B4F300A85FCD /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				BAE0F4191CBB9AA5002009F6 /* map_icon_302@2x.png in Resources */,
+				BAFF67241D76BA5F00FCBC8B /* applyNoRedDot.png in Resources */,
 				BA04BE8A1CC88AE4000270EB /* map_point_on.png in Resources */,
 				BAE0F4011CBB9AA5002009F6 /* icon_map_delivery_big@2x.png in Resources */,
 				BA68E1D41CC0B4F300A85FCD /* chatBar_colorMore_videoCall@2x.png in Resources */,
@@ -2702,6 +2714,7 @@
 				BAE0F41F1CBB9AA5002009F6 /* map_icon_308@2x.png in Resources */,
 				BAD26EBA1CBF86B100F355C5 /* anon_chat_bottom_Camera_nor@3x.png in Resources */,
 				BA9E3D921CBCA10100E71119 /* add_header@3x.png in Resources */,
+				BAFF67251D76BA5F00FCBC8B /* applyRedDot.png in Resources */,
 				BA68E1C51CC0B4F300A85FCD /* in.caf in Resources */,
 				BAD26E851CBF7F6100F355C5 /* chatBar_face.png in Resources */,
 				BA68E1E91CC0B4F300A85FCD /* VoiceSearchFeedback002@2x.png in Resources */,
@@ -2963,6 +2976,7 @@
 				BA68E1171CC0B4C800A85FCD /* amrFileCodec.mm in Sources */,
 				BA68E1741CC0B4C900A85FCD /* EaseBubbleView+File.m in Sources */,
 				BA68E1391CC0B4C900A85FCD /* DACircularProgressView.m in Sources */,
+				BAFF66A21D75216700FCBC8B /* BYMYCar.m in Sources */,
 				BA44F86C1D74036C0036E4B2 /* UIViewController+BYTracking.m in Sources */,
 				BAE0F3C81CBB9AA4002009F6 /* BYCreateShopViewController.m in Sources */,
 				BA6BA2461D6D4252003B3E3E /* AppDelegate+BYEaseMob.m in Sources */,

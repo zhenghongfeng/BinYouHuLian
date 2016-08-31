@@ -231,7 +231,7 @@
     [manager POST:[BYURL_Development stringByAppendingString:@"/user/regist?"] parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //单张图片
         UIImage *image = self.avatarButton.currentBackgroundImage;//获得一张Image
-        NSData *data = UIImageJPEGRepresentation(image, 1.0);//将UIImage转为NSData，1.0表示不压缩图片质量。
+        NSData *data = UIImageJPEGRepresentation(image, 0.7);//将UIImage转为NSData，1.0表示不压缩图片质量。
         [formData appendPartWithFileData:data name:@"avatar" fileName:@"test.jpg" mimeType:@"image/jpeg"];
         
         /*

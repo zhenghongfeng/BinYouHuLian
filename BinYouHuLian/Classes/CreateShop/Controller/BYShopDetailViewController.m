@@ -65,7 +65,7 @@
         .leftSpaceToView(header, 0)
         .topSpaceToView(header, 0)
         .rightSpaceToView(header, 0)
-        .heightIs(150);
+        .heightIs(kScreenWidth);
         
         [header setupAutoHeightWithBottomView:scrollView bottomMargin:0];
         

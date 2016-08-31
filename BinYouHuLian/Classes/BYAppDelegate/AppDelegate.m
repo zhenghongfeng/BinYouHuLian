@@ -187,6 +187,21 @@
     }
 }
 
+- (void)didReceiveCmdMessages:(NSArray *)aCmdMessages
+{
+    for(EMMessage *message in aCmdMessages){
+        
+        EMCmdMessageBody *body = (EMCmdMessageBody *)message.body;
+        NSLog(@"收到的action是 -- %@",body.action);
+        
+//        SaveRedDot(@"1");
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationApplyRedDot object:nil];
+
+        [MBProgressHUD showModeText:@"您收到一条好友申请,请注意查看" view:[UIApplication sharedApplication].keyWindow];
+    }
+}
+
 - (BOOL)_needShowNotification:(NSString *)fromChatter
 {
     BOOL ret = YES;

@@ -13,13 +13,19 @@
 
 #warning ---- 上线之前需要更改发送验证码接口的istest 为 0 ！
 
-#define BYVcode @"0"
+#define BYVcode @"1"
 
 #define BYImageURL @"http://123.56.186.178/api/download/img?path="
 
 #define BYBaseURL @"http://123.56.186.178"
 
 #define BYURL_Development @"http://123.56.186.178/api"
+
+//#define BYImageURL @"http://www.binyou.info/api/download/img?path="
+//
+//#define BYBaseURL @"http://www.binyou.info"
+//
+//#define BYURL_Development @"http://www.binyou.info/api"
 
 // 环信聊天用的昵称和头像（发送聊天消息时，要附带这3个属性）
 #define kChatUserId @"ChatUserId"// 环信账号
@@ -44,9 +50,14 @@
 #define GetAvatar      Get(@"user_avatar")
 #define SaveAvatar(a)   Save(a,@"user_avatar")
 
+
+//#define GetRedDot         Get(@"redDot") ? Get(@"redDot") : @""
+//#define SaveRedDot(a)      Save(a,@"redDot")
+
 //通知Notification相关的宏
 #define kNotficationSearchShopToHome     @"kNotficationSearchShopToHome" // 搜索店铺，跳到首页
 
+#define kNotficationApplyRedDot          @"redDot"  // 好友申请提示红点
 
 
 #define WeakSelf __weak typeof(self) weakSelf = self;
