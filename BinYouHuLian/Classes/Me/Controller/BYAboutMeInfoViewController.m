@@ -57,7 +57,8 @@
     if (indexPath.row == 0) {
         BYAboutMeInfoHeadTableViewCell *cell = [[BYAboutMeInfoHeadTableViewCell alloc] init];
         cell.textLabel.text = @"头像";
-        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
+        NSURL *url = [NSURL URLWithString:GetAvatar];
+        [cell.myImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -161,13 +162,13 @@
         
         if (code == 1) {
             
-            SaveAvatar(responseObject[@"avatar"]);
+            SaveAvatar(responseObject[@"avatar"][@"SMALL"]);
             
-            [UserCacheManager saveInfo:GetPhone imgUrl:[BYImageURL stringByAppendingString:GetAvatar] nickName:GetNickName];
+            [UserCacheManager saveInfo:GetPhone imgUrl:GetAvatar nickName:GetNickName];
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             BYAboutMeInfoHeadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:GetAvatar]] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:GetAvatar] placeholderImage:[UIImage imageNamed:@"add_header_edit_btn"]];
             [self.tableView reloadData];
             
             [MBProgressHUD showModeText:@"头像修改成功" view:self.view];

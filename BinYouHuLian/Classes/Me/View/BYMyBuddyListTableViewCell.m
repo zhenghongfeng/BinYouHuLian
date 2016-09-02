@@ -7,8 +7,19 @@
 //
 
 #import "BYMyBuddyListTableViewCell.h"
+#import "BYFriend.h"
 
 @implementation BYMyBuddyListTableViewCell
+
+
+- (void)setMyFriend:(BYFriend *)myFriend
+{
+    _myFriend = myFriend;
+    
+    self.textLabel.text = myFriend.nickname;
+    self.detailTextLabel.text = myFriend.phone;
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:myFriend.avatar] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -137,7 +137,6 @@ static NSString *kGroupName = @"GroupName";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestRedDot) name:kNotficationApplyRedDot object:nil];
     
-    
     [self.view addSubview:self.mapView];
 //    [self.view addSubview:self.searchButton];
     [self.view addSubview:self.locateButton];
@@ -162,7 +161,7 @@ static NSString *kGroupName = @"GroupName";
     [manager POST:[BYURL_Development stringByAppendingString:@"/ease/users/apply/list/count?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@", responseObject);
+//        NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             if ([responseObject[@"applyListCount"] integerValue]) {
@@ -382,7 +381,7 @@ static NSString *kGroupName = @"GroupName";
     [manager POST:[BYURL_Development stringByAppendingString:@"/shop/search?"] parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"responseObject = %@", responseObject);
+        NSLog(@"responseObject = %@", responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             [_mapView removeAnnotations:_mapView.annotations];
@@ -556,6 +555,7 @@ static double hometransformLon(double x, double y)
                         [chatingVC removeFromParentViewController];
                         ChatViewController *chatVC = [[ChatViewController alloc] initWithConversationChatter:self.friend.phone conversationType:EMConversationTypeChat];
                         chatVC.myFriend = self.friend;
+                        chatVC.navigationItem.title = self.friend.nickname;
                         [self.navigationController pushViewController:chatVC animated:NO];
                     }
                 } else {
@@ -636,7 +636,7 @@ static double hometransformLon(double x, double y)
                                         //                                chatViewController.imageURL = chaterImage;
                                         break;
                                 }
-                                
+                                chatViewController.navigationItem.title = self.friend.nickname;
                                 [self.navigationController pushViewController:chatViewController animated:NO];
                             }
                         }];
@@ -688,6 +688,7 @@ static double hometransformLon(double x, double y)
             weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
             ChatViewController *chatViewController = [[ChatViewController alloc] initWithConversationChatter:weakSelf.friend.phone conversationType:EMConversationTypeChat];
             chatViewController.myFriend = weakSelf.friend;
+            chatViewController.navigationItem.title = weakSelf.friend.nickname;
             [weakSelf.navigationController pushViewController:chatViewController animated:NO];
         } else {
             [MBProgressHUD showModeText:responseObject[@"msg"] view:weakSelf.view];

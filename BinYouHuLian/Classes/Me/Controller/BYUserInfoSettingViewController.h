@@ -1,8 +1,8 @@
 //
-//  BYMyBuddyListTableViewCell.h
+//  BYUserInfoSettingViewController.h
 //  BinYouHuLian
 //
-//  Created by zhf on 16/4/25.
+//  Created by zhf on 16/9/2.
 //  Copyright © 2016年 郑洪锋. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @class BYFriend;
 
-@interface BYMyBuddyListTableViewCell : UITableViewCell
+@interface BYUserInfoSettingViewController : UIViewController
 
 @property (nonatomic, strong) BYFriend *myFriend;
 

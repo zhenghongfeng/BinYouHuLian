@@ -40,24 +40,25 @@
 
 - (void)setupTabelView
 {
-    if (self.shop.picshow1) {
+    if (self.shop.images.count > 0) {
         
         UIView *header = [UIView new];
         
         SDCycleScrollView *scrollView = [SDCycleScrollView new];
+        scrollView.placeholderImage = [UIImage imageNamed:@"shopPlaceholder"];
         scrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
 
-        NSString *str1 = [BYImageURL stringByAppendingString:self.shop.picshow1];
-        scrollView.imageURLStringsGroup = @[str1];
+//        NSString *str1 = [BYImageURL stringByAppendingString:self.shop.picshow1];
+        scrollView.imageURLStringsGroup = self.shop.images;
         
-        if (self.shop.picshow2) {
-            NSString *str2 = [BYImageURL stringByAppendingString:self.shop.picshow2];
-            scrollView.imageURLStringsGroup = @[str1, str2];
-            if (self.shop.picshow3) {
-                NSString *str3 = [BYImageURL stringByAppendingString:self.shop.picshow3];
-                scrollView.imageURLStringsGroup = @[str1, str2, str3];
-            }
-        }
+//        if (self.shop.picshow2) {
+//            NSString *str2 = [BYImageURL stringByAppendingString:self.shop.picshow2];
+//            scrollView.imageURLStringsGroup = @[str1, str2];
+//            if (self.shop.picshow3) {
+//                NSString *str3 = [BYImageURL stringByAppendingString:self.shop.picshow3];
+//                scrollView.imageURLStringsGroup = @[str1, str2, str3];
+//            }
+//        }
         
         [header addSubview:scrollView];
         
@@ -72,7 +73,7 @@
         self.tableView.tableHeaderView = scrollView;
     }
     
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 100)];
 
     UIButton *privateChatbtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.view.width * 0.5 - 20, 40)];
     privateChatbtn.backgroundColor = [UIColor blackColor];

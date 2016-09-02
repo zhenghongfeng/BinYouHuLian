@@ -277,7 +277,8 @@
                         SaveAvatar([responseObject[@"user"] valueForKey:@"avatar"]);
                         
                         // 保存用户信息
-                        [UserCacheManager saveInfo:GetPhone imgUrl:[BYImageURL stringByAppendingString:GetAvatar] nickName:GetNickName];
+                        
+                        [UserCacheManager saveInfo:GetPhone imgUrl:GetAvatar nickName:GetNickName];
                         
                         // set auto login
                         [[EMClient sharedClient].options setIsAutoLogin:YES];

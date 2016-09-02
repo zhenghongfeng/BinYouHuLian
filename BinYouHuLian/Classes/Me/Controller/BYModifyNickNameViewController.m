@@ -126,7 +126,7 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             SaveNickName(_nickNameTextField.text);
-            [UserCacheManager saveInfo:GetPhone imgUrl:[BYImageURL stringByAppendingString:GetAvatar] nickName:GetNickName];
+            [UserCacheManager saveInfo:GetPhone imgUrl:GetAvatar nickName:GetNickName];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [hud hide:YES];

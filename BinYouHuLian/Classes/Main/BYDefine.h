@@ -15,6 +15,8 @@
 
 #define BYVcode @"1"
 
+#define BYImageAvatarURL @"http://123.56.186.178/api/download/img?type=small&path="
+
 #define BYImageURL @"http://123.56.186.178/api/download/img?path="
 
 #define BYBaseURL @"http://123.56.186.178"

@@ -28,15 +28,8 @@
 @property (nonatomic, copy) NSString *myLegalPerson;
 /** location */
 @property (nonatomic, copy) NSString *location;
-/** locs */
-@property (nonatomic, strong) NSDictionary *locs;
-/** picshow1 */
-@property (nonatomic, copy) NSString *picshow1;
-/** picshow2 */
-@property (nonatomic, copy) NSString *picshow2;
-/** picshow3 */
-@property (nonatomic, copy) NSString *picshow3;
-
+/** images */
+@property (nonatomic, strong) NSArray *images;
 
 
 

@@ -33,6 +33,15 @@
 		BA1D12D11D50878200C8CD93 /* libHyphenateFullSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1D12CD1D50878200C8CD93 /* libHyphenateFullSDK.a */; };
 		BA1F00FE1D599E7B00408EC1 /* BYChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F00FD1D599E7B00408EC1 /* BYChatRoomViewController.m */; };
 		BA1F01011D59A1C500408EC1 /* BYRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1F01001D59A1C500408EC1 /* BYRoom.m */; };
+		BA2945FB1D79204400DF0CFA /* shopPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = BA2945FA1D79204400DF0CFA /* shopPlaceholder.png */; };
+		BA2945FE1D79464A00DF0CFA /* BYMyBlackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2945FD1D79464A00DF0CFA /* BYMyBlackListViewController.m */; };
+		BA2946011D79519F00DF0CFA /* BYBlackUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2946001D79519F00DF0CFA /* BYBlackUser.m */; };
+		BA2946041D79583000DF0CFA /* BYUserDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2946031D79583000DF0CFA /* BYUserDetailInfoViewController.m */; };
+		BA2946061D795F1300DF0CFA /* user_detailInfo_more.png in Resources */ = {isa = PBXBuildFile; fileRef = BA2946051D795F1300DF0CFA /* user_detailInfo_more.png */; };
+		BA2946091D79606400DF0CFA /* BYUserInfoSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2946081D79606400DF0CFA /* BYUserInfoSettingViewController.m */; };
+		BA29460C1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA29460B1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.m */; };
+		BA29460F1D79781C00DF0CFA /* BYAddBlackUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA29460E1D79781C00DF0CFA /* BYAddBlackUserViewController.m */; };
+		BA2946111D79808F00DF0CFA /* addUser.png in Resources */ = {isa = PBXBuildFile; fileRef = BA2946101D79808F00DF0CFA /* addUser.png */; };
 		BA44F8691D73FD1E0036E4B2 /* BYMySafeDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BA44F8681D73FD1E0036E4B2 /* BYMySafeDictionary.m */; };
 		BA44F86C1D74036C0036E4B2 /* UIViewController+BYTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = BA44F86B1D74036C0036E4B2 /* UIViewController+BYTracking.m */; };
 		BA59B2C11D4702E3003007CE /* BYLookBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA59B2C01D4702E3003007CE /* BYLookBigImageViewController.m */; };
@@ -516,6 +525,21 @@
 		BA1F00FD1D599E7B00408EC1 /* BYChatRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYChatRoomViewController.m; sourceTree = "<group>"; };
 		BA1F00FF1D59A1C500408EC1 /* BYRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYRoom.h; sourceTree = "<group>"; };
 		BA1F01001D59A1C500408EC1 /* BYRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYRoom.m; sourceTree = "<group>"; };
+		BA2945FA1D79204400DF0CFA /* shopPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopPlaceholder.png; sourceTree = "<group>"; };
+		BA2945FC1D79464A00DF0CFA /* BYMyBlackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMyBlackListViewController.h; sourceTree = "<group>"; };
+		BA2945FD1D79464A00DF0CFA /* BYMyBlackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMyBlackListViewController.m; sourceTree = "<group>"; };
+		BA2945FF1D79519F00DF0CFA /* BYBlackUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYBlackUser.h; sourceTree = "<group>"; };
+		BA2946001D79519F00DF0CFA /* BYBlackUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYBlackUser.m; sourceTree = "<group>"; };
+		BA2946021D79583000DF0CFA /* BYUserDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYUserDetailInfoViewController.h; sourceTree = "<group>"; };
+		BA2946031D79583000DF0CFA /* BYUserDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYUserDetailInfoViewController.m; sourceTree = "<group>"; };
+		BA2946051D795F1300DF0CFA /* user_detailInfo_more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_detailInfo_more.png; sourceTree = "<group>"; };
+		BA2946071D79606400DF0CFA /* BYUserInfoSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYUserInfoSettingViewController.h; sourceTree = "<group>"; };
+		BA2946081D79606400DF0CFA /* BYUserInfoSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYUserInfoSettingViewController.m; sourceTree = "<group>"; };
+		BA29460A1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYUserInfoSettingTableViewCell.h; sourceTree = "<group>"; };
+		BA29460B1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYUserInfoSettingTableViewCell.m; sourceTree = "<group>"; };
+		BA29460D1D79781C00DF0CFA /* BYAddBlackUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYAddBlackUserViewController.h; sourceTree = "<group>"; };
+		BA29460E1D79781C00DF0CFA /* BYAddBlackUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYAddBlackUserViewController.m; sourceTree = "<group>"; };
+		BA2946101D79808F00DF0CFA /* addUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addUser.png; sourceTree = "<group>"; };
 		BA44F8671D73FD1E0036E4B2 /* BYMySafeDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYMySafeDictionary.h; sourceTree = "<group>"; };
 		BA44F8681D73FD1E0036E4B2 /* BYMySafeDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYMySafeDictionary.m; sourceTree = "<group>"; };
 		BA44F86A1D74036C0036E4B2 /* UIViewController+BYTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BYTracking.h"; sourceTree = "<group>"; };
@@ -2216,6 +2240,14 @@
 				BAE05F541D58336C00CA2503 /* BYAddApplyViewController.m */,
 				BA1F00FC1D599E7B00408EC1 /* BYChatRoomViewController.h */,
 				BA1F00FD1D599E7B00408EC1 /* BYChatRoomViewController.m */,
+				BA2945FC1D79464A00DF0CFA /* BYMyBlackListViewController.h */,
+				BA2945FD1D79464A00DF0CFA /* BYMyBlackListViewController.m */,
+				BA2946021D79583000DF0CFA /* BYUserDetailInfoViewController.h */,
+				BA2946031D79583000DF0CFA /* BYUserDetailInfoViewController.m */,
+				BA2946071D79606400DF0CFA /* BYUserInfoSettingViewController.h */,
+				BA2946081D79606400DF0CFA /* BYUserInfoSettingViewController.m */,
+				BA29460D1D79781C00DF0CFA /* BYAddBlackUserViewController.h */,
+				BA29460E1D79781C00DF0CFA /* BYAddBlackUserViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2231,6 +2263,8 @@
 				BAE05F571D58810900CA2503 /* BYApply.m */,
 				BA1F00FF1D59A1C500408EC1 /* BYRoom.h */,
 				BA1F01001D59A1C500408EC1 /* BYRoom.m */,
+				BA2945FF1D79519F00DF0CFA /* BYBlackUser.h */,
+				BA2946001D79519F00DF0CFA /* BYBlackUser.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2251,6 +2285,8 @@
 				BAE05F5A1D5883B400CA2503 /* BYApplyListTableViewCell.m */,
 				BA6BA2551D6D6BA8003B3E3E /* BYSettingTableViewCell.h */,
 				BA6BA2561D6D6BA8003B3E3E /* BYSettingTableViewCell.m */,
+				BA29460A1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.h */,
+				BA29460B1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2258,6 +2294,9 @@
 		BAE0F3611CBB9AA4002009F6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BA2946101D79808F00DF0CFA /* addUser.png */,
+				BA2946051D795F1300DF0CFA /* user_detailInfo_more.png */,
+				BA2945FA1D79204400DF0CFA /* shopPlaceholder.png */,
 				BAFF67221D76BA5F00FCBC8B /* applyNoRedDot.png */,
 				BAFF67231D76BA5F00FCBC8B /* applyRedDot.png */,
 				BA5BDD531D6FEB0E00BB6147 /* addFriend.png */,
@@ -2638,6 +2677,7 @@
 				BA68E1F71CC0B4F300A85FCD /* VoiceSearchFeedback016@2x.png in Resources */,
 				BAD26EBD1CBF86B100F355C5 /* anon_chat_bottom_more_nor@3x.png in Resources */,
 				BAD26DAF1CBF442E00F355C5 /* xiaowang.png in Resources */,
+				BA2945FB1D79204400DF0CFA /* shopPlaceholder.png in Resources */,
 				BAE0F4001CBB9AA5002009F6 /* icon_map_delivery@2x.png in Resources */,
 				BAE0F4171CBB9AA5002009F6 /* map_icon_300@2x.png in Resources */,
 				BAD26E8E1CBF7F7700F355C5 /* chatBar_keyboard@2x.png in Resources */,
@@ -2713,6 +2753,7 @@
 				BAE0F4241CBB9AA5002009F6 /* mapTabButtonSelected@2x.png in Resources */,
 				BAE0F41F1CBB9AA5002009F6 /* map_icon_308@2x.png in Resources */,
 				BAD26EBA1CBF86B100F355C5 /* anon_chat_bottom_Camera_nor@3x.png in Resources */,
+				BA2946111D79808F00DF0CFA /* addUser.png in Resources */,
 				BA9E3D921CBCA10100E71119 /* add_header@3x.png in Resources */,
 				BAFF67251D76BA5F00FCBC8B /* applyRedDot.png in Resources */,
 				BA68E1C51CC0B4F300A85FCD /* in.caf in Resources */,
@@ -2738,6 +2779,7 @@
 				BAE0F4231CBB9AA5002009F6 /* mapTabButtonSelected.png in Resources */,
 				BAD26EC81CBF959500F355C5 /* chat_sender_bg@2x.png in Resources */,
 				BA68E1EB1CC0B4F300A85FCD /* VoiceSearchFeedback004@2x.png in Resources */,
+				BA2946061D795F1300DF0CFA /* user_detailInfo_more.png in Resources */,
 				BAE0F3FD1CBB9AA5002009F6 /* icon_map_cateid_99.png in Resources */,
 				BA68E1EC1CC0B4F300A85FCD /* VoiceSearchFeedback005@2x.png in Resources */,
 				BAE0F3D71CBB9AA4002009F6 /* bg_map_dealListCell.png in Resources */,
@@ -2872,6 +2914,7 @@
 				BA68E1501CC0B4C900A85FCD /* PSTCollectionViewItemKey.m in Sources */,
 				BA68E16B1CC0B4C900A85FCD /* EaseMessageViewController.m in Sources */,
 				BA68E12B1CC0B4C800A85FCD /* MJRefreshStateHeader.m in Sources */,
+				BA2946041D79583000DF0CFA /* BYUserDetailInfoViewController.m in Sources */,
 				BA68E1331CC0B4C900A85FCD /* MWGridViewController.m in Sources */,
 				BA68E1131CC0B4C800A85FCD /* EMCDDeviceManager+Microphone.m in Sources */,
 				BA04BE4C1CC0D5BE000270EB /* ChatViewController.m in Sources */,
@@ -2911,9 +2954,11 @@
 				BAA388F41D4F24E300C6FEB4 /* BYAboutMeInfoViewController.m in Sources */,
 				BAA388FA1D4F2BA000C6FEB4 /* BYAboutMeInfoNicknameTableViewCell.m in Sources */,
 				BA68E1121CC0B4C800A85FCD /* EMCDDeviceManager+Media.m in Sources */,
+				BA2946091D79606400DF0CFA /* BYUserInfoSettingViewController.m in Sources */,
 				BA04BE7F1CC61EA8000270EB /* BYCalloutAnnotation.m in Sources */,
 				BA68E1591CC0B4C900A85FCD /* EaseConversationModel.m in Sources */,
 				BAD26DA31CBF40E500F355C5 /* BYMessageListViewController.m in Sources */,
+				BA29460F1D79781C00DF0CFA /* BYAddBlackUserViewController.m in Sources */,
 				BA68E1481CC0B4C900A85FCD /* UIImageView+EMWebCache.m in Sources */,
 				BA68E1261CC0B4C800A85FCD /* MJRefreshBackGifFooter.m in Sources */,
 				BA6BA2521D6D47AD003B3E3E /* BYRegisterNextStepViewController.m in Sources */,
@@ -2961,6 +3006,7 @@
 				BA9E3DBF1CBE200B00E71119 /* BYSettingViewController.m in Sources */,
 				BA68E1421CC0B4C900A85FCD /* NSData+EMImageContentType.m in Sources */,
 				BA59B2C41D470380003007CE /* BYLookBigPictureView.m in Sources */,
+				BA2945FE1D79464A00DF0CFA /* BYMyBlackListViewController.m in Sources */,
 				BA68E17D1CC0B4C900A85FCD /* EaseChatToolbarItem.m in Sources */,
 				BA68E15C1CC0B4C900A85FCD /* NSDate+Category.m in Sources */,
 				BA68E14F1CC0B4C900A85FCD /* PSTCollectionViewFlowLayout.m in Sources */,
@@ -2995,6 +3041,7 @@
 				BA44F8691D73FD1E0036E4B2 /* BYMySafeDictionary.m in Sources */,
 				BA68E1671CC0B4C900A85FCD /* EaseEmotionManager.m in Sources */,
 				BA6BA2201D6D400D003B3E3E /* MBProgressHUD+BYCategory.m in Sources */,
+				BA2946011D79519F00DF0CFA /* BYBlackUser.m in Sources */,
 				BA6BA2471D6D4252003B3E3E /* AppDelegate.m in Sources */,
 				BA68E16D1CC0B4C900A85FCD /* EaseUsersListViewController.m in Sources */,
 				BA68E1401CC0B4C900A85FCD /* EMSDWebImagePrefetcher.m in Sources */,
@@ -3012,6 +3059,7 @@
 				BA68E17A1CC0B4C900A85FCD /* EaseBubbleView+Voice.m in Sources */,
 				BA159F3F1CCDE92A00FE34F0 /* BYMyBuddyListViewController.m in Sources */,
 				BA68E1781CC0B4C900A85FCD /* EaseBubbleView+Text.m in Sources */,
+				BA29460C1D7963B600DF0CFA /* BYUserInfoSettingTableViewCell.m in Sources */,
 				BA6BA2281D6D400D003B3E3E /* ELCAsset.m in Sources */,
 				BA68E1601CC0B4C900A85FCD /* UIViewController+HUD.m in Sources */,
 				BAD26DB71CBF5D9E00F355C5 /* BYMessageTableViewCell.m in Sources */,

@@ -13,6 +13,9 @@
 #import "ChatViewController.h"
 #import "BYAddApplyViewController.h"
 #import "BYChatRoomViewController.h"
+#import "BYMyBlackListViewController.h"
+
+#import "BYUserDetailInfoViewController.h"
 
 @interface BYMyBuddyListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -222,8 +225,9 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:({
         UIButton *button = [UIButton new];
-        button.frame = CGRectMake(0, 0, 25, 25);
-        [button setBackgroundImage:[UIImage imageNamed:@"addFriend"] forState:UIControlStateNormal];
+        button.size = CGSizeMake(25, 25);
+//        button.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        [button setImage:[UIImage imageNamed:@"addUser"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(addBuddy) forControlEvents:UIControlEventTouchUpInside];
         button;
     })];
@@ -273,10 +277,7 @@
             cell = [[BYMyBuddyListTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
         }
         BYFriend *friend = self.dataArray[indexPath.section - 1][indexPath.row];
-        
-        cell.textLabel.text = friend.nickname;
-        cell.detailTextLabel.text = friend.phone;
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+        cell.myFriend = friend;
         
         return cell;
     }
@@ -330,12 +331,17 @@
             BYChatRoomViewController *vc = [BYChatRoomViewController new];
             [self.navigationController pushViewController:vc animated:YES];
         }
-        
+        if (indexPath.row == 2) {
+            BYMyBlackListViewController *vc = [BYMyBlackListViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     } else {
         BYFriend *friend = self.dataArray[indexPath.section - 1][indexPath.row];
-        ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
-        vc.myFriend = friend;
-        vc.navigationItem.title = friend.nickname;
+//        ChatViewController *vc = [[ChatViewController alloc] initWithConversationChatter:friend.phone conversationType:EMConversationTypeChat];
+//        vc.myFriend = friend;
+//        vc.navigationItem.title = friend.nickname;
+        BYUserDetailInfoViewController *vc = [BYUserDetailInfoViewController new];
+        vc.friend = friend;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

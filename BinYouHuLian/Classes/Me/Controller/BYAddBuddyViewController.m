@@ -23,7 +23,7 @@
 @property (nonatomic, strong) BYFriend *friend;
 
 /** isfriend */
-@property (nonatomic, assign) BOOL isfriend;
+@property (nonatomic, assign) NSInteger isfriend;
 
 @end
 
@@ -86,7 +86,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"userinfo == %@", responseObject);
         [hud hide:YES];
-        self.isfriend = [responseObject[@"isfriend"] boolValue];
+        self.isfriend = [responseObject[@"isfriend"] integerValue];
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 1) {
             weakSelf.friend = [BYFriend mj_objectWithKeyValues:responseObject[@"userInfo"]];
@@ -117,13 +117,16 @@
     BYMyBuddyListTableViewCell *cell = [[BYMyBuddyListTableViewCell alloc] init];
     cell.textLabel.text = self.friend.nickname;
     cell.detailTextLabel.text = self.friend.phone;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[BYImageURL stringByAppendingString:self.friend.avatar]] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:self.friend.avatar] placeholderImage:[UIImage imageNamed:@"chatListCellHead"]];
     
     UIButton *addButton = [[UIButton alloc] init];
     [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    if (self.isfriend) {
+    if (self.isfriend == 1) {
         [addButton setTitle:@"已添加" forState:UIControlStateNormal];
         addButton.frame = CGRectMake(kScreenWidth - 70, 0, 60, 44);
+    } else if (self.isfriend == 2) {
+        [addButton setTitle:@"已在黑名单中" forState:UIControlStateNormal];
+        addButton.frame = CGRectMake(kScreenWidth - 130, 0, 120, 44);
     } else {
         [addButton setTitle:@"添加" forState:UIControlStateNormal];
         addButton.frame = CGRectMake(kScreenWidth - 54, 0, 44, 44);
