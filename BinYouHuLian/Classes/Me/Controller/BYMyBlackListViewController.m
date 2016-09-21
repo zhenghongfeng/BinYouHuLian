@@ -17,7 +17,6 @@
 /** tableView */
 @property (nonatomic, strong) UITableView *tableView;
 
-
 /** blackUsers */
 @property (nonatomic, strong) NSMutableArray *blackUsers;
 

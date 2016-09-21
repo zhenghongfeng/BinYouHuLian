@@ -10,6 +10,7 @@
 #import "BYSearchListTableViewCell.h"
 #import "BYShop.h"
 #import <YTKKeyValueStore.h>
+#import <MapKit/MKLocalSearch.h>
 
 static NSString *const placeholder = @"请输入店铺关键字";
 static NSString *const backButtonTitle = @"取消";
@@ -186,6 +187,7 @@ static NSString *const notLoginUser = @"notLoginUser";
             [self.view endEditing:YES];
             [self dismissViewControllerAnimated:YES completion:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationSearchShopToHome object:name userInfo:nil];
+//            [self requestShopsDataWithSearchText:name isSearchButtonClicked:YES];
         }
         if (indexPath.section == 1) {
             [_tableView removeFromSuperview];
@@ -206,6 +208,7 @@ static NSString *const notLoginUser = @"notLoginUser";
         [self dismissViewControllerAnimated:YES completion:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotficationSearchShopToHome object:name userInfo:nil];
+//        [self requestShopsDataWithSearchText:name isSearchButtonClicked:YES];
     }
 }
 

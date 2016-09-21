@@ -266,7 +266,9 @@
         if (code == 1) {
             // async login EM
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
                 EMError *error = [[EMClient sharedClient] loginWithUsername:self.phone password:password];
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (!error) {
                         NSLog(@"环信登录成功");

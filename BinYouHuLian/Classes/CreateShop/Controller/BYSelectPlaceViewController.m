@@ -44,6 +44,14 @@
 
 @implementation BYSelectPlaceViewController
 
+- (CLGeocoder *)geocoder
+{
+    if (_geocoder == nil) {
+        _geocoder = [[CLGeocoder alloc] init];
+    }
+    return _geocoder;
+}
+
 - (UIButton *)backButton
 {
     if (_backButton == nil) {
@@ -191,6 +199,29 @@
     [self.view addSubview:self.backButton];
     [self.view addSubview:self.centerImageView];
     [self.view addSubview:self.adressLabel];
+    
+    self.backButton.sd_layout.leftSpaceToView(self.view, BYMargin)
+    .topSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
+    
+    self.centerImageView.sd_layout
+    .centerXIs(self.view.centerX)
+    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
+    .widthIs(20)
+    .heightIs(30);
+    
+    self.locateBtn.sd_layout
+    .leftSpaceToView(self.view, BYMargin)
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonH)
+    .heightIs(BYHomeButtonH);
+    
+    self.okButton.sd_layout
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .centerXEqualToView(self.view)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
 }
 
 #pragma mark - CLLocationManagerDelegate  位置更新后的回调
@@ -220,22 +251,41 @@
 }
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     CLLocationCoordinate2D cl =  mapView.centerCoordinate;
-    NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
-    typeof(BYSelectPlaceViewController *)weakSelf = self;
     
-    CLLocationCoordinate2D earthCL = [self gcj2wgs:cl ];
+    CLLocation* location = [[CLLocation alloc] initWithLatitude:cl.latitude longitude:cl.longitude];
     
-    //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.8 animations:^{
-//                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-            } completion:^(BOOL finished) {
-//                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
-            }];
-        });
-    });
+    [_geocoder reverseGeocodeLocation:location
+                    completionHandler:^(NSArray* placemarks, NSError* error) {
+                        _placemark = [placemarks firstObject];
+                        NSLog(@"详细信息:%@", _placemark.addressDictionary);
+                        if(_placemark.addressDictionary == nil){
+                            _adressLabel.text = @"地图没有识别到此地";
+                        } else {
+                            //                            NSString *addStr = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] objectAtIndex:0];
+                            //                            NSString *countyStr = [placemark.addressDictionary objectForKey:@"Country"];
+                            //                            NSString *cityStr = [placemark.addressDictionary objectForKey:@"City"];
+                            //                             NSString *streetStr = [placemark.addressDictionary objectForKey:@"Street"];
+                            
+                            _adressLabel.text = [NSString stringWithFormat:@"%@", _placemark.name];
+                        }
+                    }];
+    
+//    NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+//    typeof(BYSelectPlaceViewController *)weakSelf = self;
+//    
+//    CLLocationCoordinate2D earthCL = [self gcj2wgs:cl ];
+//    
+//    //FIXME:不知什么原因有时候 PBRequester failed with Error Error Domain=NSURLErrorDomain Code=-1001 "The request timed out."所以加了线程，然并卵
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//        [weakSelf reverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [UIView animateWithDuration:0.8 animations:^{
+////                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+//            } completion:^(BOOL finished) {
+////                _centerImageView.center = CGPointMake(weakSelf.view.center.x, weakSelf.view.center.y);
+//            }];
+//        });
+//    });
 }
 #pragma mark 反地理编码
 - (void)reverseGeocode1:(double)_lat longitude:(double)_long
@@ -346,35 +396,6 @@ static double transformLon(double x, double y)
     [_mapView setCenterCoordinate:_mapView.userLocation.coordinate animated:YES];
 }
 
-#pragma mark - autoLayout
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
-    self.backButton.sd_layout.leftSpaceToView(self.view, BYMargin)
-    .topSpaceToView(self.view, BYMargin * 2)
-    .widthIs(BYHomeButtonW)
-    .heightIs(BYHomeButtonH);
-    
-    self.centerImageView.sd_layout
-    .centerXIs(self.view.centerX)
-    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
-    .widthIs(20)
-    .heightIs(30);
-    
-    self.locateBtn.sd_layout
-    .leftSpaceToView(self.view, BYMargin)
-    .bottomSpaceToView(self.view, BYMargin * 2)
-    .widthIs(BYHomeButtonH)
-    .heightIs(BYHomeButtonH);
-    
-    self.okButton.sd_layout
-    .bottomSpaceToView(self.view, BYMargin * 2)
-    .centerXEqualToView(self.view)
-    .widthIs(BYHomeButtonW)
-    .heightIs(BYHomeButtonH);
-}
 
 
 @end

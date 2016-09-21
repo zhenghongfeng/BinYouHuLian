@@ -14,6 +14,8 @@
 #import "BYFriend.h"
 #import "BYRegisterViewController.h"
 
+
+
 #define EaseMobAppKey @"binyou#binyouapp"
 
 #ifdef DEBUG

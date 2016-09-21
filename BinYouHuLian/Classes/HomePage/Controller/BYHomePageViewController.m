@@ -150,6 +150,35 @@ static NSString *kGroupName = @"GroupName";
     if ([NSString isValueableString:GetToken]) {
         [self  judgeToken];
     }
+    
+    self.searchButton.sd_layout.leftSpaceToView(self.view, BYMargin)
+    .topSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
+    
+    self.locateButton.sd_layout
+    .leftSpaceToView(self.view, BYMargin)
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .widthIs(BYHomeButtonH)
+    .heightIs(BYHomeButtonH);
+    
+    self.mineButton.sd_layout
+    .bottomSpaceToView(self.view, BYMargin * 2)
+    .centerXEqualToView(self.view)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
+    
+    self.createShopButton.sd_layout
+    .rightSpaceToView(self.view, BYMargin)
+    .bottomSpaceToView(self.view,BYMargin * 2)
+    .widthIs(BYHomeButtonW)
+    .heightIs(BYHomeButtonH);
+    
+    self.centerImageView.sd_layout
+    .centerXIs(self.view.centerX)
+    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
+    .widthIs(20)
+    .heightIs(30);
 }
 
 - (void)requestRedDot
@@ -254,7 +283,6 @@ static NSString *kGroupName = @"GroupName";
 }
 
 #pragma mark - MKMapViewDelegate
-
 /**
  *  每次添加标注都会调用此方法  可以自定义标注的样式
  */
@@ -264,36 +292,9 @@ static NSString *kGroupName = @"GroupName";
     if ([annotation isKindOfClass:[BYAnnotation class]] == NO) {
         return nil;
     }
-    /*
-     static NSString *key1 = @"AnnotationKey1";
-     MKAnnotationView *annotationView = [_mapView dequeueReusableAnnotationViewWithIdentifier:key1];
-     //如果缓存池中不存在则新建
-     if (!annotationView) {
-     annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:key1];
-     //允许交互点击
-     annotationView.canShowCallout = YES;
-     //定义详情视图偏移量
-     annotationView.calloutOffset = CGPointMake(0, 1);
-     //定义右视图
-     annotationView.rightCalloutAccessoryView = ({
-     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
-     button.tag = [(BYAnnotation *)annotation tag];
-     [button setTitle:@"查看详情" forState:UIControlStateNormal];
-     [button setTitleColor:kMainColor forState:UIControlStateNormal];
-     button.titleLabel.numberOfLines = 2;
-     [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
-     
-     button;
-     });
-     }
-     */
-    
     MKAnnotationView *annotationView = [[MKAnnotationView alloc] init];
-    //允许交互点击
     annotationView.canShowCallout = YES;
-    //定义详情视图偏移量
     annotationView.calloutOffset = CGPointMake(0, 1);
-    //定义右视图
     annotationView.rightCalloutAccessoryView = ({
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
         button.tag = [(BYAnnotation *)annotation tag];
@@ -303,11 +304,9 @@ static NSString *kGroupName = @"GroupName";
         [button addTarget:self action:@selector(shopDetailClick:) forControlEvents:UIControlEventTouchUpInside];
         button;
     });
-    //修改大头针视图
-    //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
     annotationView.annotation = (BYAnnotation *)annotation;
     annotationView.annotation.coordinate = annotation.coordinate;
-    annotationView.image = ((BYAnnotation *)annotation).image;//设置大头针视图的图片
+    annotationView.image = ((BYAnnotation *)annotation).image;
     return annotationView;
 }
 
@@ -333,17 +332,28 @@ static NSString *kGroupName = @"GroupName";
         
         CLLocationCoordinate2D cl =  mapView.centerCoordinate;
         
-        NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+        CLLocation* location = [[CLLocation alloc] initWithLatitude:cl.latitude longitude:cl.longitude];
         
-        WeakSelf;
-        CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
+        [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
+            CLPlacemark *placemark = [placemarks firstObject];
+            if(placemark.addressDictionary == nil){
+                self.adressLabel.text = @"地图没有识别到此地";
+            } else {
+                self.adressLabel.text = placemark.name;
+            }
+        }];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.centerImageView.center = weakSelf.view.center;
-            });
-        });
+//        NSLog(@"转换前：%f,%f",cl.latitude,cl.longitude);
+//        
+//        WeakSelf;
+//        CLLocationCoordinate2D earthCL = [self homegcj2wgs:cl];
+//        
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//            [weakSelf homereverseGeocode1:earthCL.latitude  longitude:earthCL.longitude];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+////                self.centerImageView.center = weakSelf.view.center;
+//            });
+//        });
     }
 }
 
@@ -807,48 +817,6 @@ static double hometransformLon(double x, double y)
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius = 5;
     return button;
-}
-
-#pragma mark - autoLayout
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
-    self.searchButton.sd_layout.leftSpaceToView(self.view, BYMargin)
-    .topSpaceToView(self.view, BYMargin * 2)
-    .widthIs(BYHomeButtonW)
-    .heightIs(BYHomeButtonH);
-    
-    self.locateButton.sd_layout
-    .leftSpaceToView(self.view, BYMargin)
-    .bottomSpaceToView(self.view, BYMargin * 2)
-    .widthIs(BYHomeButtonH)
-    .heightIs(BYHomeButtonH);
-    
-    self.mineButton.sd_layout
-    .bottomSpaceToView(self.view, BYMargin * 2)
-    .centerXEqualToView(self.view)
-    .widthIs(BYHomeButtonW)
-    .heightIs(BYHomeButtonH);
-    
-    self.createShopButton.sd_layout
-    .rightSpaceToView(self.view, BYMargin)
-    .bottomSpaceToView(self.view,BYMargin * 2)
-    .widthIs(BYHomeButtonW)
-    .heightIs(BYHomeButtonH);
-    
-//    self.centerImageView.sd_layout
-//    .centerXIs(self.view.centerX)
-//    .centerYIs(self.view.centerY)
-//    .widthIs(20)
-//    .heightIs(30);
-    
-    self.centerImageView.sd_layout
-    .centerXIs(self.view.centerX)
-    .topSpaceToView(self.navigationController.navigationBar, (kScreenHeight - 64) / 2 - 30)
-    .widthIs(20)
-    .heightIs(30);
 }
 
 - (void)dealloc

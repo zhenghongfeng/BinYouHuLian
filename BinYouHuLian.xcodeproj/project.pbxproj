@@ -261,6 +261,8 @@
 		BA6BA2541D6D47AD003B3E3E /* BYResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6BA2501D6D47AD003B3E3E /* BYResetPasswordViewController.m */; };
 		BA6BA2571D6D6BA8003B3E3E /* BYSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6BA2561D6D6BA8003B3E3E /* BYSettingTableViewCell.m */; };
 		BA6C26B41D5464550050940E /* BYApplyReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C26B31D5464550050940E /* BYApplyReasonViewController.m */; };
+		BA819D191D7D204400EAF2D0 /* CLLocation+BYSino.m in Sources */ = {isa = PBXBuildFile; fileRef = BA819D181D7D204400EAF2D0 /* CLLocation+BYSino.m */; };
+		BA819D1D1D7FF12300EAF2D0 /* YYViewHierarchy3D.m in Sources */ = {isa = PBXBuildFile; fileRef = BA819D1C1D7FF12300EAF2D0 /* YYViewHierarchy3D.m */; };
 		BA99421A1D4AEE8E00BF9E04 /* searchShopLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9942181D4AEE8E00BF9E04 /* searchShopLocation.png */; };
 		BA99421B1D4AEE8E00BF9E04 /* searchResult.png in Resources */ = {isa = PBXBuildFile; fileRef = BA9942191D4AEE8E00BF9E04 /* searchResult.png */; };
 		BA99421E1D4AEF9200BF9E04 /* BYSearchListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA99421D1D4AEF9200BF9E04 /* BYSearchListTableViewCell.m */; };
@@ -926,6 +928,11 @@
 		BA6BA2561D6D6BA8003B3E3E /* BYSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYSettingTableViewCell.m; sourceTree = "<group>"; };
 		BA6C26B21D5464550050940E /* BYApplyReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYApplyReasonViewController.h; sourceTree = "<group>"; };
 		BA6C26B31D5464550050940E /* BYApplyReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYApplyReasonViewController.m; sourceTree = "<group>"; };
+		BA819D171D7D204400EAF2D0 /* CLLocation+BYSino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+BYSino.h"; sourceTree = "<group>"; };
+		BA819D181D7D204400EAF2D0 /* CLLocation+BYSino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+BYSino.m"; sourceTree = "<group>"; };
+		BA819D1B1D7FF12300EAF2D0 /* YYViewHierarchy3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYViewHierarchy3D.h; sourceTree = "<group>"; };
+		BA819D1C1D7FF12300EAF2D0 /* YYViewHierarchy3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYViewHierarchy3D.m; sourceTree = "<group>"; };
+		BA937AF31D8E42F100F9CAB7 /* BinYouHuLian.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BinYouHuLian.entitlements; sourceTree = "<group>"; };
 		BA9942181D4AEE8E00BF9E04 /* searchShopLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchShopLocation.png; sourceTree = "<group>"; };
 		BA9942191D4AEE8E00BF9E04 /* searchResult.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchResult.png; sourceTree = "<group>"; };
 		BA99421C1D4AEF9200BF9E04 /* BYSearchListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYSearchListTableViewCell.h; sourceTree = "<group>"; };
@@ -1200,6 +1207,7 @@
 		BA0857881CB60E4F00D4454C /* BinYouHuLian */ = {
 			isa = PBXGroup;
 			children = (
+				BA937AF31D8E42F100F9CAB7 /* BinYouHuLian.entitlements */,
 				BAE0F33D1CBB9AA4002009F6 /* Classes */,
 				BA0857891CB60E4F00D4454C /* Supporting Files */,
 			);
@@ -1979,6 +1987,8 @@
 				BA6BA1F51D6D400D003B3E3E /* UITextField+Category.m */,
 				BA6BA1F61D6D400D003B3E3E /* UIView+BYCategory.h */,
 				BA6BA1F71D6D400D003B3E3E /* UIView+BYCategory.m */,
+				BA819D171D7D204400EAF2D0 /* CLLocation+BYSino.h */,
+				BA819D181D7D204400EAF2D0 /* CLLocation+BYSino.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1995,6 +2005,7 @@
 		BA6BA1FB1D6D400D003B3E3E /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BA819D1A1D7FF12300EAF2D0 /* YYViewHierarchy3D */,
 				BA6BA1FC1D6D400D003B3E3E /* ELCImagePicker */,
 			);
 			path = Lib;
@@ -2090,6 +2101,15 @@
 				BA6BA2501D6D47AD003B3E3E /* BYResetPasswordViewController.m */,
 			);
 			path = "Login&Register";
+			sourceTree = "<group>";
+		};
+		BA819D1A1D7FF12300EAF2D0 /* YYViewHierarchy3D */ = {
+			isa = PBXGroup;
+			children = (
+				BA819D1B1D7FF12300EAF2D0 /* YYViewHierarchy3D.h */,
+				BA819D1C1D7FF12300EAF2D0 /* YYViewHierarchy3D.m */,
+			);
+			path = YYViewHierarchy3D;
 			sourceTree = "<group>";
 		};
 		BAC26B731D5AC7D600F5EA6E /* Core Data */ = {
@@ -2581,8 +2601,12 @@
 					BA0857851CB60E4F00D4454C = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = EL6G5T28V9;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -2981,6 +3005,7 @@
 				BA68E1731CC0B4C900A85FCD /* EaseMessageTimeCell.m in Sources */,
 				BAE0F3CB1CBB9AA4002009F6 /* BYMineViewController.m in Sources */,
 				BAD26DBE1CBF64CC00F355C5 /* BYMessageModel.m in Sources */,
+				BA819D191D7D204400EAF2D0 /* CLLocation+BYSino.m in Sources */,
 				BA68E1701CC0B4C900A85FCD /* EaseBaseMessageCell.m in Sources */,
 				BA68E13D1CC0B4C900A85FCD /* EMSDWebImageDownloader.m in Sources */,
 				BA1F01011D59A1C500408EC1 /* BYRoom.m in Sources */,
@@ -2991,6 +3016,7 @@
 				BA68E1611CC0B4C900A85FCD /* EaseChineseToPinyin.m in Sources */,
 				BAD26DA01CBF37D100F355C5 /* BYCaredLocationViewController.m in Sources */,
 				BA6BA2541D6D47AD003B3E3E /* BYResetPasswordViewController.m in Sources */,
+				BA819D1D1D7FF12300EAF2D0 /* YYViewHierarchy3D.m in Sources */,
 				BA68E1141CC0B4C800A85FCD /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				BA68E1841CC0B4C900A85FCD /* EaseConversationCell.m in Sources */,
 				BA68E16A1CC0B4C900A85FCD /* EaseLocationViewController.m in Sources */,
@@ -3201,8 +3227,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BinYouHuLian/BinYouHuLian.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zheng hongfeng (4U327QE44C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng hongfeng (4U327QE44C)";
+				DEVELOPMENT_TEAM = EL6G5T28V9;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Main/PrefixHeader.pch;
@@ -3235,7 +3263,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = binyouhulian_profile_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -3246,8 +3275,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BinYouHuLian/BinYouHuLian.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zheng hongfeng (4U327QE44C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng hongfeng (4U327QE44C)";
+				DEVELOPMENT_TEAM = EL6G5T28V9;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BinYouHuLian/Classes/Main/PrefixHeader.pch;
@@ -3280,7 +3311,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.binyou.binyouhulian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d93b309b-dece-4c19-8558-b2331fa8bdb0";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = binyouhulian_profile_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
